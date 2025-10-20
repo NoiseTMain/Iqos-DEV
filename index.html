@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Profesionální webová aplikace</title>
+<title>Profesionální webová aplikace — sloučený HTML</title>
 <!-- Stylování -->
 <style>
   body {
@@ -66,7 +66,7 @@
     gap: 1rem;
     flex-wrap: wrap;
   }
-  input[type="text"], input[type="email"] {
+  input[type="text"], input[type="email"], select {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -126,6 +126,18 @@
     max-width: 100%;
     border-radius: 8px;
   }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    color: #777;
+  }
+
+  /* drobné responzivní úpravy */
+  @media (max-width: 600px) {
+    nav { gap: 0.5rem; }
+    nav button { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+    main { padding: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -138,9 +150,387 @@
     <button onclick="showSection('list')">Seznam</button>
     <button onclick="showSection('profileDetail')">Profil</button>
     <button onclick="showSection('history')">Historie</button>
+    <!-- Neviditelná položka: obsah 'bez vizualizace' je vložen v &lt;template&gt; níže -->
   </nav>
 </header>
 
 <main>
+  <!-- Notifikace -->
+  <div id="notification" role="status" aria-live="polite"></div>
 
-<div id="notification"></
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="profile-card">
+      <h2>Vítejte</h2>
+      <p>Toto je profesionální šablona aplikace. V navigaci můžete přepínat mezi sekcemi. Dále je do tohoto dokumentu vložen "jiný web" **bez vizualizace** — najdete ho v DOMu uvnitř &lt;template id="rawSite"&gt; (neviditelný, nepronásledovaný).</p>
+    </div>
+
+    <div id="emailSection" aria-label="Sekce pro demo e-mail/video">
+      <h3>Kontakt / Demo video</h3>
+      <p>Pošlete e-mail nebo si přehrajte demo video (zde je pouze ukázka elementu video — zatím bez reálného zdroje).</p>
+      <form id="contactForm" onsubmit="event.preventDefault(); sendContact();">
+        <input type="text" id="name" placeholder="Vaše jméno" required />
+        <input type="email" id="email" placeholder="E-mail" required />
+        <button type="submit">Odeslat</button>
+      </form>
+
+      <div style="margin-top:1rem;">
+        <video controls id="demoVideo" poster="" preload="metadata">
+          <!-- Demo — bez skutečného zdroje, uživatel může doplnit -->
+          <source src="" type="video/mp4">
+          Vaše prohlížeč nepodporuje video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRACE -->
+  <section id="register" class="section">
+    <div class="profile-card">
+      <h2>Registrace uživatele</h2>
+      <form id="registerForm" onsubmit="event.preventDefault(); registerUser();">
+        <input type="text" id="regName" placeholder="Jméno a příjmení" required />
+        <input type="email" id="regEmail" placeholder="E-mail" required />
+        <select id="regRole" required>
+          <option value="">Vyberte roli</option>
+          <option value="user">Uživatel</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit">Registrovat</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- SEZNAM -->
+  <section id="list" class="section">
+    <div class="profile-card">
+      <h2>Seznam lidí</h2>
+      <div id="peopleList" aria-live="polite"></div>
+      <button onclick="addSamplePeople()">Přidat ukázkové osoby</button>
+    </div>
+  </section>
+
+  <!-- PROFIL DETAIL -->
+  <section id="profileDetail" class="section">
+    <div class="profile-card">
+      <h2>Detail profilu</h2>
+      <div id="profileContent">
+        <p>Vyberte osobu v sekci <strong>Seznam</strong> pro zobrazení detailu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORIE -->
+  <section id="history" class="section">
+    <div class="profile-card">
+      <h2>Historie aktivit</h2>
+      <ul id="historyList">
+        <li>Žádná historie zatím.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Profesionální webová aplikace — demo
+  </footer>
+</main>
+
+<!--
+  Sem je vložen "jiný web" BEZ VIZUALIZACE — tedy fyzicky vložen do dokumentu, ale není vykreslen.
+  Používám <template> element, který obsah DOMu obsahuje, ale nejeví se uživateli.
+  Pokud byste chtěl/a tento obsah zobrazit, stačí ho zkopírovat nebo pomocí JS vložit do stránky.
+-->
+<template id="rawSite">
+  <!-- Začátek vloženého (původního) kódu uživatele (bez vizualizace) -->
+  <!DOCTYPE html>
+  <html lang="cs">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profesionální webová aplikace</title>
+  <!-- Stylování -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    header {
+      background-color: #2c3e50;
+      padding: 1rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #ecf0f1;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    nav button:hover {
+      background-color: #34495e;
+    }
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+    /* Card */
+    .profile-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    /* Formy */
+    form {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    input[type="text"], input[type="email"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1 1 200px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background-color: #3498db;
+    }
+    #peopleList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .personCard {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1rem;
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .personCard:hover {
+      transform: scale(1.02);
+    }
+    #profileContent {
+      margin-top: 1rem;
+    }
+    /* Notifikace */
+    #notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      font-weight: bold;
+      display: none;
+      z-index: 1000;
+    }
+    /* Sekce email a video */
+    #emailSection {
+      margin-top: 2rem;
+      background: #ecf0f1;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    video {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+  </style>
+  </head>
+  <body>
+
+  <header>
+    <h1>Profesionální Webová Aplikace</h1>
+    <nav>
+      <button onclick="showSection('home')">Domů</button>
+      <button onclick="showSection('register')">Registrace</button>
+      <button onclick="showSection('list')">Seznam</button>
+      <button onclick="showSection('profileDetail')">Profil</button>
+      <button onclick="showSection('history')">Historie</button>
+    </nav>
+  </header>
+
+  <main>
+
+  <div id="notification"></div>
+
+  <!-- ... původní obsah pokračoval ... -->
+
+  </main>
+  </body>
+  </html>
+  <!-- Konec vloženého kódu -->
+</template>
+
+<script>
+  // Základní funkcionalita přepínání sekcí
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+  }
+
+  // jednoduché notifikace
+  function notify(text, duration = 3000) {
+    const n = document.getElementById('notification');
+    n.textContent = text;
+    n.style.display = 'block';
+    n.style.background = '#27ae60';
+    n.style.color = 'white';
+    setTimeout(() => { n.style.display = 'none'; }, duration);
+    // uložíme do historie
+    addHistory(text);
+  }
+
+  // Simulace registrace
+  function registerUser() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const role = document.getElementById('regRole').value;
+    if (!name || !email || !role) {
+      notify('Vyplňte prosím všechna pole.', 2500);
+      return;
+    }
+    addPerson({ name, email, role });
+    notify('Uživatel zaregistrován: ' + name, 3000);
+    document.getElementById('registerForm').reset();
+  }
+
+  // Kontakt (demo)
+  function sendContact() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!name || !email) {
+      notify('Vyplňte prosím jméno a e-mail.', 2500);
+      return;
+    }
+    notify('Děkujeme, ' + name + '. Zpráva byla odeslána.', 3000);
+    document.getElementById('contactForm').reset();
+  }
+
+  // Správa osob (lokálně v paměti)
+  const people = [];
+
+  function addPerson(p) {
+    people.push(p);
+    renderPeople();
+  }
+
+  function renderPeople() {
+    const container = document.getElementById('peopleList');
+    container.innerHTML = '';
+    if (people.length === 0) {
+      const el = document.createElement('div');
+      el.textContent = 'Žádné osoby v seznamu.';
+      container.appendChild(el);
+      return;
+    }
+    people.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'personCard';
+      card.tabIndex = 0;
+      card.innerHTML = '<strong>' + escapeHtml(p.name) + '</strong><div style="font-size:0.9rem;color:#666;">' + escapeHtml(p.role) + '</div>';
+      card.onclick = () => showProfile(idx);
+      card.onkeypress = (e) => { if (e.key === 'Enter') showProfile(idx); };
+      container.appendChild(card);
+    });
+  }
+
+  function showProfile(idx) {
+    const p = people[idx];
+    const container = document.getElementById('profileContent');
+    container.innerHTML = '<h3>' + escapeHtml(p.name) + '</h3>' +
+                          '<p><strong>E-mail:</strong> ' + escapeHtml(p.email) + '</p>' +
+                          '<p><strong>Role:</strong> ' + escapeHtml(p.role) + '</p>' +
+                          '<button onclick="removePerson(' + idx + ')">Smazat</button>';
+    showSection('profileDetail');
+  }
+
+  function removePerson(idx) {
+    if (!confirm('Opravdu smazat uživatele?')) return;
+    const removed = people.splice(idx, 1);
+    renderPeople();
+    document.getElementById('profileContent').innerHTML = '<p>Osoba byla smazána.</p>';
+    addHistory('Smazán uživatel: ' + (removed[0] && removed[0].name));
+  }
+
+  // Pomocné: přidat příkladné osoby
+  function addSamplePeople() {
+    addPerson({ name: 'Jan Novák', email: 'jan.novak@example.com', role: 'user' });
+    addPerson({ name: 'Petra Svobodová', email: 'petra.svobodova@example.com', role: 'admin' });
+    notify('Přidány ukázkové osoby', 2000);
+  }
+
+  // Historie akcí (lokálně)
+  function addHistory(text) {
+    const list = document.getElementById('historyList');
+    const li = document.createElement('li');
+    const now = new Date();
+    li.textContent = now.toLocaleString('cs-CZ') + ' — ' + text;
+    // pokud je první položka placeholder, odstraníme ji
+    if (list.children.length === 1 && list.children[0].textContent === 'Žádná historie zatím.') {
+      list.innerHTML = '';
+    }
+    list.prepend(li);
+  }
+
+  // Bezpečné escapování textu pro HTML
+  function escapeHtml(unsafe) {
+    return String(unsafe)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Nahraj rok do patičky
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Init: vykreslí prázdný seznam správně
+  renderPeople();
+
+  // Poznámka: rawSite (jiný web) je dostupný v DOMu přes template
+  // Pokud budete chtít obsah "bez vizualizace" zpracovat programově, můžete ho načíst:
+  // const raw = document.getElementById('rawSite').content;
+
+  // (volitelné) bezpečnostní opatření: zakáže automatické vložení obsahu template do stránky při drag&drop
+  document.addEventListener('drop', (e) => { e.preventDefault(); e.stopPropagation(); });
+</script>
+</body>
+</html>
