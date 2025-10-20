@@ -1,942 +1,1003 @@
-{
-  "name": "vite-starter",
-  "version": "0.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
-  "packages": {
-    "": {
-      "name": "vite-starter",
-      "version": "0.0.0",
-      "devDependencies": {
-        "vite": "^5.4.2"
-      }
-    },
-    "node_modules/@esbuild/aix-ppc64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz",
-      "integrity": "sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==",
-      "cpu": [
-        "ppc64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "aix"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/android-arm": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.21.5.tgz",
-      "integrity": "sha512-vCPvzSjpPHEi1siZdlvAlsPxXl7WbOVUBBAowWug4rJHb68Ox8KualB+1ocNvT5fjv6wpkX6o/iEpbDrf68zcg==",
-      "cpu": [
-        "arm"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "android"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/android-arm64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.21.5.tgz",
-      "integrity": "sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "android"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/android-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.21.5.tgz",
-      "integrity": "sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "android"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/darwin-arm64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.21.5.tgz",
-      "integrity": "sha512-DwqXqZyuk5AiWWf3UfLiRDJ5EDd49zg6O9wclZ7kUMv2WRFr4HKjXp/5t8JZ11QbQfUS6/cRCKGwYhtNAY88kQ==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "darwin"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/darwin-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.21.5.tgz",
-      "integrity": "sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "darwin"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/freebsd-arm64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.21.5.tgz",
-      "integrity": "sha512-5JcRxxRDUJLX8JXp/wcBCy3pENnCgBR9bN6JsY4OmhfUtIHe3ZW0mawA7+RDAcMLrMIZaf03NlQiX9DGyB8h4g==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "freebsd"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/freebsd-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.21.5.tgz",
-      "integrity": "sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "freebsd"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-arm": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.21.5.tgz",
-      "integrity": "sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA==",
-      "cpu": [
-        "arm"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-arm64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.21.5.tgz",
-      "integrity": "sha512-ibKvmyYzKsBeX8d8I7MH/TMfWDXBF3db4qM6sy+7re0YXya+K1cem3on9XgdT2EQGMu4hQyZhan7TeQ8XkGp4Q==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-ia32": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.21.5.tgz",
-      "integrity": "sha512-YvjXDqLRqPDl2dvRODYmmhz4rPeVKYvppfGYKSNGdyZkA01046pLWyRKKI3ax8fbJoK5QbxblURkwK/MWY18Tg==",
-      "cpu": [
-        "ia32"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-loong64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.21.5.tgz",
-      "integrity": "sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg==",
-      "cpu": [
-        "loong64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-mips64el": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.21.5.tgz",
-      "integrity": "sha512-IajOmO+KJK23bj52dFSNCMsz1QP1DqM6cwLUv3W1QwyxkyIWecfafnI555fvSGqEKwjMXVLokcV5ygHW5b3Jbg==",
-      "cpu": [
-        "mips64el"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-ppc64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.21.5.tgz",
-      "integrity": "sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==",
-      "cpu": [
-        "ppc64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-riscv64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.21.5.tgz",
-      "integrity": "sha512-2HdXDMd9GMgTGrPWnJzP2ALSokE/0O5HhTUvWIbD3YdjME8JwvSCnNGBnTThKGEB91OZhzrJ4qIIxk/SBmyDDA==",
-      "cpu": [
-        "riscv64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-s390x": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.21.5.tgz",
-      "integrity": "sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A==",
-      "cpu": [
-        "s390x"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/linux-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.21.5.tgz",
-      "integrity": "sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/netbsd-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.21.5.tgz",
-      "integrity": "sha512-Woi2MXzXjMULccIwMnLciyZH4nCIMpWQAs049KEeMvOcNADVxo0UBIQPfSmxB3CWKedngg7sWZdLvLczpe0tLg==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "netbsd"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/openbsd-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.21.5.tgz",
-      "integrity": "sha512-HLNNw99xsvx12lFBUwoT8EVCsSvRNDVxNpjZ7bPn947b8gJPzeHWyNVhFsaerc0n3TsbOINvRP2byTZ5LKezow==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "openbsd"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/sunos-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.21.5.tgz",
-      "integrity": "sha512-6+gjmFpfy0BHU5Tpptkuh8+uw3mnrvgs+dSPQXQOv3ekbordwnzTVEb4qnIvQcYXq6gzkyTnoZ9dZG+D4garKg==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "sunos"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/win32-arm64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.21.5.tgz",
-      "integrity": "sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/win32-ia32": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.21.5.tgz",
-      "integrity": "sha512-SWXFF1CL2RVNMaVs+BBClwtfZSvDgtL//G/smwAc5oVK/UPu2Gu9tIaRgFmYFFKrmg3SyAjSrElf0TiJ1v8fYA==",
-      "cpu": [
-        "ia32"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@esbuild/win32-x64": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz",
-      "integrity": "sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ],
-      "engines": {
-        "node": ">=12"
-      }
-    },
-    "node_modules/@rollup/rollup-android-arm-eabi": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.52.5.tgz",
-      "integrity": "sha512-8c1vW4ocv3UOMp9K+gToY5zL2XiiVw3k7f1ksf4yO1FlDFQ1C2u72iACFnSOceJFsWskc2WZNqeRhFRPzv+wtQ==",
-      "cpu": [
-        "arm"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "android"
-      ]
-    },
-    "node_modules/@rollup/rollup-android-arm64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.52.5.tgz",
-      "integrity": "sha512-mQGfsIEFcu21mvqkEKKu2dYmtuSZOBMmAl5CFlPGLY94Vlcm+zWApK7F/eocsNzp8tKmbeBP8yXyAbx0XHsFNA==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "android"
-      ]
-    },
-    "node_modules/@rollup/rollup-darwin-arm64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.52.5.tgz",
-      "integrity": "sha512-takF3CR71mCAGA+v794QUZ0b6ZSrgJkArC+gUiG6LB6TQty9T0Mqh3m2ImRBOxS2IeYBo4lKWIieSvnEk2OQWA==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "darwin"
-      ]
-    },
-    "node_modules/@rollup/rollup-darwin-x64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.52.5.tgz",
-      "integrity": "sha512-W901Pla8Ya95WpxDn//VF9K9u2JbocwV/v75TE0YIHNTbhqUTv9w4VuQ9MaWlNOkkEfFwkdNhXgcLqPSmHy0fA==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "darwin"
-      ]
-    },
-    "node_modules/@rollup/rollup-freebsd-arm64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.52.5.tgz",
-      "integrity": "sha512-QofO7i7JycsYOWxe0GFqhLmF6l1TqBswJMvICnRUjqCx8b47MTo46W8AoeQwiokAx3zVryVnxtBMcGcnX12LvA==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "freebsd"
-      ]
-    },
-    "node_modules/@rollup/rollup-freebsd-x64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.52.5.tgz",
-      "integrity": "sha512-jr21b/99ew8ujZubPo9skbrItHEIE50WdV86cdSoRkKtmWa+DDr6fu2c/xyRT0F/WazZpam6kk7IHBerSL7LDQ==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "freebsd"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-arm-gnueabihf": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.52.5.tgz",
-      "integrity": "sha512-PsNAbcyv9CcecAUagQefwX8fQn9LQ4nZkpDboBOttmyffnInRy8R8dSg6hxxl2Re5QhHBf6FYIDhIj5v982ATQ==",
-      "cpu": [
-        "arm"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-arm-musleabihf": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.52.5.tgz",
-      "integrity": "sha512-Fw4tysRutyQc/wwkmcyoqFtJhh0u31K+Q6jYjeicsGJJ7bbEq8LwPWV/w0cnzOqR2m694/Af6hpFayLJZkG2VQ==",
-      "cpu": [
-        "arm"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-arm64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.52.5.tgz",
-      "integrity": "sha512-a+3wVnAYdQClOTlyapKmyI6BLPAFYs0JM8HRpgYZQO02rMR09ZcV9LbQB+NL6sljzG38869YqThrRnfPMCDtZg==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-arm64-musl": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.52.5.tgz",
-      "integrity": "sha512-AvttBOMwO9Pcuuf7m9PkC1PUIKsfaAJ4AYhy944qeTJgQOqJYJ9oVl2nYgY7Rk0mkbsuOpCAYSs6wLYB2Xiw0Q==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-loong64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-gnu/-/rollup-linux-loong64-gnu-4.52.5.tgz",
-      "integrity": "sha512-DkDk8pmXQV2wVrF6oq5tONK6UHLz/XcEVow4JTTerdeV1uqPeHxwcg7aFsfnSm9L+OO8WJsWotKM2JJPMWrQtA==",
-      "cpu": [
-        "loong64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-ppc64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-gnu/-/rollup-linux-ppc64-gnu-4.52.5.tgz",
-      "integrity": "sha512-W/b9ZN/U9+hPQVvlGwjzi+Wy4xdoH2I8EjaCkMvzpI7wJUs8sWJ03Rq96jRnHkSrcHTpQe8h5Tg3ZzUPGauvAw==",
-      "cpu": [
-        "ppc64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-riscv64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.52.5.tgz",
-      "integrity": "sha512-sjQLr9BW7R/ZiXnQiWPkErNfLMkkWIoCz7YMn27HldKsADEKa5WYdobaa1hmN6slu9oWQbB6/jFpJ+P2IkVrmw==",
-      "cpu": [
-        "riscv64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-riscv64-musl": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-musl/-/rollup-linux-riscv64-musl-4.52.5.tgz",
-      "integrity": "sha512-hq3jU/kGyjXWTvAh2awn8oHroCbrPm8JqM7RUpKjalIRWWXE01CQOf/tUNWNHjmbMHg/hmNCwc/Pz3k1T/j/Lg==",
-      "cpu": [
-        "riscv64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-s390x-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.52.5.tgz",
-      "integrity": "sha512-gn8kHOrku8D4NGHMK1Y7NA7INQTRdVOntt1OCYypZPRt6skGbddska44K8iocdpxHTMMNui5oH4elPH4QOLrFQ==",
-      "cpu": [
-        "s390x"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-x64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.52.5.tgz",
-      "integrity": "sha512-hXGLYpdhiNElzN770+H2nlx+jRog8TyynpTVzdlc6bndktjKWyZyiCsuDAlpd+j+W+WNqfcyAWz9HxxIGfZm1Q==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-linux-x64-musl": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.52.5.tgz",
-      "integrity": "sha512-arCGIcuNKjBoKAXD+y7XomR9gY6Mw7HnFBv5Rw7wQRvwYLR7gBAgV7Mb2QTyjXfTveBNFAtPt46/36vV9STLNg==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "linux"
-      ]
-    },
-    "node_modules/@rollup/rollup-openharmony-arm64": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-openharmony-arm64/-/rollup-openharmony-arm64-4.52.5.tgz",
-      "integrity": "sha512-QoFqB6+/9Rly/RiPjaomPLmR/13cgkIGfA40LHly9zcH1S0bN2HVFYk3a1eAyHQyjs3ZJYlXvIGtcCs5tko9Cw==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "openharmony"
-      ]
-    },
-    "node_modules/@rollup/rollup-win32-arm64-msvc": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.52.5.tgz",
-      "integrity": "sha512-w0cDWVR6MlTstla1cIfOGyl8+qb93FlAVutcor14Gf5Md5ap5ySfQ7R9S/NjNaMLSFdUnKGEasmVnu3lCMqB7w==",
-      "cpu": [
-        "arm64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ]
-    },
-    "node_modules/@rollup/rollup-win32-ia32-msvc": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.52.5.tgz",
-      "integrity": "sha512-Aufdpzp7DpOTULJCuvzqcItSGDH73pF3ko/f+ckJhxQyHtp67rHw3HMNxoIdDMUITJESNE6a8uh4Lo4SLouOUg==",
-      "cpu": [
-        "ia32"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ]
-    },
-    "node_modules/@rollup/rollup-win32-x64-gnu": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-gnu/-/rollup-win32-x64-gnu-4.52.5.tgz",
-      "integrity": "sha512-UGBUGPFp1vkj6p8wCRraqNhqwX/4kNQPS57BCFc8wYh0g94iVIW33wJtQAx3G7vrjjNtRaxiMUylM0ktp/TRSQ==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ]
-    },
-    "node_modules/@rollup/rollup-win32-x64-msvc": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.52.5.tgz",
-      "integrity": "sha512-TAcgQh2sSkykPRWLrdyy2AiceMckNf5loITqXxFI5VuQjS5tSuw3WlwdN8qv8vzjLAUTvYaH/mVjSFpbkFbpTg==",
-      "cpu": [
-        "x64"
-      ],
-      "dev": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "win32"
-      ]
-    },
-    "node_modules/@types/estree": {
-      "version": "1.0.8",
-      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz",
-      "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==",
-      "dev": true,
-      "license": "MIT"
-    },
-    "node_modules/esbuild": {
-      "version": "0.21.5",
-      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.21.5.tgz",
-      "integrity": "sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==",
-      "dev": true,
-      "hasInstallScript": true,
-      "license": "MIT",
-      "bin": {
-        "esbuild": "bin/esbuild"
-      },
-      "engines": {
-        "node": ">=12"
-      },
-      "optionalDependencies": {
-        "@esbuild/aix-ppc64": "0.21.5",
-        "@esbuild/android-arm": "0.21.5",
-        "@esbuild/android-arm64": "0.21.5",
-        "@esbuild/android-x64": "0.21.5",
-        "@esbuild/darwin-arm64": "0.21.5",
-        "@esbuild/darwin-x64": "0.21.5",
-        "@esbuild/freebsd-arm64": "0.21.5",
-        "@esbuild/freebsd-x64": "0.21.5",
-        "@esbuild/linux-arm": "0.21.5",
-        "@esbuild/linux-arm64": "0.21.5",
-        "@esbuild/linux-ia32": "0.21.5",
-        "@esbuild/linux-loong64": "0.21.5",
-        "@esbuild/linux-mips64el": "0.21.5",
-        "@esbuild/linux-ppc64": "0.21.5",
-        "@esbuild/linux-riscv64": "0.21.5",
-        "@esbuild/linux-s390x": "0.21.5",
-        "@esbuild/linux-x64": "0.21.5",
-        "@esbuild/netbsd-x64": "0.21.5",
-        "@esbuild/openbsd-x64": "0.21.5",
-        "@esbuild/sunos-x64": "0.21.5",
-        "@esbuild/win32-arm64": "0.21.5",
-        "@esbuild/win32-ia32": "0.21.5",
-        "@esbuild/win32-x64": "0.21.5"
-      }
-    },
-    "node_modules/fsevents": {
-      "version": "2.3.3",
-      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
-      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
-      "dev": true,
-      "hasInstallScript": true,
-      "license": "MIT",
-      "optional": true,
-      "os": [
-        "darwin"
-      ],
-      "engines": {
-        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
-      }
-    },
-    "node_modules/nanoid": {
-      "version": "3.3.11",
-      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz",
-      "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==",
-      "dev": true,
-      "funding": [
-        {
-          "type": "github",
-          "url": "https://github.com/sponsors/ai"
-        }
-      ],
-      "license": "MIT",
-      "bin": {
-        "nanoid": "bin/nanoid.cjs"
-      },
-      "engines": {
-        "node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"
-      }
-    },
-    "node_modules/picocolors": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
-      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
-      "dev": true,
-      "license": "ISC"
-    },
-    "node_modules/postcss": {
-      "version": "8.5.6",
-      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.6.tgz",
-      "integrity": "sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==",
-      "dev": true,
-      "funding": [
-        {
-          "type": "opencollective",
-          "url": "https://opencollective.com/postcss/"
-        },
-        {
-          "type": "tidelift",
-          "url": "https://tidelift.com/funding/github/npm/postcss"
-        },
-        {
-          "type": "github",
-          "url": "https://github.com/sponsors/ai"
-        }
-      ],
-      "license": "MIT",
-      "dependencies": {
-        "nanoid": "^3.3.11",
-        "picocolors": "^1.1.1",
-        "source-map-js": "^1.2.1"
-      },
-      "engines": {
-        "node": "^10 || ^12 || >=14"
-      }
-    },
-    "node_modules/rollup": {
-      "version": "4.52.5",
-      "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.52.5.tgz",
-      "integrity": "sha512-3GuObel8h7Kqdjt0gxkEzaifHTqLVW56Y/bjN7PSQtkKr0w3V/QYSdt6QWYtd7A1xUtYQigtdUfgj1RvWVtorw==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/estree": "1.0.8"
-      },
-      "bin": {
-        "rollup": "dist/bin/rollup"
-      },
-      "engines": {
-        "node": ">=18.0.0",
-        "npm": ">=8.0.0"
-      },
-      "optionalDependencies": {
-        "@rollup/rollup-android-arm-eabi": "4.52.5",
-        "@rollup/rollup-android-arm64": "4.52.5",
-        "@rollup/rollup-darwin-arm64": "4.52.5",
-        "@rollup/rollup-darwin-x64": "4.52.5",
-        "@rollup/rollup-freebsd-arm64": "4.52.5",
-        "@rollup/rollup-freebsd-x64": "4.52.5",
-        "@rollup/rollup-linux-arm-gnueabihf": "4.52.5",
-        "@rollup/rollup-linux-arm-musleabihf": "4.52.5",
-        "@rollup/rollup-linux-arm64-gnu": "4.52.5",
-        "@rollup/rollup-linux-arm64-musl": "4.52.5",
-        "@rollup/rollup-linux-loong64-gnu": "4.52.5",
-        "@rollup/rollup-linux-ppc64-gnu": "4.52.5",
-        "@rollup/rollup-linux-riscv64-gnu": "4.52.5",
-        "@rollup/rollup-linux-riscv64-musl": "4.52.5",
-        "@rollup/rollup-linux-s390x-gnu": "4.52.5",
-        "@rollup/rollup-linux-x64-gnu": "4.52.5",
-        "@rollup/rollup-linux-x64-musl": "4.52.5",
-        "@rollup/rollup-openharmony-arm64": "4.52.5",
-        "@rollup/rollup-win32-arm64-msvc": "4.52.5",
-        "@rollup/rollup-win32-ia32-msvc": "4.52.5",
-        "@rollup/rollup-win32-x64-gnu": "4.52.5",
-        "@rollup/rollup-win32-x64-msvc": "4.52.5",
-        "fsevents": "~2.3.2"
-      }
-    },
-    "node_modules/source-map-js": {
-      "version": "1.2.1",
-      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
-      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==",
-      "dev": true,
-      "license": "BSD-3-Clause",
-      "engines": {
-        "node": ">=0.10.0"
-      }
-    },
-    "node_modules/vite": {
-      "version": "5.4.21",
-      "resolved": "https://registry.npmjs.org/vite/-/vite-5.4.21.tgz",
-      "integrity": "sha512-o5a9xKjbtuhY6Bi5S3+HvbRERmouabWbyUcpXXUA1u+GNUKoROi9byOJ8M0nHbHYHkYICiMlqxkg1KkYmm25Sw==",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "esbuild": "^0.21.3",
-        "postcss": "^8.4.43",
-        "rollup": "^4.20.0"
-      },
-      "bin": {
-        "vite": "bin/vite.js"
-      },
-      "engines": {
-        "node": "^18.0.0 || >=20.0.0"
-      },
-      "funding": {
-        "url": "https://github.com/vitejs/vite?sponsor=1"
-      },
-      "optionalDependencies": {
-        "fsevents": "~2.3.3"
-      },
-      "peerDependencies": {
-        "@types/node": "^18.0.0 || >=20.0.0",
-        "less": "*",
-        "lightningcss": "^1.21.0",
-        "sass": "*",
-        "sass-embedded": "*",
-        "stylus": "*",
-        "sugarss": "*",
-        "terser": "^5.4.0"
-      },
-      "peerDependenciesMeta": {
-        "@types/node": {
-          "optional": true
-        },
-        "less": {
-          "optional": true
-        },
-        "lightningcss": {
-          "optional": true
-        },
-        "sass": {
-          "optional": true
-        },
-        "sass-embedded": {
-          "optional": true
-        },
-        "stylus": {
-          "optional": true
-        },
-        "sugarss": {
-          "optional": true
-        },
-        "terser": {
-          "optional": true
-        }
-      }
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profesionální webová aplikace</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+  }
+  header {
+    background-color: #2c3e50;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  nav button:hover {
+    background-color: #34495e;
+  }
+  main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  .section {
+    display: none;
+  }
+  .section.active {
+    display: block;
+  }
+  .profile-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  form {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1 1 200px;
+  }
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background-color: #3498db;
+  }
+  button.btn-danger {
+    background-color: #c0392b;
+  }
+  button.btn-danger:hover {
+    background-color: #e74c3c;
+  }
+  button.btn-success {
+    background-color: #27ae60;
+  }
+  button.btn-success:hover {
+    background-color: #2ecc71;
+  }
+  button.btn-secondary {
+    background-color: #95a5a6;
+  }
+  button.btn-secondary:hover {
+    background-color: #7f8c8d;
+  }
+  #peopleList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .personCard {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .personCard:hover {
+    transform: scale(1.02);
+  }
+  #profileContent {
+    margin-top: 1rem;
+  }
+  #notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  .notification {
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease-out;
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
     }
   }
+  .notification.success {
+    background-color: #2ecc71;
+    color: white;
+  }
+  .notification.danger {
+    background-color: #e74c3c;
+    color: white;
+  }
+  .notification.warning {
+    background-color: #f39c12;
+    color: white;
+  }
+  .notification.info {
+    background-color: #3498db;
+    color: white;
+  }
+  #emailSection {
+    margin-top: 2rem;
+    background: #ecf0f1;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  video {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  .identity-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  .identity-card .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .identity-number {
+    font-weight: bold;
+    color: #e74c3c;
+  }
+  .button-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .button-group button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+  }
+  .identity-line {
+    white-space: pre-wrap;
+    font-family: monospace;
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+  }
+  #output {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  #history-list, #registered-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background: #f8f9fa;
+  }
+  .history-item, .registered-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .history-item:hover, .registered-item:hover {
+    background: #e9ecef;
+  }
+  .stats-box {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-around;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2980b9;
+  }
+  .stat-label {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+  .registered-badge {
+    color: #9b59b6;
+    font-weight: bold;
+  }
+  .profile-detail {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+  .profile-detail p {
+    margin: 0.5rem 0;
+  }
+  .profile-detail strong {
+    display: inline-block;
+    width: 150px;
+    color: #2c3e50;
+  }
+  .profile-detail hr {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin: 1rem 0;
+  }
+  textarea {
+    min-height: 200px;
+    font-family: monospace;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Profesionální Webová Aplikace</h1>
+  <nav>
+    <button onclick="showSection('home')">Domů</button>
+    <button onclick="showSection('register')">Registrace</button>
+    <button onclick="showSection('generator')">Generátor</button>
+    <button onclick="showSection('bulk')">Hromadné</button>
+    <button onclick="showSection('list')">Seznam</button>
+    <button onclick="showSection('search')">Vyhledávání</button>
+    <button onclick="showSection('history')">Historie</button>
+    <button onclick="showSection('registered')">Registrovaní</button>
+  </nav>
+</header>
+
+<main>
+
+<div id="home" class="section active">
+  <div class="profile-card">
+    <h2>Vítejte v aplikaci</h2>
+    <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
+    <ul>
+      <li><strong>Registrace:</strong> Zaregistrujte nové uživatele</li>
+      <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
+      <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
+      <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
+      <li><strong>Vyhledávání:</strong> Vyhledávání osob podle jména nebo telefonu</li>
+      <li><strong>Historie:</strong> Kompletní historie všech generovaných osob</li>
+      <li><strong>Registrovaní:</strong> Seznam registrovaných osob</li>
+    </ul>
+  </div>
+</div>
+
+<div id="register" class="section">
+  <div class="profile-card">
+    <h2>Registrace</h2>
+    <form onsubmit="handleRegistration(event)">
+      <input type="text" id="regName" placeholder="Jméno" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <button type="submit" class="btn-success">
+        <i class="fas fa-user-plus"></i> Registrovat
+      </button>
+    </form>
+    <div id="regMessage" style="margin-top: 1rem;"></div>
+  </div>
+</div>
+
+<div id="generator" class="section">
+  <div class="profile-card">
+    <h2><i class="fas fa-magic"></i> Rychlá Generace Osob</h2>
+    <form onsubmit="event.preventDefault(); generatePeople(false);">
+      <div style="flex: 1 1 100%;">
+        <label for="gender-select">Pohlaví:</label>
+        <select id="gender-select">
+          <option value="random">Náhodné</option>
+          <option value="Male">Muž</option>
+          <option value="Female">Žena</option>
+        </select>
+      </div>
+
+      <div style="flex: 1 1 100%;">
+        <label for="custom-phone">Volitelné telefonní číslo (9 číslic):</label>
+        <input type="tel" id="custom-phone" placeholder="777222333 (pro 1 osobu)">
+        <small style="color: #7f8c8d;">*Pokud zadáte tel. číslo, vygeneruje se POUZE 1 osoba.</small>
+      </div>
+
+      <div style="flex: 1 1 100%;">
+        <label for="generation-count">Počet osob (1-50):</label>
+        <input type="number" id="generation-count" min="1" max="50" value="1">
+      </div>
+
+      <button type="submit" class="btn-success" style="flex: 1 1 100%;">
+        <i class="fas fa-magic"></i> Spustit Generaci
+      </button>
+    </form>
+  </div>
+
+  <div class="profile-card">
+    <h2><i class="fas fa-users"></i> Výsledek Generování</h2>
+    <button onclick="bulkCopyAllVisible()" class="btn-secondary" style="margin-bottom: 1rem;">
+      <i class="fas fa-copy"></i> Hromadně Kopírovat Vše
+    </button>
+    <div id="output">
+      <p style="text-align: center; color: #7f8c8d;">Vygenerované osoby se zobrazí zde.</p>
+    </div>
+  </div>
+</div>
+
+<div id="bulk" class="section">
+  <div class="profile-card">
+    <h2><i class="fas fa-layer-group"></i> Hromadná Generace z Čísel</h2>
+    <p>Zadejte seznam 9místných telefonních čísel (jedno na řádek). Ke každému se vygeneruje plná osoba.</p>
+    <form onsubmit="event.preventDefault(); bulkGenerateFromPhones();">
+      <div style="flex: 1 1 100%;">
+        <label for="bulk-phones">Seznam telefonních čísel:</label>
+        <textarea id="bulk-phones" placeholder="731111111&#10;777222333&#10;..."></textarea>
+      </div>
+      <button type="submit" class="btn-success" style="flex: 1 1 100%;">
+        <i class="fas fa-exchange-alt"></i> Hromadně Generovat Lidi
+      </button>
+    </form>
+  </div>
+</div>
+
+<div id="list" class="section">
+  <div class="profile-card">
+    <h2><i class="fas fa-list"></i> Seznam Lidí</h2>
+    <div id="peopleList">
+      <p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>
+    </div>
+  </div>
+</div>
+
+<div id="search" class="section">
+  <div class="profile-card">
+    <h2><i class="fas fa-search"></i> Vyhledávání Profilu</h2>
+    <p>Vyhledejte osobu z historie podle jména nebo 9místného telefonního čísla.</p>
+    <form onsubmit="event.preventDefault(); searchPerson();">
+      <input type="text" id="search-input" placeholder="Jméno nebo 777222333">
+      <button type="submit">
+        <i class="fas fa-search"></i> Vyhledat
+      </button>
+    </form>
+    <div id="search-output" style="margin-top: 1rem;">
+      <p style="text-align: center; color: #7f8c8d;">Zde se zobrazí nalezený profil.</p>
+    </div>
+  </div>
+
+  <div class="profile-card">
+    <h2><i class="fas fa-user"></i> Detail Profilu</h2>
+    <div id="profileContent">
+      <p style="text-align: center; color: #7f8c8d;">Vyberte osobu ze seznamu pro zobrazení profilu.</p>
+    </div>
+  </div>
+</div>
+
+<div id="history" class="section">
+  <div class="profile-card">
+    <h2><i class="fas fa-database"></i> Historie Generovaných Lidí</h2>
+
+    <div class="stats-box">
+      <div class="stat">
+        <div class="stat-value" id="total-generated">0</div>
+        <div class="stat-label">Celkem vygenerováno</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value registered-badge" id="total-registered">0</div>
+        <div class="stat-label">Registrovaných</div>
+      </div>
+    </div>
+
+    <h3>Seznam Všech Lidí (Nejnovější nahoře)</h3>
+    <div id="history-list">
+      <p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>
+    </div>
+
+    <button onclick="clearHistory()" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+      <i class="fas fa-trash-alt"></i> Vymazat Celou Historii
+    </button>
+  </div>
+</div>
+
+<div id="registered" class="section">
+  <div class="profile-card">
+    <h2 class="registered-badge"><i class="fas fa-user-check"></i> Registrovaní Lidé</h2>
+
+    <div class="stats-box">
+      <div class="stat">
+        <div class="stat-value registered-badge" id="reg-count-display">0</div>
+        <div class="stat-label">Celkem registrovaných</div>
+      </div>
+    </div>
+
+    <h3>Registrovaný Seznam</h3>
+    <div id="registered-list">
+      <p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>
+    </div>
+
+    <button onclick="clearAllRegistrations()" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+      <i class="fas fa-undo-alt"></i> Zrušit Registraci Všem
+    </button>
+  </div>
+</div>
+
+</main>
+
+<div id="notification-container"></div>
+
+<script>
+const firstNamesMale = ['Lukáš', 'Tomáš', 'Petr', 'Jan', 'Pavel', 'Martin', 'Ondřej', 'Jakub', 'Filip', 'Vojtěch', 'Adam', 'Marek', 'David', 'Karel', 'Jiří', 'Štěpán', 'Daniel', 'Matěj', 'Vít', 'Oldřich', 'František', 'Antonín', 'Miloslav', 'Vladimír', 'Josef', 'Václav', 'Michal', 'Patrik', 'Alex', 'Erik', 'Denis', 'Kryštof', 'Dominik', 'Hynek', 'Jaroslav', 'Aleš', 'Bohumil', 'Čeněk', 'Dalibor', 'Emil', 'Gustav', 'Ignác', 'Jindřich', 'Libor', 'Norbert', 'Oskar', 'Radek', 'Stanislav', 'Vlastimil', 'Zdeněk'];
+const firstNamesFemale = ['Anna', 'Tereza', 'Kateřina', 'Lucie', 'Adéla', 'Eliška', 'Veronika', 'Kristýna', 'Nikola', 'Karolína', 'Jana', 'Eva', 'Hana', 'Petra', 'Markéta', 'Klára', 'Zuzana', 'Michaela', 'Lenka', 'Monika', 'Iva', 'Denisa', 'Alena', 'Barbora', 'Helena', 'Natálie', 'Vendula', 'Sabina', 'Simona', 'Viktoria', 'Magdaléna', 'Ludmila', 'Šárka', 'Diana', 'Adriana', 'Beáta', 'Cyrila', 'Dagmar', 'Hedvika', 'Irena', 'Julie', 'Kamila', 'Laura', 'Nina', 'Olga', 'Renata', 'Silvie', 'Valerie', 'Xenie', 'Yvona', 'Žofie'];
+const lastNames = ['Nováček', 'Svoboda', 'Novák', 'Dvořák', 'Černý', 'Procházka', 'Kučera', 'Veselý', 'Fiala', 'Horák', 'Pospíšil', 'Malý', 'Hájek', 'Jelínek', 'Růžička', 'Beneš', 'Soukup', 'Krejčí', 'Kříž', 'Šťastný', 'Kovář', 'Konečný', 'Bartoš', 'Sedláček', 'Urban', 'Zeman', 'Kolář', 'Ševčík', 'Trnka', 'Pokorný', 'Pavelka', 'Tichý', 'Mrázek', 'Málek', 'Janda', 'Kasal', 'Liška', 'Polák', 'Holub', 'Rybář', 'Šimek', 'Vlček', 'Rejcha', 'Moravec', 'Bílek', 'Zahrádka', 'Křížek', 'Kadlec', 'Musil', 'Šimánek', 'Valenta', 'Zoubek'];
+const emailDomains = ['icloud.com', 'gmail.com', 'seznam.cz', 'post.cz', 'email.cz', 'atlas.cz', 'volny.cz', 'centrum.cz', 'quick.cz', 'yahoo.com', 'outlook.com', 'tiscali.cz'];
+const citiesData = {
+    'Praha': ['10000', '11000', '12000', '15000', '17000', '18000', '19000', '25000'], 'Brno': ['60200', '61200', '62500', '63900'], 'Ostrava': ['70200', '70800', '71000', '72000'], 'Plzeň': ['30100', '32300', '31200'], 'Liberec': ['46001', '46301', '46010'], 'Olomouc': ['77900', '78301', '77200'], 'Hradec Králové': ['50003', '50008', '50011'], 'České Budějovice': ['37001', '37004', '37007'], 'Karlovy Vary': ['36001', '36005', '36009'], 'Pardubice': ['53002', '53009', '53301'], 'Ústí nad Labem': ['40001', '40301', '40010'], 'Zlín': ['76001', '76302', '76005'], 'Jihlava': ['58601', '58851'], 'Mladá Boleslav': ['29301', '29306'], 'Tábor': ['39001', '39101'], 'Znojmo': ['66902', '67161'], 'Frýdek-Místek': ['73801', '73942'], 'Třinec': ['73961', '73995'], 'Most': ['43401', '43502'], 'Teplice': ['41501', '41701'], 'Chomutov': ['43001', '43111'], 'Kladno': ['27201', '27351'], 'Opava': ['74601', '74705'], 'Karviná': ['73301', '73506'], 'Jablonec nad Nisou': ['46601', '46802'], 'Prostějov': ['79601', '79802'], 'Přerov': ['75002', '75116'], 'Děčín': ['40502', '40711'], 'Kroměříž': ['76701', '76811'], 'Valašské Meziříčí': ['75701', '75704']
+};
+const allCities = Object.keys(citiesData);
+const HISTORY_KEY = 'iqosPeopleHistory';
+
+const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+const normalize = (text) => text.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, '');
+
+function showNotification(message, type = 'info') {
+    const container = document.getElementById('notification-container');
+    const note = document.createElement('div');
+
+    note.className = `notification ${type}`;
+    note.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${message}`;
+    container.appendChild(note);
+
+    setTimeout(() => {
+        note.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => note.remove(), 300);
+    }, 4000);
 }
+
+function generateBirthData(isMale) {
+    const currentYear = new Date().getFullYear();
+    const year = getRandomInt(currentYear - 65, currentYear - 18);
+    const month = getRandomInt(1, 12);
+    const day = getRandomInt(1, 28);
+
+    let rcMonth = month;
+    if (!isMale) {
+        rcMonth += 50;
+    }
+
+    const yy = String(year % 100).padStart(2, '0');
+    const mm = String(rcMonth).padStart(2, '0');
+    const dd = String(day).padStart(2, '0');
+
+    const suffix = String(getRandomInt(1000, 9999)).padStart(4, '0');
+
+    const rodneCislo = `${yy}${mm}${dd}/${suffix}`;
+
+    return {
+        day: day,
+        month: month,
+        year: year,
+        formattedDate: `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`,
+        rodneCislo: rodneCislo
+    };
+}
+
+function generateEmail(firstName, lastName) {
+    const baseFirstName = normalize(firstName);
+    const baseLastName = normalize(lastName);
+    const randomNum = getRandomInt(1, 99);
+
+    const emailFormats = [
+        `${baseFirstName}.${baseLastName}`,
+        `${baseLastName}${baseFirstName.charAt(0)}`,
+        `${baseFirstName}${randomNum}`,
+        `${baseFirstName.charAt(0)}${baseLastName}${randomNum}`,
+    ];
+
+    const base = getRandomItem(emailFormats);
+    const domain = getRandomItem(emailDomains);
+    return `${base}@${domain}`;
+}
+
+function createPersonObject(customPhone = null, preferredGender = 'random') {
+    let isMale;
+    if (preferredGender === 'Male') isMale = true;
+    else if (preferredGender === 'Female') isMale = false;
+    else isMale = Math.random() < 0.5;
+
+    const { formattedDate, rodneCislo } = generateBirthData(isMale);
+
+    let firstName;
+    if (isMale) firstName = getRandomItem(firstNamesMale);
+    else firstName = getRandomItem(firstNamesFemale);
+
+    let lastNameBase = getRandomItem(lastNames);
+    const lastName = isMale ? lastNameBase : (lastNameBase.endsWith('ý') ? lastNameBase.slice(0, -1) + 'á' : lastNameBase + 'ová');
+
+    const city = getRandomItem(allCities);
+    const postalCode = getRandomItem(citiesData[city]);
+
+    let phoneBase;
+    if (customPhone) {
+        phoneBase = customPhone.replace(/\s/g, '').substring(0, 9);
+    } else {
+        phoneBase = String(getRandomInt(700000000, 799999999));
+    }
+
+    const person = {
+        id: Date.now() + Math.random(),
+        fullName: `${firstName} ${lastName}`,
+        birthDate: formattedDate,
+        phoneNumber: phoneBase.replace(/(\d{3})(\d{3})(\d{3})/, '$1$2$3'),
+        email: generateEmail(firstName, lastName),
+
+        rodneCislo: rodneCislo,
+        city: city,
+        postalCode: postalCode,
+        gender: isMale ? 'Muž' : 'Žena',
+        timestamp: new Date().toLocaleString('cs-CZ'),
+        isRegistered: false
+    };
+
+    return person;
+}
+
+function formatPerson(person) {
+    return `Jméno: ${person.fullName}\nDatum Narození: ${person.birthDate}\nTelefon: ${person.phoneNumber}\nE-mail: ${person.email}`.trim();
+}
+
+function formatProfile(person) {
+    const regStatus = person.isRegistered ? '<span style="color: #27ae60;">ANO</span>' : '<span style="color: #e74c3c;">NE</span>';
+
+    return `
+        <div class="profile-detail">
+            <p><strong><i class="fas fa-user"></i> Jméno:</strong> ${person.fullName}</p>
+            <p><strong><i class="fas fa-calendar-alt"></i> Datum Narození:</strong> ${person.birthDate}</p>
+            <p><strong><i class="fas fa-phone"></i> Telefon:</strong> ${person.phoneNumber}</p>
+            <p><strong><i class="fas fa-at"></i> E-mail:</strong> ${person.email}</p>
+            <hr>
+            <p><strong><i class="fas fa-id-card"></i> Rodné Číslo:</strong> ${person.rodneCislo}</p>
+            <p><strong><i class="fas fa-venus-mars"></i> Pohlaví:</strong> ${person.gender}</p>
+            <p><strong><i class="fas fa-map-marker-alt"></i> Bydliště:</strong> ${person.city} (${person.postalCode})</p>
+            <p><strong><i class="fas fa-calendar-check"></i> Vytvořeno:</strong> ${person.timestamp}</p>
+            <hr>
+            <p><strong><i class="fas fa-user-check"></i> Registrovaný:</strong> ${regStatus}</p>
+        </div>
+    `;
+}
+
+function renderPersonCard(person, container) {
+    const formattedPerson = formatPerson(person);
+    const card = document.createElement('div');
+    card.className = 'identity-card';
+    card.setAttribute('data-id', person.id);
+
+    card.innerHTML = `
+        <div class="header-row">
+            <div class="identity-number"></div>
+            <div class="button-group">
+                <button onclick="copyPerson('${person.id}')" title="Kopírovat">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <button onclick="removePersonFromOutput('${person.id}')" class="btn-danger" title="Smazat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <pre class="identity-line">${formattedPerson}</pre>
+    `;
+    container.prepend(card);
+
+    renumberOutputCards(container);
+}
+
+function renumberOutputCards(container) {
+    const cards = container.querySelectorAll('.identity-card');
+    let count = cards.length;
+    cards.forEach(card => {
+        const numberDiv = card.querySelector('.identity-number');
+        if (numberDiv) {
+            numberDiv.textContent = `#${count}`;
+        }
+        count--;
+    });
+}
+
+function generatePeople(isBulk = false, phoneList = []) {
+    const outputDiv = document.getElementById('output');
+    const gender = document.getElementById('gender-select').value;
+    const customPhoneInput = document.getElementById('custom-phone');
+    const customPhone = customPhoneInput.value.trim().replace(/\s/g, '');
+    const isSingle = customPhone.length > 0;
+
+    let peopleToGenerate = [];
+
+    if (isBulk) {
+        peopleToGenerate = phoneList.map(phone => createPersonObject(phone, gender));
+    } else if (isSingle) {
+        if (!/^\d{9}$/.test(customPhone)) {
+             showNotification('Neplatné číslo. Zadejte prosím 9 číslic.', 'danger');
+             return;
+        }
+        peopleToGenerate.push(createPersonObject(customPhone, gender));
+    } else {
+        const count = parseInt(document.getElementById('generation-count').value, 10);
+        if (isNaN(count) || count <= 0 || count > 50) {
+            showNotification('Zadejte platný počet (1-50 osob).', 'danger');
+            return;
+        }
+        for (let i = 0; i < count; i++) {
+            peopleToGenerate.push(createPersonObject(null, gender));
+        }
+    }
+
+    if (!isBulk && !isSingle) {
+         outputDiv.innerHTML = '';
+    }
+
+    peopleToGenerate.forEach(person => {
+        renderPersonCard(person, outputDiv);
+        saveToHistory(person);
+    });
+
+    updatePeopleList();
+
+    showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
+
+    if (customPhoneInput && isSingle) {
+        customPhoneInput.value = '';
+    }
+}
+
+function bulkGenerateFromPhones() {
+    const textarea = document.getElementById('bulk-phones');
+    const phones = textarea.value.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+    const validPhones = phones.filter(p => /^\d{9}$/.test(p));
+
+    if (validPhones.length === 0) {
+        showNotification('Nebylo nalezeno žádné platné 9místné číslo v seznamu.', 'danger');
+        return;
+    }
+
+    generatePeople(true, validPhones);
+    textarea.value = '';
+
+    showSection('generator');
+}
+
+function searchPerson() {
+    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    const outputDiv = document.getElementById('search-output');
+    outputDiv.innerHTML = '';
+
+    if (query.length < 3) {
+        outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Zadejte alespoň 3 znaky pro vyhledávání.</p>`;
+        showNotification('Zadejte alespoň 3 znaky pro vyhledávání.', 'warning');
+        return;
+    }
+
+    const history = loadHistory();
+
+    const foundPerson = history.find(person =>
+        person.fullName.toLowerCase().includes(query) ||
+        person.phoneNumber.includes(query)
+    );
+
+    if (foundPerson) {
+        outputDiv.innerHTML = formatProfile(foundPerson);
+        showNotification(`Profil nalezen: ${foundPerson.fullName}`, 'success');
+    } else {
+        outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Osoba nebyla nalezena.</p>`;
+        showNotification('Osoba nenalezena.', 'danger');
+    }
+}
+
+function loadHistory() {
+    const history = localStorage.getItem(HISTORY_KEY);
+    return history ? JSON.parse(history) : [];
+}
+
+function saveHistory(history) {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function saveToHistory(person) {
+    const history = loadHistory();
+    history.push(person);
+    saveHistory(history);
+
+    document.getElementById('total-generated').textContent = history.length;
+}
+
+function removePersonFromOutput(id) {
+    const card = document.querySelector(`#output .identity-card[data-id="${id}"]`);
+    if (card) {
+        card.remove();
+        renumberOutputCards(document.getElementById('output'));
+        showNotification('Osoba smazána z výsledků (zůstává v Historii).', 'warning');
+    }
+}
+
+function clearHistory() {
+     if (confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")) {
+        localStorage.removeItem(HISTORY_KEY);
+        renderHistory();
+        renderRegisteredPeople();
+        updatePeopleList();
+        showNotification('Celá historie byla úspěšně vymazána.', 'danger');
+    }
+}
+
+function toggleRegistration(id) {
+    let history = loadHistory();
+    const personIndex = history.findIndex(p => p.id == id);
+
+    if (personIndex !== -1) {
+        const isCurrentlyRegistered = history[personIndex].isRegistered;
+        history[personIndex].isRegistered = !isCurrentlyRegistered;
+        history[personIndex].timestamp = new Date().toLocaleString('cs-CZ');
+        saveHistory(history);
+
+        showNotification(`Osoba ${history[personIndex].fullName} byla ${!isCurrentlyRegistered ? 'zaregistrována' : 'odregistrována'}.`, 'info');
+
+        renderHistory();
+        renderRegisteredPeople();
+        updatePeopleList();
+    } else {
+        showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
+    }
+}
+
+function clearAllRegistrations() {
+     if (confirm("Opravdu chcete zrušit registraci VŠEM lidem v historii?")) {
+        let history = loadHistory();
+        history = history.map(person => ({ ...person, isRegistered: false }));
+        saveHistory(history);
+
+        showNotification('Registrace zrušena u VŠECH osob.', 'danger');
+        renderHistory();
+        renderRegisteredPeople();
+        updatePeopleList();
+    }
+}
+
+function renderHistory() {
+    const history = loadHistory();
+    const historyList = document.getElementById('history-list');
+    const totalCountSpan = document.getElementById('total-generated');
+    const totalRegisteredSpan = document.getElementById('total-registered');
+
+    totalCountSpan.textContent = history.length;
+    const registeredCount = history.filter(p => p.isRegistered).length;
+    totalRegisteredSpan.textContent = registeredCount;
+
+    historyList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>` : '';
+
+    [...history].reverse().forEach((person, index) => {
+        const isReg = person.isRegistered;
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        item.innerHTML = `
+            <div>
+                <strong>#${history.length - index}:</strong> ${person.fullName}
+                <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
+                ${isReg ? '<i class="fas fa-check-circle" style="color: #9b59b6;"></i>' : ''}
+            </div>
+            <div class="button-group">
+                <button onclick="toggleRegistration('${person.id}')" class="${isReg ? 'btn-danger' : 'btn-success'}">
+                    <i class="fas ${isReg ? 'fa-user-times' : 'fa-user-check'}"></i> ${isReg ? 'Zrušit' : 'Registrovat'}
+                </button>
+                <button onclick="viewProfile('${person.id}')">
+                    <i class="fas fa-eye"></i> Profil
+                </button>
+            </div>
+        `;
+        historyList.appendChild(item);
+    });
+}
+
+function renderRegisteredPeople() {
+    const history = loadHistory();
+    const registeredPeople = history.filter(p => p.isRegistered);
+    const registeredList = document.getElementById('registered-list');
+    const regCountDisplay = document.getElementById('reg-count-display');
+
+    regCountDisplay.textContent = registeredPeople.length;
+
+    registeredList.innerHTML = registeredPeople.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>` : '';
+
+    registeredPeople.forEach((person, index) => {
+        const item = document.createElement('div');
+        item.className = 'registered-item';
+
+        item.innerHTML = `
+            <div>
+                <strong class="registered-badge">#${index + 1}:</strong> ${person.fullName}
+                <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
+                <i class="fas fa-check-circle" style="color: #9b59b6;"></i>
+            </div>
+            <div class="button-group">
+                 <button onclick="toggleRegistration('${person.id}')" class="btn-danger">
+                    <i class="fas fa-user-times"></i> Zrušit registraci
+                </button>
+                <button onclick="viewProfile('${person.id}')">
+                    <i class="fas fa-eye"></i> Profil
+                </button>
+            </div>
+        `;
+        registeredList.appendChild(item);
+    });
+}
+
+function viewProfile(id) {
+    const history = loadHistory();
+    const person = history.find(i => i.id == id);
+
+    if (person) {
+        showSection('search');
+        document.getElementById('search-input').value = person.fullName;
+        document.getElementById('search-output').innerHTML = formatProfile(person);
+        showNotification('Profil osoby zobrazen v sekci Vyhledávání.', 'info');
+    } else {
+        showNotification('Profil nebyl nalezen v historii.', 'danger');
+    }
+}
+
+function copyPerson(id) {
+    const card = document.querySelector(`.identity-card[data-id="${id}"]`);
+    if (!card) return;
+
+    const textToCopy = card.querySelector('.identity-line').textContent;
+
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+            showNotification('Osoba zkopírována.', 'success');
+        })
+        .catch(err => {
+            showNotification('Kopírování se nezdařilo.', 'danger');
+        });
+}
+
+function bulkCopyAllVisible() {
+     const cards = document.querySelectorAll('#output .identity-card');
+    if (cards.length === 0) {
+        showNotification("Nejsou zde žádné osoby ke zkopírování.", 'warning');
+        return;
+    }
+
+    let allText = '';
+    cards.forEach((card, index) => {
+        const number = card.querySelector('.identity-number').textContent;
+        const text = card.querySelector('.identity-line').textContent.trim();
+        allText += `---[ Osoba ${number} ]---\n${text}`;
+        if (index < cards.length - 1) {
+            allText += '\n\n';
+        }
+    });
+
+    navigator.clipboard.writeText(allText)
+        .then(() => {
+            showNotification(`Hromadně zkopírováno ${cards.length} osob!`, 'success');
+        })
+        .catch(err => {
+            showNotification('Hromadné kopírování se nezdařilo.', 'danger');
+        });
+}
+
+function showSection(sectionName) {
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    const section = document.getElementById(sectionName);
+    if (section) {
+        section.classList.add('active');
+    }
+
+    if (sectionName === 'history') {
+        renderHistory();
+    } else if (sectionName === 'registered') {
+        renderRegisteredPeople();
+    } else if (sectionName === 'list') {
+        updatePeopleList();
+    }
+}
+
+function updatePeopleList() {
+    const history = loadHistory();
+    const peopleList = document.getElementById('peopleList');
+
+    peopleList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>` : '';
+
+    history.forEach(person => {
+        const card = document.createElement('div');
+        card.className = 'personCard';
+        card.onclick = () => showPersonProfile(person);
+        card.innerHTML = `
+            <h3 style="color: #2980b9; margin: 0 0 0.5rem 0;">${person.fullName}</h3>
+            <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.email}</p>
+            <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.phoneNumber}</p>
+        `;
+        peopleList.appendChild(card);
+    });
+}
+
+function showPersonProfile(person) {
+    showSection('search');
+    document.getElementById('profileContent').innerHTML = formatProfile(person);
+}
+
+function handleRegistration(event) {
+    event.preventDefault();
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+
+    const messageDiv = document.getElementById('regMessage');
+    messageDiv.innerHTML = `<p style="color: #27ae60;">Děkujeme za registraci, ${name}! Na email ${email} jsme Vám zaslali potvrzení.</p>`;
+
+    document.getElementById('regName').value = '';
+    document.getElementById('regEmail').value = '';
+
+    showNotification('Registrace proběhla úspěšně!', 'success');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('total-generated').textContent = loadHistory().length;
+    updatePeopleList();
+});
+
+</script>
+</body>
+</html>
+
