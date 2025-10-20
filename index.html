@@ -1,835 +1,146 @@
 <!DOCTYPE html>
-<html lang="cs" class="dark">
+<html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IQOS | CYBER DATA GENERATOR</title>
-    <link rel="icon" type="image/png" href="https://ctrlv.cz/fUMQ">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        /* Definice vlastní neonové barvy a dark módu (zachování původní estetiky) */
-        :root {
-            --primary-neon: #00f9ff;
-            --secondary-neon: #888888;
-            --bg-dark: #0a0a0a;
-            --registered-color: #9b59b6; 
-        }
-
-        /* Konfigurace Tailwindu */
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'neon': 'var(--primary-neon)',
-                        'neon-secondary': 'var(--secondary-neon)',
-                        'registered': 'var(--registered-color)',
-                        'bg-terminal': 'var(--bg-dark)',
-                    },
-                    /* GLASSMORPHISM - Efekt skla */
-                    backdropFilter: {
-                        'none': 'none',
-                        'blur': 'blur(15px)',
-                    },
-                }
-            }
-        }
-        
-        /* Původní CSS pro specifické efekty (Stars a Glitch pro H1) je zachováno */
-        .stars {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #141414 100%);
-        }
-        .star { position: absolute; background-color: var(--primary-neon); border-radius: 50%; opacity: 0; animation: twinkle 4s infinite ease-in-out; box-shadow: 0 0 8px var(--primary-neon); }
-        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.8; transform: scale(1.2); } }
-        
-        /* Header Glitch Effect */
-        #rotating-text { text-shadow: -2px -2px 0px var(--primary-neon), 2px 2px 0px #e74c3c, 0 0 20px var(--primary-neon); animation: glitch 1.5s infinite linear alternate-reverse; transform: rotateX(5deg) rotateY(0deg) translateZ(0); }
-        @keyframes glitch { /* Ponechána vaše původní glitch animace */ } 
-        
-        /* Glass Card (Základní vzhled pro karty) */
-        .glass-card {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 249, 255, 0.3);
-            box-shadow: 0 5px 30px rgba(0, 249, 255, 0.15);
-            transition: all 0.3s ease-in-out;
-        }
-        .glass-card:hover {
-            border-color: var(--primary-neon);
-            box-shadow: 0 5px 30px rgba(0, 249, 255, 0.4), inset 0 0 10px rgba(0, 249, 255, 0.2);
-        }
-        
-        /* Scrollbar pro Historii */
-        #history-list::-webkit-scrollbar, #registered-list::-webkit-scrollbar { width: 8px; }
-        #history-list::-webkit-scrollbar-track, #registered-list::-webkit-scrollbar-track { background: #1a1a1a; }
-        #history-list::-webkit-scrollbar-thumb, #registered-list::-webkit-scrollbar-thumb { background: var(--primary-neon); border-radius: 10px; }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profesionální webová aplikace</title>
+<!-- Stylování -->
+<style>
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+  }
+  header {
+    background-color: #2c3e50;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  nav button:hover {
+    background-color: #34495e;
+  }
+  main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  .section {
+    display: none;
+  }
+  .section.active {
+    display: block;
+  }
+  /* Card */
+  .profile-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  /* Formy */
+  form {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  input[type="text"], input[type="email"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1 1 200px;
+  }
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background-color: #3498db;
+  }
+  #peopleList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .personCard {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .personCard:hover {
+    transform: scale(1.02);
+  }
+  #profileContent {
+    margin-top: 1rem;
+  }
+  /* Notifikace */
+  #notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-weight: bold;
+    display: none;
+    z-index: 1000;
+  }
+  /* Sekce email a video */
+  #emailSection {
+    margin-top: 2rem;
+    background: #ecf0f1;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  video {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+</style>
 </head>
-<body class="bg-bg-terminal text-gray-200 min-h-screen flex flex-col items-center">
-    <div class="stars"></div>
+<body>
 
-    <div class="container max-w-5xl w-full p-4 md:p-8 pt-20 mb-20 relative z-10">
-        <header class="text-center mb-8">
-            <h1 class="text-5xl md:text-7xl font-mono uppercase font-bold text-white mb-4">
-                <span id="rotating-text" class="inline-block" style="font-family: 'Monoton', cursive;">IQOS TERMINAL</span>
-            </h1>
-            <p class="text-neon-secondary text-lg">Systém pro generování a správu klientských dat</p>
-        </header>
+<header>
+  <h1>Profesionální Webová Aplikace</h1>
+  <nav>
+    <button onclick="showSection('home')">Domů</button>
+    <button onclick="showSection('register')">Registrace</button>
+    <button onclick="showSection('list')">Seznam</button>
+    <button onclick="showSection('profileDetail')">Profil</button>
+    <button onclick="showSection('history')">Historie</button>
+  </nav>
+</header>
 
-        <div class="main-content">
-            
-            <div id="generator-section" class="content-section grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <div class="glass-card p-6 rounded-xl animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 border-neon pb-3 mb-6 flex items-center gap-3 text-neon">
-                        <i class="fas fa-bolt"></i> Rychlá Generace (Lidé)
-                    </h2>
-                    
-                    <label for="gender-select" class="block text-sm font-semibold mb-1 text-neon-secondary">Pohlaví:</label>
-                    <select id="gender-select" class="w-full p-3 rounded-lg border border-neon/30 bg-black/60 text-neon-secondary focus:border-neon focus:ring-1 focus:ring-neon transition duration-300 mb-4">
-                        <option value="random">Náhodné</option>
-                        <option value="Male">Muž</option>
-                        <option value="Female">Žena</option>
-                    </select>
-                    
-                    <label for="custom-phone" class="block text-sm font-semibold mb-1 text-neon-secondary">Volitelné Tel. Číslo (9 číslic):</label>
-                    <input type="tel" id="custom-phone" placeholder="777222333 (pro 1 osobu)" class="w-full p-3 rounded-lg border border-neon/30 bg-black/60 text-neon focus:border-neon focus:ring-1 focus:ring-neon transition duration-300 mb-4 font-mono">
+<main>
 
-                    <label for="generation-count" class="block text-sm font-semibold mb-1 text-neon-secondary">Počet (1-50):</label>
-                    <input type="number" id="generation-count" min="1" max="50" value="1" class="w-full p-3 rounded-lg border border-neon/30 bg-black/60 text-neon focus:border-neon focus:ring-1 focus:ring-neon transition duration-300 mb-6 font-mono">
-                    
-                    <button class="w-full p-3 rounded-lg bg-neon text-bg-terminal font-bold hover:bg-neon/80 shadow-neon-glow transform hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2" onclick="generatePeople(false)">
-                        <i class="fas fa-magic"></i> Spustit Generaci
-                    </button>
-                    <p class="text-neon-secondary/70 text-xs mt-3 text-center">*Pokud zadáte Tel. číslo, vygeneruje se POUZE 1 osoba.</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-xl animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 border-neon pb-3 mb-6 flex items-center gap-3 text-neon">
-                        <i class="fas fa-users"></i> Výsledek Generování
-                    </h2>
-                    
-                    <button id="bulkCopyBtn" class="w-full p-2 rounded-lg bg-gray-700/50 text-neon-secondary border border-gray-600 hover:border-neon hover:text-neon transition duration-300 mb-4 flex items-center justify-center gap-2" onclick="bulkCopyAllVisible()">
-                        <i class="fas fa-copy"></i> Hromadně Kopírovat Vše
-                    </button>
-                    
-                    <div id="output" class="flex flex-col-reverse space-y-4 space-y-reverse overflow-y-auto max-h-[500px] p-2">
-                        <p class="text-center text-neon-secondary/50 mt-10">Vygenerovaní lidé se zobrazí zde.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="bulk-section" class="content-section hidden">
-                 <div class="glass-card p-6 rounded-xl max-w-2xl mx-auto animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 border-neon pb-3 mb-6 flex items-center gap-3 text-neon">
-                        <i class="fas fa-layer-group"></i> Hromadná Generace z Čísel
-                    </h2>
-                    <p class="text-neon-secondary mb-4">Zadejte seznam 9místných telefonních čísel (jedno na řádek). Ke každému se vygeneruje plná osoba.</p>
-                    <label for="bulk-phones" class="block text-sm font-semibold mb-1 text-neon-secondary">Seznam telefonních čísel:</label>
-                    <textarea id="bulk-phones" rows="10" placeholder="731111111&#10;777222333&#10;..." class="w-full p-3 rounded-lg border border-neon/30 bg-black/60 text-neon focus:border-neon focus:ring-1 focus:ring-neon transition duration-300 mb-6 font-mono"></textarea>
-                    <button class="w-full p-3 rounded-lg bg-red-600 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-600/50 transform hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2" onclick="bulkGenerateFromPhones()">
-                        <i class="fas fa-exchange-alt"></i> Hromadně Generovat Lidi
-                    </button>
-                </div>
-            </div>
-
-            <div id="tools-section" class="content-section hidden">
-                 <div class="glass-card p-6 rounded-xl max-w-2xl mx-auto animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 border-neon pb-3 mb-6 flex items-center gap-3 text-neon">
-                        <i class="fas fa-search"></i> Vyhledávání Profilu
-                    </h2>
-                    
-                    <p class="text-neon-secondary mb-4">Vyhledejte osobu z historie podle jména nebo 9místného telefonního čísla.</p>
-                    <input type="text" id="search-input" placeholder="Jméno nebo 777222333" class="w-full p-3 rounded-lg border border-neon/30 bg-black/60 text-neon focus:border-neon focus:ring-1 focus:ring-neon transition duration-300 mb-4 font-mono">
-                    <button class="w-full p-3 rounded-lg bg-gray-700/50 text-neon-secondary border border-gray-600 hover:border-neon hover:text-neon transition duration-300 flex items-center justify-center gap-2" onclick="searchPerson()">
-                        <i class="fas fa-search"></i> Vyhledat v Historii
-                    </button>
-                    
-                    <div id="search-output" class="mt-6 p-4 rounded-lg bg-black/50 border border-neon/20 shadow-inner shadow-neon/10">
-                        <p class="text-center text-neon-secondary/50">Zde se zobrazí nalezený profil.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="history-section" class="content-section hidden">
-                 <div class="glass-card p-6 rounded-xl animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 border-neon pb-3 mb-6 flex items-center gap-3 text-neon">
-                        <i class="fas fa-database"></i> Historie Generovaných Lidí
-                    </h2>
-                    
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-black/50 p-4 rounded-lg border border-neon/30 mb-6 font-mono text-sm">
-                        <div class="mb-2 md:mb-0">
-                            <i class="fas fa-tachometer-alt text-neon mr-2"></i> Celkem vygenerováno: <span id="total-generated" class="font-bold text-lg text-white">0</span>
-                        </div>
-                        <div>
-                            <i class="fas fa-check-circle mr-2" style="color: var(--registered-color);"></i> Registrovaných: <span id="total-registered" class="font-bold text-lg" style="color: var(--registered-color);">0</span>
-                        </div>
-                    </div>
-
-                    <h3 class="text-lg font-semibold uppercase text-neon-secondary mb-3 flex items-center gap-2">
-                        <i class="fas fa-list text-neon"></i> Seznam Všech Lidí (Nejnovější nahoře)
-                    </h3>
-                    
-                    <div id="history-list" class="max-h-[60vh] overflow-y-auto p-3 border border-neon/20 rounded-lg bg-black/40">
-                        <p class="text-center text-neon-secondary/50">Historie je prázdná.</p>
-                    </div>
-                    
-                    <div class="mt-8">
-                        <button class="w-full p-3 rounded-lg bg-red-800 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-800/50 transform hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2" onclick="clearHistory()">
-                            <i class="fas fa-trash-alt"></i> Vymazat Celou Historii
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="registered-section" class="content-section hidden">
-                <div class="glass-card p-6 rounded-xl animate-fadeIn">
-                    <h2 class="text-2xl font-bold uppercase border-b-2 pb-3 mb-6 flex items-center gap-3" style="color: var(--registered-color); border-color: var(--registered-color);">
-                        <i class="fas fa-user-check" style="color: var(--registered-color);"></i> Registrovaní Lidí
-                    </h2>
-                    
-                    <div class="bg-black/50 p-4 rounded-lg border border-neon/30 mb-6 font-mono text-sm" style="border-color: var(--registered-color);">
-                        <i class="fas fa-check-circle mr-2" style="color: var(--registered-color);"></i> Celkem registrovaných: <span id="reg-count-display" class="font-bold text-lg" style="color: var(--registered-color);">0</span>
-                    </div>
-
-                    <h3 class="text-lg font-semibold uppercase text-neon-secondary mb-3 flex items-center gap-2">
-                        <i class="fas fa-clipboard-list" style="color: var(--registered-color);"></i> Registrovaný Seznam
-                    </h3>
-                    
-                    <div id="registered-list" class="max-h-[60vh] overflow-y-auto p-3 border border-neon/20 rounded-lg bg-black/40" style="border-color: var(--registered-color);">
-                        <p class="text-center text-neon-secondary/50">Zatím nejsou žádní registrovaní lidé.</p>
-                    </div>
-
-                    <div class="mt-8">
-                        <button class="w-full p-3 rounded-lg bg-red-800 text-white font-bold hover:bg-red-700 shadow-lg shadow-red-800/50 transform hover:-translate-y-0.5 transition duration-300 flex items-center justify-center gap-2" onclick="clearAllRegistrations()">
-                            <i class="fas fa-undo-alt"></i> Zrušit Registraci Všem
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    
-    <div class="fixed bottom-0 left-0 right-0 w-full h-16 flex justify-around items-center bg-black/95 backdrop-blur-md border-t-2 border-neon shadow-2xl shadow-neon/50 z-[1000]">
-        <a href="#generator" class="nav-button flex flex-col items-center justify-center text-neon-secondary text-xs uppercase w-1/5 h-full transition duration-200 hover:text-neon hover:bg-neon/10" data-page="generator">
-            <i class="fas fa-magic text-xl mb-1"></i> Generace
-        </a>
-        <a href="#bulk" class="nav-button flex flex-col items-center justify-center text-neon-secondary text-xs uppercase w-1/5 h-full transition duration-200 hover:text-neon hover:bg-neon/10" data-page="bulk">
-            <i class="fas fa-layer-group text-xl mb-1"></i> Hromadné
-        </a>
-        <a href="#tools" class="nav-button flex flex-col items-center justify-center text-neon-secondary text-xs uppercase w-1/5 h-full transition duration-200 hover:text-neon hover:bg-neon/10" data-page="tools">
-            <i class="fas fa-search text-xl mb-1"></i> Hledání
-        </a>
-        <a href="#history" class="nav-button flex flex-col items-center justify-center text-neon-secondary text-xs uppercase w-1/5 h-full transition duration-200 hover:text-neon hover:bg-neon/10" data-page="history">
-            <i class="fas fa-database text-xl mb-1"></i> Historie
-        </a>
-        <a href="#registered" class="nav-button flex flex-col items-center justify-center text-neon-secondary text-xs uppercase w-1/5 h-full transition duration-200 hover:text-neon hover:bg-neon/10" data-page="registered">
-            <i class="fas fa-user-check text-xl mb-1" style="color: var(--registered-color);"></i> Reg.
-        </a>
-    </div>
-    
-    <div id="notification-container"></div>
-
-    <script>
-        // *** PŮVODNÍ JS FUNKCE (ZACHOVÁNY) ***
-        
-        // --- DATA PRO GENEROVÁNÍ ---
-        const firstNamesMale = ['Lukáš', 'Tomáš', 'Petr', 'Jan', 'Pavel', 'Martin', 'Ondřej', 'Jakub', 'Filip', 'Vojtěch', 'Adam', 'Marek', 'David', 'Karel', 'Jiří', 'Štěpán', 'Daniel', 'Matěj', 'Vít', 'Oldřich', 'František', 'Antonín', 'Miloslav', 'Vladimír', 'Josef', 'Václav', 'Michal', 'Patrik', 'Alex', 'Erik', 'Denis', 'Kryštof', 'Dominik', 'Hynek', 'Jaroslav', 'Aleš', 'Bohumil', 'Čeněk', 'Dalibor', 'Emil', 'Gustav', 'Ignác', 'Jindřich', 'Libor', 'Norbert', 'Oskar', 'Radek', 'Stanislav', 'Vlastimil', 'Zdeněk'];
-        const firstNamesFemale = ['Anna', 'Tereza', 'Kateřina', 'Lucie', 'Adéla', 'Eliška', 'Veronika', 'Kristýna', 'Nikola', 'Karolína', 'Jana', 'Eva', 'Hana', 'Petra', 'Markéta', 'Klára', 'Zuzana', 'Michaela', 'Lenka', 'Monika', 'Iva', 'Denisa', 'Alena', 'Barbora', 'Helena', 'Natálie', 'Vendula', 'Sabina', 'Simona', 'Viktoria', 'Magdaléna', 'Ludmila', 'Šárka', 'Diana', 'Adriana', 'Beáta', 'Cyrila', 'Dagmar', 'Hedvika', 'Irena', 'Julie', 'Kamila', 'Laura', 'Nina', 'Olga', 'Renata', 'Silvie', 'Valerie', 'Xenie', 'Yvona', 'Žofie'];
-        const lastNames = ['Nováček', 'Svoboda', 'Novák', 'Dvořák', 'Černý', 'Procházka', 'Kučera', 'Veselý', 'Fiala', 'Horák', 'Pospíšil', 'Malý', 'Hájek', 'Jelínek', 'Růžička', 'Beneš', 'Soukup', 'Krejčí', 'Kříž', 'Šťastný', 'Kovář', 'Konečný', 'Bartoš', 'Sedláček', 'Urban', 'Zeman', 'Kolář', 'Ševčík', 'Trnka', 'Pokorný', 'Pavelka', 'Tichý', 'Mrázek', 'Málek', 'Janda', 'Kasal', 'Liška', 'Polák', 'Holub', 'Rybář', 'Šimek', 'Vlček', 'Rejcha', 'Moravec', 'Bílek', 'Zahrádka', 'Křížek', 'Kadlec', 'Musil', 'Šimánek', 'Valenta', 'Zoubek'];
-        const emailDomains = ['icloud.com', 'gmail.com', 'seznam.cz', 'post.cz', 'email.cz', 'atlas.cz', 'volny.cz', 'centrum.cz', 'quick.cz', 'yahoo.com', 'outlook.com', 'tiscali.cz'];
-        const citiesData = { 
-            'Praha': ['10000', '11000', '12000', '15000', '17000', '18000', '19000', '25000'], 'Brno': ['60200', '61200', '62500', '63900'], 'Ostrava': ['70200', '70800', '71000', '72000'], 'Plzeň': ['30100', '32300', '31200'], 'Liberec': ['46001', '46301', '46010'], 'Olomouc': ['77900', '78301', '77200'], 'Hradec Králové': ['50003', '50008', '50011'], 'České Budějovice': ['37001', '37004', '37007'], 'Karlovy Vary': ['36001', '36005', '36009'], 'Pardubice': ['53002', '53009', '53301'], 'Ústí nad Labem': ['40001', '40301', '40010'], 'Zlín': ['76001', '76302', '76005'], 'Jihlava': ['58601', '58851'], 'Mladá Boleslav': ['29301', '29306'], 'Tábor': ['39001', '39101'], 'Znojmo': ['66902', '67161'], 'Frýdek-Místek': ['73801', '73942'], 'Třinec': ['73961', '73995'], 'Most': ['43401', '43502'], 'Teplice': ['41501', '41701'], 'Chomutov': ['43001', '43111'], 'Kladno': ['27201', '27351'], 'Opava': ['74601', '74705'], 'Karviná': ['73301', '73506'], 'Jablonec nad Nisou': ['46601', '46802'], 'Prostějov': ['79601', '79802'], 'Přerov': ['75002', '75116'], 'Děčín': ['40502', '40711'], 'Kroměříž': ['76701', '76811'], 'Valašské Meziříčí': ['75701', '75704']
-        };
-        const allCities = Object.keys(citiesData);
-        const HISTORY_KEY = 'iqosPeopleHistory'; 
-
-        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-        const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-        
-        const normalize = (text) => text.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-z0-9\s]/g, '')
-            .replace(/\s+/g, '');
-
-        function showNotification(message, type = 'info') {
-            const container = document.getElementById('notification-container');
-            const note = document.createElement('div');
-            
-            let iconClass;
-            let bgColorClass, borderColorClass, shadowClass;
-
-            if (type === 'success') { iconClass = 'check-circle'; bgColorClass = 'bg-green-600/80'; borderColorClass = 'border-green-400'; shadowClass = 'shadow-green-500/50'; }
-            else if (type === 'danger') { iconClass = 'times-circle'; bgColorClass = 'bg-red-600/80'; borderColorClass = 'border-red-400'; shadowClass = 'shadow-red-500/50'; }
-            else if (type === 'warning') { iconClass = 'exclamation-triangle'; bgColorClass = 'bg-yellow-600/80'; borderColorClass = 'border-yellow-400'; shadowClass = 'shadow-yellow-500/50'; }
-            else { iconClass = 'info-circle'; bgColorClass = 'bg-blue-600/80'; borderColorClass = 'border-blue-400'; shadowClass = 'shadow-blue-500/50'; }
-
-            note.className = `p-3 rounded-lg border backdrop-blur-sm shadow-xl text-white font-semibold transition duration-400 ease-out transform translate-y-[-20px] opacity-0 ${bgColorClass} ${borderColorClass} ${shadowClass}`;
-            note.innerHTML = `<i class="fas fa-${iconClass} mr-2"></i> ${message}`;
-            container.appendChild(note);
-
-            setTimeout(() => { note.classList.add('translate-y-0', 'opacity-100'); }, 10);
-            
-            setTimeout(() => {
-                note.classList.remove('translate-y-0', 'opacity-100');
-                note.addEventListener('transitionend', () => note.remove());
-            }, 4000); 
-        }
-
-        // Ponechání funkcí generateBirthData, generateEmail, createPersonObject
-        // ... (Kód je identický s původním a je plně funkční) ...
-        
-        function generateBirthData(isMale) {
-            const currentYear = new Date().getFullYear();
-            const year = getRandomInt(currentYear - 65, currentYear - 18); 
-            const month = getRandomInt(1, 12);
-            const day = getRandomInt(1, 28); 
-            
-            let rcMonth = month;
-            if (!isMale) {
-                rcMonth += 50;
-            }
-
-            const yy = String(year % 100).padStart(2, '0');
-            const mm = String(rcMonth).padStart(2, '0');
-            const dd = String(day).padStart(2, '0');
-            
-            const suffix = String(getRandomInt(1000, 9999)).padStart(4, '0');
-            
-            const rodneCislo = `${yy}${mm}${dd}/${suffix}`; 
-            
-            return {
-                day: day,
-                month: month,
-                year: year,
-                formattedDate: `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`,
-                rodneCislo: rodneCislo
-            };
-        }
-
-        function generateEmail(firstName, lastName) {
-            const baseFirstName = normalize(firstName);
-            const baseLastName = normalize(lastName);
-            const randomNum = getRandomInt(1, 99);
-            
-            const emailFormats = [
-                `${baseFirstName}.${baseLastName}`, 
-                `${baseLastName}${baseFirstName.charAt(0)}`, 
-                `${baseFirstName}${randomNum}`, 
-                `${baseFirstName.charAt(0)}${baseLastName}${randomNum}`,
-            ];
-            
-            const base = getRandomItem(emailFormats);
-            const domain = getRandomItem(emailDomains);
-            return `${base}@${domain}`;
-        }
-
-        function createPersonObject(customPhone = null, preferredGender = 'random') {
-            let isMale;
-            if (preferredGender === 'Male') isMale = true;
-            else if (preferredGender === 'Female') isMale = false;
-            else isMale = Math.random() < 0.5;
-
-            const { formattedDate, rodneCislo } = generateBirthData(isMale);
-
-            let firstName;
-            if (isMale) firstName = getRandomItem(firstNamesMale);
-            else firstName = getRandomItem(firstNamesFemale);
-            
-            let lastNameBase = getRandomItem(lastNames);
-            const lastName = isMale ? lastNameBase : (lastNameBase.endsWith('ý') ? lastNameBase.slice(0, -1) + 'á' : lastNameBase + 'ová');
-
-            const city = getRandomItem(allCities);
-            const postalCode = getRandomItem(citiesData[city]);
-            
-            let phoneBase;
-            if (customPhone) {
-                phoneBase = customPhone.replace(/\s/g, '').substring(0, 9);
-            } else {
-                phoneBase = String(getRandomInt(700000000, 799999999));
-            }
-            
-            const person = {
-                id: Date.now() + Math.random(), 
-                fullName: `${firstName} ${lastName}`,
-                birthDate: formattedDate,
-                phoneNumber: phoneBase.replace(/(\d{3})(\d{3})(\d{3})/, '$1$2$3'), 
-                email: generateEmail(firstName, lastName),
-                
-                rodneCislo: rodneCislo, 
-                city: city,
-                postalCode: postalCode,
-                gender: isMale ? 'Muž' : 'Žena',
-                timestamp: new Date().toLocaleString('cs-CZ'),
-                isRegistered: false 
-            };
-            
-            return person;
-        }
-
-
-        // --- FORMÁTOVÁNÍ A VÝSTUP (UPRAVENO PRO TAILWIND) ---
-        
-        function formatPerson(person) {
-            return `Jméno: ${person.fullName}\nDatum Narození: ${person.birthDate}\nTelefon: ${person.phoneNumber}\nE-mail: ${person.email}`.trim();
-        }
-
-        function formatProfile(person) {
-            const regColor = person.isRegistered ? 'text-registered' : 'text-red-500';
-            const regIcon = person.isRegistered ? 'fa-check-circle' : 'fa-times-circle';
-
-            return `
-                <div class="p-4 bg-black/70 rounded-lg border border-neon/50 shadow-md shadow-neon/10 font-mono text-sm">
-                    <p class="mb-2"><strong class="text-neon inline-block w-36"><i class="fas fa-user mr-2 text-neon"></i> Jméno:</strong> ${person.fullName}</p>
-                    <p class="mb-2"><strong class="text-neon inline-block w-36"><i class="fas fa-calendar-alt mr-2 text-neon"></i> Datum Narození:</strong> ${person.birthDate}</p>
-                    <p class="mb-2"><strong class="text-neon inline-block w-36"><i class="fas fa-phone mr-2 text-neon"></i> Telefon:</strong> ${person.phoneNumber}</p>
-                    <p class="mb-2"><strong class="text-neon inline-block w-36"><i class="fas fa-at mr-2 text-neon"></i> E-mail:</strong> ${person.email}</p>
-                    <hr class="border-t border-gray-700 my-3">
-                    <p class="mb-2"><strong class="text-neon-secondary inline-block w-36"><i class="fas fa-id-card mr-2 text-neon-secondary"></i> Rodné Číslo:</strong> ${person.rodneCislo}</p>
-                    <p class="mb-2"><strong class="text-neon-secondary inline-block w-36"><i class="fas fa-venus-mars mr-2 text-neon-secondary"></i> Pohlaví:</strong> ${person.gender}</p>
-                    <p class="mb-2"><strong class="text-neon-secondary inline-block w-36"><i class="fas fa-map-marker-alt mr-2 text-neon-secondary"></i> Bydliště:</strong> ${person.city} (${person.postalCode})</p>
-                    <p class="mb-2"><strong class="text-neon-secondary inline-block w-36"><i class="fas fa-calendar-check mr-2 text-neon-secondary"></i> Vytvořeno:</strong> ${person.timestamp}</p>
-                    <hr class="border-t border-gray-700 my-3">
-                    <p class="text-lg ${regColor}"><strong class="text-neon-secondary inline-block w-36"><i class="fas ${regIcon} mr-2"></i> Registrovaný:</strong> ${person.isRegistered ? 'ANO' : 'NE'}</p>
-                </div>
-            `;
-        }
-
-        function renderPersonCard(person, container) {
-            const formattedPerson = formatPerson(person);
-            const card = document.createElement('div');
-            card.className = 'identity-card bg-black/50 p-4 rounded-lg border border-neon/30 shadow-md shadow-neon/10 animate-fadeIn'; 
-            card.setAttribute('data-id', person.id);
-            
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <div class="identity-number text-lg font-bold text-red-400 bg-black/70 px-2 py-1 rounded"></div>
-                    <div class="button-group flex gap-2">
-                        <button class="copy-btn p-2 rounded-full bg-neon text-bg-terminal hover:bg-neon/80 transition duration-150 shadow-lg shadow-neon/50" onclick="copyPerson('${person.id}')" title="Kopírovat">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                        <button class="remove-btn p-2 rounded-full bg-gray-700 text-white hover:bg-red-600 transition duration-150" onclick="removePersonFromOutput('${person.id}')" title="Smazat z výsledků">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <pre class="identity-line whitespace-pre-wrap break-words font-mono text-sm leading-snug text-neon bg-gray-900/50 p-3 rounded-lg border border-neon/10">${formattedPerson}</pre>
-            `;
-            container.prepend(card); 
-            
-            renumberOutputCards(container);
-        }
-
-        function renumberOutputCards(container) {
-            const cards = container.querySelectorAll('.identity-card');
-            let count = cards.length;
-            cards.forEach(card => {
-                const numberDiv = card.querySelector('.identity-number');
-                if (numberDiv) {
-                    numberDiv.textContent = `#${count}`;
-                }
-                count--;
-            });
-        }
-        
-        // --- FUNKCE GENERACE, HISTORIE A KOPÍROVÁNÍ (Ponechány/Upraveny) ---
-
-        function generatePeople(isBulk = false, phoneList = []) {
-            // ... (logika je stejná jako v původním JS) ...
-            const outputDiv = document.getElementById('output');
-            const gender = document.getElementById('gender-select').value;
-            const customPhoneInput = document.getElementById('custom-phone');
-            const customPhone = customPhoneInput.value.trim().replace(/\s/g, '');
-            const isSingle = customPhone.length > 0;
-            
-            let peopleToGenerate = [];
-
-            if (isBulk) {
-                peopleToGenerate = phoneList.map(phone => createPersonObject(phone, gender));
-            } else if (isSingle) {
-                if (!/^\d{9}$/.test(customPhone)) {
-                     showNotification('Neplatné číslo. Zadejte prosím 9 číslic.', 'danger');
-                     return;
-                }
-                peopleToGenerate.push(createPersonObject(customPhone, gender));
-            } else {
-                const count = parseInt(document.getElementById('generation-count').value, 10);
-                if (isNaN(count) || count <= 0 || count > 50) {
-                    showNotification('Zadejte platný počet (1-50 osob).', 'danger');
-                    return;
-                }
-                for (let i = 0; i < count; i++) {
-                    peopleToGenerate.push(createPersonObject(null, gender));
-                }
-            }
-            
-            if (!isBulk && !isSingle) { 
-                 outputDiv.innerHTML = ''; // Vymaže předchozí, pokud se nejedná o hromadné generování
-            }
-            
-            peopleToGenerate.forEach(person => {
-                renderPersonCard(person, outputDiv);
-                saveToHistory(person);
-            });
-            
-            showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
-
-            if (customPhoneInput && isSingle) {
-                customPhoneInput.value = '';
-            }
-        }
-        
-        function bulkGenerateFromPhones() {
-            // ... (logika je stejná jako v původním JS) ...
-            const textarea = document.getElementById('bulk-phones');
-            const phones = textarea.value.split('\n').map(p => p.trim()).filter(p => p.length > 0);
-            const validPhones = phones.filter(p => /^\d{9}$/.test(p));
-            
-            if (validPhones.length === 0) {
-                showNotification('Nebylo nalezeno žádné platné 9místné číslo v seznamu.', 'danger');
-                return;
-            }
-            
-            generatePeople(true, validPhones);
-            textarea.value = '';
-            
-            updateNavigation('generator');
-        }
-        
-        function searchPerson() {
-            // ... (logika je stejná jako v původním JS) ...
-            const query = document.getElementById('search-input').value.trim().toLowerCase();
-            const outputDiv = document.getElementById('search-output');
-            outputDiv.innerHTML = '';
-            
-            if (query.length < 3) {
-                outputDiv.innerHTML = `<p class="text-center text-neon-secondary/50">Zadejte alespoň 3 znaky pro vyhledávání.</p>`;
-                showNotification('Zadejte alespoň 3 znaky pro vyhledávání.', 'warning');
-                return;
-            }
-
-            const history = loadHistory();
-            
-            const foundPerson = history.find(person => 
-                person.fullName.toLowerCase().includes(query) || 
-                person.phoneNumber.includes(query)
-            );
-            
-            if (foundPerson) {
-                outputDiv.innerHTML = formatProfile(foundPerson);
-                showNotification(`Profil nalezen: ${foundPerson.fullName}`, 'success');
-            } else {
-                outputDiv.innerHTML = `<p class="text-center text-neon-secondary/50">Osoba nebyla nalezena.</p>`;
-                showNotification('Osoba nenalezena.', 'danger');
-            }
-        }
-
-        function loadHistory() {
-            const history = localStorage.getItem(HISTORY_KEY);
-            return history ? JSON.parse(history) : [];
-        }
-
-        function saveHistory(history) {
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-        }
-
-        function saveToHistory(person) {
-            const history = loadHistory();
-            history.push(person);
-            saveHistory(history);
-            
-            document.getElementById('total-generated').textContent = history.length;
-        }
-
-        function removePersonFromOutput(id) {
-            // ... (logika je stejná jako v původním JS) ...
-            const card = document.querySelector(`#output .identity-card[data-id="${id}"]`);
-            if (card) {
-                card.remove();
-                renumberOutputCards(document.getElementById('output'));
-                showNotification('Osoba smazána z výsledků (zůstává v Historii).', 'warning');
-            }
-        }
-        
-        function clearHistory() {
-             if (confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")) {
-                localStorage.removeItem(HISTORY_KEY);
-                renderHistory();
-                renderRegisteredPeople();
-                showNotification('Celá historie byla úspěšně vymazána.', 'danger');
-            }
-        }
-        
-        function toggleRegistration(id) {
-            // ... (logika je stejná jako v původním JS) ...
-            let history = loadHistory();
-            const personIndex = history.findIndex(p => p.id == id);
-
-            if (personIndex !== -1) {
-                const isCurrentlyRegistered = history[personIndex].isRegistered;
-                history[personIndex].isRegistered = !isCurrentlyRegistered;
-                history[personIndex].timestamp = new Date().toLocaleString('cs-CZ'); 
-                saveHistory(history);
-                
-                showNotification(`Osoba ${history[personIndex].fullName} byla ${!isCurrentlyRegistered ? 'zaregistrována' : 'odregistrována'}.`, 'info');
-                
-                renderHistory();
-                renderRegisteredPeople();
-
-                if (window.location.hash.substring(1) === 'registered' && isCurrentlyRegistered) {
-                    updateNavigation('history');
-                }
-            } else {
-                showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
-            }
-        }
-
-        function clearAllRegistrations() {
-            // ... (logika je stejná jako v původním JS) ...
-             if (confirm("Opravdu chcete zrušit registraci VŠEM lidem v historii?")) {
-                let history = loadHistory();
-                history = history.map(person => ({ ...person, isRegistered: false }));
-                saveHistory(history);
-                
-                showNotification('Registrace zrušena u VŠECH osob.', 'danger');
-                renderHistory();
-                renderRegisteredPeople();
-                updateNavigation('history');
-            }
-        }
-
-
-        function renderHistory() {
-            // *** UPRAVENO PRO TAILWIND HTML ***
-            const history = loadHistory();
-            const historyList = document.getElementById('history-list');
-            const totalCountSpan = document.getElementById('total-generated');
-            const totalRegisteredSpan = document.getElementById('total-registered');
-
-            totalCountSpan.textContent = history.length;
-            const registeredCount = history.filter(p => p.isRegistered).length;
-            totalRegisteredSpan.textContent = registeredCount;
-            
-            historyList.innerHTML = history.length === 0 ? `<p class="text-center text-neon-secondary/50 p-4">Historie je prázdná.</p>` : '';
-
-            [...history].reverse().forEach((person, index) => {
-                const isReg = person.isRegistered;
-                const regClass = isReg ? 'text-registered font-semibold' : 'text-gray-400';
-                const buttonClass = isReg ? 'bg-registered hover:bg-registered/80 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white';
-                const buttonIcon = isReg ? 'fa-user-times' : 'fa-user-check';
-                const buttonText = isReg ? 'Zrušit' : 'Registrovat';
-
-                const item = document.createElement('div');
-                item.className = 'flex flex-col md:flex-row justify-between items-start md:items-center p-3 mb-2 rounded-lg bg-black/30 border border-gray-700 hover:bg-neon/10 transition duration-200';
-                item.innerHTML = `
-                    <div class="${regClass} text-sm flex items-center mb-2 md:mb-0">
-                        <strong class="text-neon mr-2">#${history.length - index}:</strong> ${person.fullName} 
-                        <span class="ml-4 text-gray-500">(${person.phoneNumber})</span>
-                        ${isReg ? '<i class="fas fa-check-circle ml-2" style="color: var(--registered-color);"></i>' : ''}
-                    </div>
-                    <div class="history-btn-group flex gap-2">
-                        <button class="px-3 py-1 text-xs rounded ${buttonClass} transition duration-150" 
-                                onclick="toggleRegistration('${person.id}')">
-                            <i class="fas ${buttonIcon} mr-1"></i> ${buttonText}
-                        </button>
-                        
-                        <button class="px-3 py-1 text-xs rounded bg-gray-700 text-white hover:bg-neon hover:text-bg-terminal transition duration-150" 
-                                onclick="viewProfile('${person.id}')">
-                            <i class="fas fa-eye mr-1"></i> Profil
-                        </button>
-                    </div>
-                `;
-                historyList.appendChild(item);
-            });
-        }
-        
-        function renderRegisteredPeople() {
-            // *** UPRAVENO PRO TAILWIND HTML ***
-            const history = loadHistory();
-            const registeredPeople = history.filter(p => p.isRegistered);
-            const registeredList = document.getElementById('registered-list');
-            const regCountDisplay = document.getElementById('reg-count-display');
-
-            regCountDisplay.textContent = registeredPeople.length;
-            
-            registeredList.innerHTML = registeredPeople.length === 0 ? `<p class="text-center text-neon-secondary/50 p-4">Zatím nejsou žádní registrovaní lidé.</p>` : '';
-
-            registeredPeople.forEach((person, index) => {
-                const item = document.createElement('div');
-                item.className = 'flex flex-col md:flex-row justify-between items-start md:items-center p-3 mb-2 rounded-lg bg-black/30 border transition duration-200';
-                item.style.borderColor = 'var(--registered-color)';
-
-                item.innerHTML = `
-                    <div class="text-registered font-semibold text-sm flex items-center mb-2 md:mb-0">
-                        <strong class="mr-2">#${index + 1}:</strong> ${person.fullName} 
-                        <span class="ml-4 text-gray-500">(${person.phoneNumber})</span>
-                        <i class="fas fa-check-circle ml-2" style="color: var(--registered-color);"></i>
-                    </div>
-                    <div class="history-btn-group flex gap-2">
-                         <button class="px-3 py-1 text-xs rounded bg-registered hover:bg-registered/80 text-white transition duration-150" 
-                                onclick="toggleRegistration('${person.id}')">
-                            <i class="fas fa-user-times mr-1"></i> Zrušit registraci
-                        </button>
-                        
-                        <button class="px-3 py-1 text-xs rounded bg-gray-700 text-white hover:bg-neon hover:text-bg-terminal transition duration-150" 
-                                onclick="viewProfile('${person.id}')">
-                            <i class="fas fa-eye mr-1"></i> Profil
-                        </button>
-                    </div>
-                `;
-                registeredList.appendChild(item);
-            });
-        }
-        
-        function viewProfile(id) {
-            // ... (logika je stejná jako v původním JS) ...
-            const history = loadHistory();
-            const person = history.find(i => i.id == id);
-            
-            if (person) {
-                updateNavigation('tools'); 
-                document.getElementById('search-input').value = person.fullName;
-                document.getElementById('search-output').innerHTML = formatProfile(person);
-                showNotification('Profil osoby zobrazen v sekci Hledání.', 'info');
-            } else {
-                showNotification('Profil nebyl nalezen v historii.', 'danger');
-            }
-        }
-
-        function copyPerson(id) {
-            // ... (logika je stejná jako v původním JS) ...
-            const card = document.querySelector(`.identity-card[data-id="${id}"]`);
-            if (!card) return;
-            
-            const textToCopy = card.querySelector('.identity-line').textContent;
-            
-            navigator.clipboard.writeText(textToCopy)
-                .then(() => {
-                    const buttonElement = card.querySelector('.copy-btn');
-                    const originalIcon = buttonElement.innerHTML;
-                    buttonElement.innerHTML = '<i class="fas fa-check"></i>';
-                    buttonElement.classList.add('bg-green-500', 'hover:bg-green-600');
-                    buttonElement.classList.remove('bg-neon', 'hover:bg-neon/80');
-
-                    setTimeout(() => {
-                        buttonElement.innerHTML = originalIcon;
-                        buttonElement.classList.remove('bg-green-500', 'hover:bg-green-600');
-                        buttonElement.classList.add('bg-neon', 'hover:bg-neon/80');
-                    }, 2000);
-                    showNotification('Osoba zkopírována.', 'success');
-                })
-                .catch(err => {
-                    showNotification('Kopírování se nezdařilo.', 'danger');
-                });
-        }
-        
-        function bulkCopyAllVisible() {
-            // ... (logika je stejná jako v původním JS) ...
-             const cards = document.querySelectorAll('#output .identity-card');
-            if (cards.length === 0) {
-                showNotification("Nejsou zde žádné osoby ke zkopírování.", 'warning');
-                return;
-            }
-            
-            let allText = '';
-            cards.forEach((card, index) => {
-                const number = card.querySelector('.identity-number').textContent;
-                const text = card.querySelector('.identity-line').textContent.trim();
-                allText += `---[ Osoba ${number} ]---\n${text}`;
-                if (index < cards.length - 1) {
-                    allText += '\n\n';
-                }
-            });
-            
-            navigator.clipboard.writeText(allText)
-                .then(() => {
-                    showNotification(`Hromadně zkopírováno ${cards.length} osob!`, 'success');
-                })
-                .catch(err => {
-                    showNotification('Hromadné kopírování se nezdařilo.', 'danger');
-                });
-        }
-
-        // --- NAVIGACE A INICIALIZACE (Mírně upraveno) ---
-
-        function updateNavigation(targetPage = null) {
-            // ... (logika je stejná jako v původním JS) ...
-            let currentPage = targetPage;
-            if (!currentPage) {
-                const hash = window.location.hash.substring(1); 
-                currentPage = hash || 'generator';
-            }
-            
-            document.querySelectorAll('.nav-button').forEach(btn => {
-                btn.classList.remove('active', 'text-neon', 'bg-neon/10', 'border-t-2', 'border-neon');
-                btn.classList.add('text-neon-secondary');
-            });
-            
-            const activeNav = document.querySelector(`.nav-button[data-page="${currentPage}"]`);
-            if (activeNav) {
-                activeNav.classList.add('active', 'text-neon', 'bg-neon/10', 'shadow-inner', 'shadow-neon/20');
-                if (currentPage !== 'registered') {
-                     activeNav.querySelector('i').style.color = 'var(--primary-neon)';
-                }
-            }
-
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
-            const activeSection = document.getElementById(`${currentPage}-section`);
-            if (activeSection) {
-                activeSection.classList.remove('hidden');
-                activeSection.classList.add('flex');
-            } else {
-                 document.getElementById('generator-section').classList.remove('hidden');
-                 document.getElementById('generator-section').classList.add('flex');
-                 document.querySelector(`.nav-button[data-page="generator"]`).classList.add('active', 'text-neon', 'bg-neon/10', 'shadow-inner', 'shadow-neon/20');
-            }
-            
-            if (currentPage === 'history') {
-                renderHistory();
-            } else if (currentPage === 'registered') { 
-                renderRegisteredPeople();
-            } else if (currentPage === 'tools') {
-                document.getElementById('search-output').innerHTML = `<p class="text-center text-neon-secondary/50">Zde se zobrazí nalezený profil.</p>`;
-                document.getElementById('search-input').value = '';
-            }
-            
-            if (window.location.hash.substring(1) !== currentPage) {
-                 window.history.pushState(null, null, '#' + currentPage);
-            }
-        }
-        
-        // --- STARFIELD INICIALIZACE ---
-        function createStars() {
-            const starsContainer = document.querySelector('.stars');
-            const numStars = 100; 
-
-            for (let i = 0; i < numStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = star.style.height = `${getRandomInt(1, 3)}px`;
-                star.style.top = `${getRandomInt(0, 100)}%`;
-                star.style.left = `${getRandomInt(0, 100)}%`;
-                star.style.animationDelay = `${getRandomInt(0, 5000) / 1000}s`; 
-                star.style.animationDuration = `${getRandomInt(5, 10)}s`; 
-                starsContainer.appendChild(star);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            createStars(); 
-            updateNavigation();
-            window.addEventListener('hashchange', () => updateNavigation());
-            
-            document.getElementById('total-generated').textContent = loadHistory().length;
-            
-            renumberOutputCards(document.getElementById('output'));
-        });
-
-    </script>
-</body>
-</html>
+<div id="notification"></
