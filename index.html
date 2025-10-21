@@ -14,43 +14,37 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background-color: #2c3e50;
             padding: 1rem;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         header h1 {
             margin: 0;
             font-size: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         nav {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         nav button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: none;
+            border: none;
             color: #ecf0f1;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
         }
 
         nav button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #34495e;
         }
 
         main {
@@ -65,18 +59,6 @@
 
         .section.active {
             display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .profile-card {
@@ -85,136 +67,6 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin-bottom: 1rem;
-        }
-
-        #home .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            color: white;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        #home .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.1) rotate(180deg);
-                opacity: 0.6;
-            }
-        }
-
-        #home .hero-section h2 {
-            font-size: 2.5rem;
-            margin: 0 0 1rem 0;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        #home .hero-section p {
-            font-size: 1.2rem;
-            margin: 0;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-        }
-
-        #home .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        #home .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        #home .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-            border-color: #667eea;
-        }
-
-        #home .feature-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        #home .feature-card h3 {
-            font-size: 1.3rem;
-            margin: 0 0 0.75rem 0;
-            color: #2c3e50;
-        }
-
-        #home .feature-card p {
-            margin: 0;
-            color: #7f8c8d;
-            line-height: 1.6;
-        }
-
-        #home .stats-banner {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            color: white;
-            text-align: center;
-        }
-
-        #home .stats-banner h3 {
-            margin: 0 0 1.5rem 0;
-            font-size: 1.8rem;
-        }
-
-        #home .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-        }
-
-        #home .stat-item {
-            text-align: center;
-        }
-
-        #home .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        #home .stat-label {
-            font-size: 0.95rem;
-            opacity: 0.9;
         }
 
         form {
@@ -574,93 +426,35 @@
 </head>
 <body>
     <header>
-        <h1><i class="fas fa-rocket"></i> Profesionální Webová Aplikace</h1>
+        <h1>Profesionální Webová Aplikace</h1>
         <nav>
-            <button onclick="showSection('home')"><i class="fas fa-home"></i> Domů</button>
-            <button onclick="showSection('email')"><i class="fas fa-envelope"></i> Email</button>
-            <button onclick="showSection('send-email')"><i class="fas fa-paper-plane"></i> Napsat Email</button>
-            <button onclick="showSection('generator')"><i class="fas fa-magic"></i> Generátor</button>
-            <button onclick="showSection('bulk')"><i class="fas fa-layer-group"></i> Hromadné</button>
-            <button onclick="showSection('list')"><i class="fas fa-list"></i> Seznam</button>
-            <button onclick="showSection('search')"><i class="fas fa-search"></i> Vyhledávání</button>
-            <button onclick="showSection('history')"><i class="fas fa-history"></i> Historie</button>
-            <button onclick="showSection('registered')"><i class="fas fa-user-check"></i> Registrovaní</button>
+            <button onclick="showSection('home')">Domů</button>
+            <button onclick="showSection('email')">Email</button>
+            <button onclick="showSection('send-email')">Napsat Email</button>
+            <button onclick="showSection('generator')">Generátor</button>
+            <button onclick="showSection('bulk')">Hromadné</button>
+            <button onclick="showSection('list')">Seznam</button>
+            <button onclick="showSection('search')">Vyhledávání</button>
+            <button onclick="showSection('history')">Historie</button>
+            <button onclick="showSection('registered')">Registrovaní</button>
         </nav>
     </header>
 
     <main>
         <div id="home" class="section active">
-            <div class="hero-section">
-                <h2><i class="fas fa-star"></i> Vítejte v Aplikaci</h2>
-                <p>Moderní a profesionální řešení pro správu a generování dat</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card" onclick="showSection('email')">
-                    <div class="icon"><i class="fas fa-envelope"></i></div>
-                    <h3>Emailová Schránka</h3>
-                    <p>Přístup k emailům všech vygenerovaných osob s pokročilým vyhledáváním a filtrováním</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('send-email')">
-                    <div class="icon"><i class="fas fa-paper-plane"></i></div>
-                    <h3>Napsat Email</h3>
-                    <p>Odesílání emailů registrovaným osobám s intuitivním rozhraním</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('generator')">
-                    <div class="icon"><i class="fas fa-magic"></i></div>
-                    <h3>Generátor Osob</h3>
-                    <p>Rychlé generování osob s náhodnými údaji včetně rodných čísel a adres</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('bulk')">
-                    <div class="icon"><i class="fas fa-layer-group"></i></div>
-                    <h3>Hromadné Generování</h3>
-                    <p>Generování více osob najednou z telefonních čísel pro efektivní práci</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('list')">
-                    <div class="icon"><i class="fas fa-list"></i></div>
-                    <h3>Seznam Osob</h3>
-                    <p>Přehledné zobrazení všech vygenerovaných osob s rychlým přístupem k detailům</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('search')">
-                    <div class="icon"><i class="fas fa-search"></i></div>
-                    <h3>Vyhledávání</h3>
-                    <p>Pokročilé vyhledávání osob podle jména nebo telefonního čísla</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('history')">
-                    <div class="icon"><i class="fas fa-history"></i></div>
-                    <h3>Historie</h3>
-                    <p>Kompletní historie všech generovaných osob s možností správy registrací</p>
-                </div>
-
-                <div class="feature-card" onclick="showSection('registered')">
-                    <div class="icon"><i class="fas fa-user-check"></i></div>
-                    <h3>Registrovaní</h3>
-                    <p>Přehled všech registrovaných osob s možností rychlé správy</p>
-                </div>
-            </div>
-
-            <div class="stats-banner">
-                <h3><i class="fas fa-chart-line"></i> Statistiky Aplikace</h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" id="home-total-generated">0</div>
-                        <div class="stat-label">Vygenerovaných osob</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="home-total-registered">0</div>
-                        <div class="stat-label">Registrovaných</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="home-total-emails">0</div>
-                        <div class="stat-label">Odeslaných emailů</div>
-                    </div>
-                </div>
+            <div class="profile-card">
+                <h2>Vítejte v aplikaci</h2>
+                <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
+                <ul>
+                    <li><strong>Email:</strong> Přístup k emailům všech vygenerovaných osob</li>
+                    <li><strong>Napsat Email:</strong> Odeslání emailu registrovaným osobám</li>
+                    <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
+                    <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
+                    <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
+                    <li><strong>Vyhledávání:</strong> Vyhledávání osob podle jména nebo telefonu</li>
+                    <li><strong>Historie:</strong> Kompletní historie všech generovaných osob</li>
+                    <li><strong>Registrovaní:</strong> Seznam registrovaných osob</li>
+                </ul>
             </div>
         </div>
 
@@ -1144,7 +938,6 @@
             updatePeopleList();
             renderEmailList();
             updateEmailSelects();
-            updateHomeStats();
 
             showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
 
@@ -1208,7 +1001,6 @@
             history.push(person);
             saveHistory(history);
             document.getElementById('total-generated').textContent = history.length;
-            updateHomeStats();
         }
 
         function loadEmails() {
@@ -1218,16 +1010,6 @@
 
         function saveEmails(emails) {
             localStorage.setItem(EMAILS_KEY, JSON.stringify(emails));
-        }
-
-        function updateHomeStats() {
-            const history = loadHistory();
-            const emails = loadEmails();
-            const registered = history.filter(p => p.isRegistered).length;
-            
-            document.getElementById('home-total-generated').textContent = history.length;
-            document.getElementById('home-total-registered').textContent = registered;
-            document.getElementById('home-total-emails').textContent = emails.length;
         }
 
         function sendEmailToUser() {
@@ -1284,7 +1066,6 @@
             toSelect.selectedIndex = 0;
 
             renderEmailList();
-            updateHomeStats();
         }
 
         function updateEmailSelects() {
@@ -1335,7 +1116,6 @@
                 renderEmailList();
                 updatePeopleList();
                 updateEmailSelects();
-                updateHomeStats();
                 showNotification('Celá historie byla úspěšně vymazána.', 'danger');
             }
         }
@@ -1356,7 +1136,6 @@
                 renderRegisteredPeople();
                 updatePeopleList();
                 updateEmailSelects();
-                updateHomeStats();
             } else {
                 showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
             }
@@ -1373,7 +1152,6 @@
                 renderRegisteredPeople();
                 updatePeopleList();
                 updateEmailSelects();
-                updateHomeStats();
             }
         }
 
@@ -1589,7 +1367,6 @@
                 emails = emails.filter(e => e.id != emailId);
                 saveEmails(emails);
                 renderEmailList();
-                updateHomeStats();
                 showNotification('Email byl úspěšně smazán.', 'success');
             }
         }
@@ -1667,8 +1444,6 @@
                 renderEmailList();
             } else if (sectionName === 'send-email') {
                 updateEmailSelects();
-            } else if (sectionName === 'home') {
-                updateHomeStats();
             }
         }
 
@@ -1697,7 +1472,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            updateHomeStats();
+            document.getElementById('total-generated').textContent = loadHistory().length;
             updatePeopleList();
             renderEmailList();
             updateEmailSelects();
