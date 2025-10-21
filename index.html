@@ -1,283 +1,1482 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Profesionální webová aplikace</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-  body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #333; }
-  header { background-color: #2c3e50; padding: 1rem; color: white; display: flex; justify-content: space-between; align-items: center; }
-  header h1 { margin: 0; font-size: 1.5rem; }
-  nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-  nav button { background: none; border: none; color: #ecf0f1; font-size: 1rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 4px; transition: background 0.2s; }
-  nav button:hover { background-color: #34495e; }
-  main { padding: 2rem; max-width: 1200px; margin: auto; }
-  .section { display: none; }
-  .section.active { display: block; }
-  .profile-card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 1rem; }
-  form { display: flex; gap: 1rem; flex-wrap: wrap; }
-  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; flex: 1 1 200px; }
-  button { padding: 0.5rem 1rem; background-color: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
-  button:hover { background-color: #3498db; }
-  button.btn-danger { background-color: #c0392b; }
-  button.btn-danger:hover { background-color: #e74c3c; }
-  button.btn-success { background-color: #27ae60; }
-  button.btn-success:hover { background-color: #2ecc71; }
-  button.btn-secondary { background-color: #95a5a6; }
-  button.btn-secondary:hover { background-color: #7f8c8d; }
-  #peopleList { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .personCard { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 1rem; width: 200px; cursor: pointer; transition: transform 0.2s; }
-  .personCard:hover { transform: scale(1.02); }
-  #profileContent { margin-top: 1rem; }
-  #notification-container { position: fixed; top: 20px; right: 20px; z-index: 1000; }
-  .notification { padding: 1rem 2rem; border-radius: 4px; font-weight: bold; margin-bottom: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out; }
-  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  .notification.success { background-color: #2ecc71; color: white; }
-  .notification.danger { background-color: #e74c3c; color: white; }
-  .notification.warning { background-color: #f39c12; color: white; }
-  .notification.info { background-color: #3498db; color: white; }
-  .identity-card { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 1rem; }
-  .identity-card .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-  .identity-number { font-weight: bold; color: #e74c3c; }
-  .button-group { display: flex; gap: 0.5rem; }
-  .button-group button { padding: 0.3rem 0.6rem; font-size: 0.9rem; }
-  .identity-line { white-space: pre-wrap; font-family: monospace; background: #f8f9fa; padding: 0.5rem; border-radius: 4px; border: 1px solid #dee2e6; }
-  #output { max-height: 500px; overflow-y: auto; }
-  #history-list, #registered-list { max-height: 60vh; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 4px; padding: 0.5rem; background: #f8f9fa; }
-  .history-item, .registered-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; margin-bottom: 0.5rem; background: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-  .history-item:hover, .registered-item:hover { background: #e9ecef; }
-  .stats-box { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 1rem; display: flex; justify-content: space-around; }
-  .stat { text-align: center; }
-  .stat-value { font-size: 2rem; font-weight: bold; color: #2980b9; }
-  .stat-label { color: #7f8c8d; font-size: 0.9rem; }
-  .registered-badge { color: #9b59b6; font-weight: bold; }
-  .profile-detail { background: #f8f9fa; padding: 1rem; border-radius: 4px; border: 1px solid #dee2e6; font-family: monospace; font-size: 0.9rem; }
-  .profile-detail p { margin: 0.5rem 0; }
-  .profile-detail strong { display: inline-block; width: 150px; color: #2c3e50; }
-  .profile-detail hr { border: none; border-top: 1px solid #dee2e6; margin: 1rem 0; }
-  textarea { min-height: 200px; font-family: monospace; }
-  label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: #2c3e50; }
-  .email-container { display: grid; grid-template-columns: 250px 1fr; gap: 1rem; min-height: 70vh; }
-  .email-sidebar { background: #fff; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .email-sidebar button { width: 100%; text-align: left; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; background: transparent; color: #2c3e50; }
-  .email-sidebar button:hover { background: #ecf0f1; }
-  .email-sidebar button.active { background: #3498db; color: white; }
-  .email-main { background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .email-list { max-height: 60vh; overflow-y: auto; }
-  .email-item { padding: 1rem; border-bottom: 1px solid #ecf0f1; cursor: pointer; transition: background 0.2s; display: flex; justify-content: space-between; align-items: flex-start; }
-  .email-item:hover { background: #f8f9fa; }
-  .email-item.unread { background: #e3f2fd; font-weight: bold; }
-  .email-item-star { cursor: pointer; color: #95a5a6; margin-right: 0.5rem; }
-  .email-item-star.starred { color: #f39c12; }
-  .email-detail { padding: 1rem; }
-  .email-detail-header { border-bottom: 2px solid #ecf0f1; padding-bottom: 1rem; margin-bottom: 1rem; }
-  .email-detail-body { background: #f8f9fa; padding: 1.5rem; border-radius: 4px; white-space: pre-wrap; line-height: 1.6; }
-  .compose-form input, .compose-form textarea { width: 100%; margin-bottom: 1rem; }
-  .registered-person-card { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s; }
-  .registered-person-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-2px); }
-  .unread-badge { background: #e74c3c; color: white; border-radius: 12px; padding: 2px 8px; font-size: 0.75rem; font-weight: bold; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profesionální webová aplikace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            padding: 1rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        nav button:hover {
+            background-color: #34495e;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .profile-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select,
+        textarea {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1 1 200px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #3498db;
+        }
+
+        button.btn-danger {
+            background-color: #c0392b;
+        }
+
+        button.btn-danger:hover {
+            background-color: #e74c3c;
+        }
+
+        button.btn-success {
+            background-color: #27ae60;
+        }
+
+        button.btn-success:hover {
+            background-color: #2ecc71;
+        }
+
+        button.btn-secondary {
+            background-color: #95a5a6;
+        }
+
+        button.btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        #peopleList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .personCard {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1rem;
+            width: 200px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .personCard:hover {
+            transform: scale(1.02);
+        }
+
+        #profileContent {
+            margin-top: 1rem;
+        }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .notification {
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .notification.danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .notification.warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .notification.info {
+            background-color: #3498db;
+            color: white;
+        }
+
+        video {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .identity-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .identity-card .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .identity-number {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .button-group button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .identity-line {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+
+        #output {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        #history-list,
+        #registered-list,
+        #email-list {
+            max-height: 60vh;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.5rem;
+            background: #f8f9fa;
+        }
+
+        .history-item,
+        .registered-item,
+        .email-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .history-item:hover,
+        .registered-item:hover,
+        .email-item:hover {
+            background: #e9ecef;
+        }
+
+        .stats-box {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .registered-badge {
+            color: #9b59b6;
+            font-weight: bold;
+        }
+
+        .profile-detail {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .profile-detail p {
+            margin: 0.5rem 0;
+        }
+
+        .profile-detail strong {
+            display: inline-block;
+            width: 150px;
+            color: #2c3e50;
+        }
+
+        .profile-detail hr {
+            border: none;
+            border-top: 1px solid #dee2e6;
+            margin: 1rem 0;
+        }
+
+        textarea {
+            min-height: 200px;
+            font-family: monospace;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .email-search-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .email-search-box input {
+            flex: 1;
+        }
+
+        .email-detail-view {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+
+        .email-header {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .email-header h3 {
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+        }
+
+        .email-header p {
+            margin: 0.25rem 0;
+            color: #7f8c8d;
+        }
+
+        .email-body {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            min-height: 200px;
+        }
+
+        .back-button {
+            margin-bottom: 1rem;
+        }
+
+        .unread-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .email-compose-form {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .email-compose-form textarea {
+            width: 100%;
+            min-height: 150px;
+            box-sizing: border-box;
+        }
+
+        .email-compose-form input,
+        .email-compose-form select {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .sent-email-item {
+            background: #e8f5e9;
+        }
+
+        .received-email-item {
+            background: #e3f2fd;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Profesionální Webová Aplikace</h1>
+        <nav>
+            <button onclick="showSection('home')">Domů</button>
+            <button onclick="showSection('email')">Email</button>
+            <button onclick="showSection('send-email')">Napsat Email</button>
+            <button onclick="showSection('generator')">Generátor</button>
+            <button onclick="showSection('bulk')">Hromadné</button>
+            <button onclick="showSection('list')">Seznam</button>
+            <button onclick="showSection('search')">Vyhledávání</button>
+            <button onclick="showSection('history')">Historie</button>
+            <button onclick="showSection('registered')">Registrovaní</button>
+        </nav>
+    </header>
 
-<header>
-  <h1>Profesionální Webová Aplikace</h1>
-  <nav>
-    <button onclick="showSection('home')">Domů</button>
-    <button onclick="showSection('email')">Email</button>
-    <button onclick="showSection('generator')">Generátor</button>
-    <button onclick="showSection('bulk')">Hromadné</button>
-    <button onclick="showSection('list')">Seznam</button>
-    <button onclick="showSection('search')">Vyhledávání</button>
-    <button onclick="showSection('history')">Historie</button>
-    <button onclick="showSection('registered')">Registrovaní</button>
-  </nav>
-</header>
-
-<main>
-
-<div id="home" class="section active">
-  <div class="profile-card">
-    <h2>Vítejte v aplikaci</h2>
-    <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
-    <ul>
-      <li><strong>Email:</strong> Emailový klient pro registrované osoby</li>
-      <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
-      <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
-      <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
-      <li><strong>Vyhledávání:</strong> Vyhledávání osob podle jména nebo telefonu</li>
-      <li><strong>Historie:</strong> Kompletní historie všech generovaných osob</li>
-      <li><strong>Registrovaní:</strong> Seznam registrovaných osob</li>
-    </ul>
-  </div>
-</div>
-
-<div id="email" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-envelope"></i> Emailový Systém</h2>
-    <div id="email-person-selector">
-      <h3>Vyberte Registrovanou Osobu</h3>
-      <input type="text" id="email-search" placeholder="Vyhledat osobu..." style="width: 100%; margin-bottom: 1rem;">
-      <div id="registered-people-list"></div>
-    </div>
-    <div id="email-client-container" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <div>
-          <h3 style="margin: 0;" id="current-email-person"></h3>
-          <p style="margin: 0; color: #7f8c8d; font-size: 0.9rem;" id="current-email-address"></p>
+    <main>
+        <div id="home" class="section active">
+            <div class="profile-card">
+                <h2>Vítejte v aplikaci</h2>
+                <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
+                <ul>
+                    <li><strong>Email:</strong> Přístup k emailům všech vygenerovaných osob</li>
+                    <li><strong>Napsat Email:</strong> Odeslání emailu registrovaným osobám</li>
+                    <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
+                    <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
+                    <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
+                    <li><strong>Vyhledávání:</strong> Vyhledávání osob podle jména nebo telefonu</li>
+                    <li><strong>Historie:</strong> Kompletní historie všech generovaných osob</li>
+                    <li><strong>Registrovaní:</strong> Seznam registrovaných osob</li>
+                </ul>
+            </div>
         </div>
-        <button onclick="closeEmailClient()" class="btn-secondary"><i class="fas fa-arrow-left"></i> Zpět na seznam</button>
-      </div>
-      <div class="email-container">
-        <div class="email-sidebar">
-          <button onclick="composeNewEmail()" class="btn-success" style="margin-bottom: 1rem; justify-content: center;"><i class="fas fa-pen"></i> Napsat Email</button>
-          <button onclick="switchEmailFolder('inbox')" class="active" id="folder-inbox"><i class="fas fa-inbox"></i> Doručená (<span id="inbox-count">0</span>)</button>
-          <button onclick="switchEmailFolder('sent')" id="folder-sent"><i class="fas fa-paper-plane"></i> Odeslané</button>
-          <button onclick="switchEmailFolder('starred')" id="folder-starred"><i class="fas fa-star"></i> Označené</button>
-          <button onclick="switchEmailFolder('archived')" id="folder-archived"><i class="fas fa-archive"></i> Archiv</button>
-          <button onclick="switchEmailFolder('trash')" id="folder-trash"><i class="fas fa-trash"></i> Koš</button>
+
+        <div id="send-email" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-paper-plane"></i> Napsat Nový Email</h2>
+
+                <div class="email-compose-form">
+                    <form onsubmit="event.preventDefault(); sendEmailToUser();">
+                        <div style="margin-bottom: 1rem;">
+                            <label for="email-from-select">Od (váš email):</label>
+                            <select id="email-from-select" required>
+                                <option value="">-- Vyberte odesílatele --</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <label for="email-to-select">Komu:</label>
+                            <select id="email-to-select" required>
+                                <option value="">-- Vyberte příjemce --</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <label for="email-subject-input">Předmět:</label>
+                            <input type="text" id="email-subject-input" placeholder="Zadejte předmět emailu..." required>
+                        </div>
+
+                        <div style="margin-bottom: 1rem;">
+                            <label for="email-message-input">Zpráva:</label>
+                            <textarea id="email-message-input" placeholder="Napište svou zprávu..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-success" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Odeslat Email
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="email-main">
-          <div id="email-list-view"><div class="email-list" id="email-list-container"></div></div>
-          <div id="email-detail-view" style="display: none;"><button onclick="backToEmailList()" style="margin-bottom: 1rem;"><i class="fas fa-arrow-left"></i> Zpět</button><div id="email-detail-content"></div></div>
-          <div id="email-compose-view" style="display: none;"><h3>Nový Email</h3><div class="compose-form"><label>Komu:</label><input type="email" id="compose-to" placeholder="email@example.com"><label>Předmět:</label><input type="text" id="compose-subject" placeholder="Předmět emailu"><label>Zpráva:</label><textarea id="compose-body" rows="15" placeholder="Napište svou zprávu..."></textarea><div class="button-group"><button onclick="sendEmail()" class="btn-success"><i class="fas fa-paper-plane"></i> Odeslat</button><button onclick="cancelCompose()" class="btn-secondary"><i class="fas fa-times"></i> Zrušit</button></div></div></div>
+
+        <div id="email" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-envelope"></i> Emailová Schránka</h2>
+
+                <div class="stats-box">
+                    <div class="stat">
+                        <div class="stat-value" id="email-count-display">0</div>
+                        <div class="stat-label">Celkem emailů</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="sent-email-count">0</div>
+                        <div class="stat-label">Odeslaných</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="received-email-count">0</div>
+                        <div class="stat-label">Přijatých</div>
+                    </div>
+                </div>
+
+                <div class="email-search-box">
+                    <input type="text" id="email-search-input" placeholder="Vyhledat podle jména nebo emailu...">
+                    <button onclick="filterEmails()">
+                        <i class="fas fa-search"></i> Hledat
+                    </button>
+                    <button onclick="clearEmailSearch()" class="btn-secondary">
+                        <i class="fas fa-times"></i> Zrušit
+                    </button>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label for="email-filter-user">Filtrovat podle uživatele:</label>
+                    <select id="email-filter-user" onchange="filterEmailsByUser()">
+                        <option value="">-- Všichni uživatelé --</option>
+                    </select>
+                </div>
+
+                <h3>Seznam Emailů</h3>
+                <div id="email-list">
+                    <p style="text-align: center; color: #7f8c8d;">Zatím nebyly odeslány žádné emaily.</p>
+                </div>
+            </div>
+
+            <div id="email-detail-container" style="display: none;">
+                <div class="profile-card">
+                    <button onclick="closeEmailDetail()" class="back-button btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Zpět na seznam
+                    </button>
+
+                    <div class="email-detail-view">
+                        <div class="email-header">
+                            <h3 id="email-detail-subject">Email Detail</h3>
+                            <p><strong>Od:</strong> <span id="email-detail-from"></span></p>
+                            <p><strong>Komu:</strong> <span id="email-detail-to"></span></p>
+                            <p><strong>Datum:</strong> <span id="email-detail-date"></span></p>
+                        </div>
+                        <div class="email-body">
+                            <div id="email-detail-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div id="generator" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-magic"></i> Rychlá Generace Osob</h2>
-    <form onsubmit="event.preventDefault(); generatePeople(false);">
-      <div style="flex: 1 1 100%;"><label for="gender-select">Pohlaví:</label><select id="gender-select"><option value="random">Náhodné</option><option value="Male">Muž</option><option value="Female">Žena</option></select></div>
-      <div style="flex: 1 1 100%;"><label for="custom-phone">Volitelné telefonní číslo (9 číslic):</label><input type="tel" id="custom-phone" placeholder="777222333 (pro 1 osobu)"><small style="color: #7f8c8d;">*Pokud zadáte tel. číslo, vygeneruje se POUZE 1 osoba.</small></div>
-      <div style="flex: 1 1 100%;"><label for="generation-count">Počet osob (1-50):</label><input type="number" id="generation-count" min="1" max="50" value="1"></div>
-      <button type="submit" class="btn-success" style="flex: 1 1 100%;"><i class="fas fa-magic"></i> Spustit Generaci</button>
-    </form>
-  </div>
-  <div class="profile-card">
-    <h2><i class="fas fa-users"></i> Výsledek Generování</h2>
-    <button onclick="bulkCopyAllVisible()" class="btn-secondary" style="margin-bottom: 1rem;"><i class="fas fa-copy"></i> Hromadně Kopírovat Vše</button>
-    <div id="output"><p style="text-align: center; color: #7f8c8d;">Vygenerované osoby se zobrazí zde.</p></div>
-  </div>
-</div>
+        <div id="generator" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-magic"></i> Rychlá Generace Osob</h2>
+                <form onsubmit="event.preventDefault(); generatePeople(false);">
+                    <div style="flex: 1 1 100%;">
+                        <label for="gender-select">Pohlaví:</label>
+                        <select id="gender-select">
+                            <option value="random">Náhodné</option>
+                            <option value="Male">Muž</option>
+                            <option value="Female">Žena</option>
+                        </select>
+                    </div>
 
-<div id="bulk" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-layer-group"></i> Hromadná Generace z Čísel</h2>
-    <p>Zadejte seznam 9místných telefonních čísel (jedno na řádek). Ke každému se vygeneruje plná osoba.</p>
-    <form onsubmit="event.preventDefault(); bulkGenerateFromPhones();">
-      <div style="flex: 1 1 100%;"><label for="bulk-phones">Seznam telefonních čísel:</label><textarea id="bulk-phones" placeholder="731111111&#10;777222333&#10;..."></textarea></div>
-      <button type="submit" class="btn-success" style="flex: 1 1 100%;"><i class="fas fa-exchange-alt"></i> Hromadně Generovat Lidi</button>
-    </form>
-  </div>
-</div>
+                    <div style="flex: 1 1 100%;">
+                        <label for="custom-phone">Volitelné telefonní číslo (9 číslic):</label>
+                        <input type="tel" id="custom-phone" placeholder="777222333 (pro 1 osobu)">
+                        <small style="color: #7f8c8d;">*Pokud zadáte tel. číslo, vygeneruje se POUZE 1 osoba.</small>
+                    </div>
 
-<div id="list" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-list"></i> Seznam Lidí</h2>
-    <div id="peopleList"><p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p></div>
-  </div>
-</div>
+                    <div style="flex: 1 1 100%;">
+                        <label for="generation-count">Počet osob (1-50):</label>
+                        <input type="number" id="generation-count" min="1" max="50" value="1">
+                    </div>
 
-<div id="search" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-search"></i> Vyhledávání Profilu</h2>
-    <p>Vyhledejte osobu z historie podle jména nebo 9místného telefonního čísla.</p>
-    <form onsubmit="event.preventDefault(); searchPerson();"><input type="text" id="search-input" placeholder="Jméno nebo 777222333"><button type="submit"><i class="fas fa-search"></i> Vyhledat</button></form>
-    <div id="search-output" style="margin-top: 1rem;"><p style="text-align: center; color: #7f8c8d;">Zde se zobrazí nalezený profil.</p></div>
-  </div>
-  <div class="profile-card">
-    <h2><i class="fas fa-user"></i> Detail Profilu</h2>
-    <div id="profileContent"><p style="text-align: center; color: #7f8c8d;">Vyberte osobu ze seznamu pro zobrazení profilu.</p></div>
-  </div>
-</div>
+                    <button type="submit" class="btn-success" style="flex: 1 1 100%;">
+                        <i class="fas fa-magic"></i> Spustit Generaci
+                    </button>
+                </form>
+            </div>
 
-<div id="history" class="section">
-  <div class="profile-card">
-    <h2><i class="fas fa-database"></i> Historie Generovaných Lidí</h2>
-    <div class="stats-box"><div class="stat"><div class="stat-value" id="total-generated">0</div><div class="stat-label">Celkem vygenerováno</div></div><div class="stat"><div class="stat-value registered-badge" id="total-registered">0</div><div class="stat-label">Registrovaných</div></div></div>
-    <h3>Seznam Všech Lidí (Nejnovější nahoře)</h3>
-    <div id="history-list"><p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p></div>
-    <button onclick="clearHistory()" class="btn-danger" style="width: 100%; margin-top: 1rem;"><i class="fas fa-trash-alt"></i> Vymazat Celou Historii</button>
-  </div>
-</div>
+            <div class="profile-card">
+                <h2><i class="fas fa-users"></i> Výsledek Generování</h2>
+                <button onclick="bulkCopyAllVisible()" class="btn-secondary" style="margin-bottom: 1rem;">
+                    <i class="fas fa-copy"></i> Hromadně Kopírovat Vše
+                </button>
+                <div id="output">
+                    <p style="text-align: center; color: #7f8c8d;">Vygenerované osoby se zobrazí zde.</p>
+                </div>
+            </div>
+        </div>
 
-<div id="registered" class="section">
-  <div class="profile-card">
-    <h2 class="registered-badge"><i class="fas fa-user-check"></i> Registrovaní Lidé</h2>
-    <div class="stats-box"><div class="stat"><div class="stat-value registered-badge" id="reg-count-display">0</div><div class="stat-label">Celkem registrovaných</div></div></div>
-    <h3>Registrovaný Seznam</h3>
-    <div id="registered-list"><p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p></div>
-    <button onclick="clearAllRegistrations()" class="btn-danger" style="width: 100%; margin-top: 1rem;"><i class="fas fa-undo-alt"></i> Zrušit Registraci Všem</button>
-  </div>
-</div>
+        <div id="bulk" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-layer-group"></i> Hromadná Generace z Čísel</h2>
+                <p>Zadejte seznam 9místných telefonních čísel (jedno na řádek). Ke každému se vygeneruje plná osoba.</p>
+                <form onsubmit="event.preventDefault(); bulkGenerateFromPhones();">
+                    <div style="flex: 1 1 100%;">
+                        <label for="bulk-phones">Seznam telefonních čísel:</label>
+                        <textarea id="bulk-phones" placeholder="731111111&#10;777222333&#10;..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-success" style="flex: 1 1 100%;">
+                        <i class="fas fa-exchange-alt"></i> Hromadně Generovat Lidi
+                    </button>
+                </form>
+            </div>
+        </div>
 
-</main>
+        <div id="list" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-list"></i> Seznam Lidí</h2>
+                <div id="peopleList">
+                    <p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>
+                </div>
+            </div>
+        </div>
 
-<div id="notification-container"></div>
+        <div id="search" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-search"></i> Vyhledávání Profilu</h2>
+                <p>Vyhledejte osobu z historie podle jména nebo 9místného telefonního čísla.</p>
+                <form onsubmit="event.preventDefault(); searchPerson();">
+                    <input type="text" id="search-input" placeholder="Jméno nebo 777222333">
+                    <button type="submit">
+                        <i class="fas fa-search"></i> Vyhledat
+                    </button>
+                </form>
+                <div id="search-output" style="margin-top: 1rem;">
+                    <p style="text-align: center; color: #7f8c8d;">Zde se zobrazí nalezený profil.</p>
+                </div>
+            </div>
 
-<script>
-const firstNamesMale=['Lukáš','Tomáš','Petr','Jan','Pavel','Martin','Ondřej','Jakub','Filip','Vojtěch','Adam','Marek','David','Karel','Jiří','Štěpán','Daniel','Matěj','Vít','Oldřich','František','Antonín','Miloslav','Vladimír','Josef','Václav','Michal','Patrik','Alex','Erik','Denis','Kryštof','Dominik','Hynek','Jaroslav','Aleš','Bohumil','Čeněk','Dalibor','Emil','Gustav','Ignác','Jindřich','Libor','Norbert','Oskar','Radek','Stanislav','Vlastimil','Zdeněk'];
-const firstNamesFemale=['Anna','Tereza','Kateřina','Lucie','Adéla','Eliška','Veronika','Kristýna','Nikola','Karolína','Jana','Eva','Hana','Petra','Markéta','Klára','Zuzana','Michaela','Lenka','Monika','Iva','Denisa','Alena','Barbora','Helena','Natálie','Vendula','Sabina','Simona','Viktoria','Magdaléna','Ludmila','Šárka','Diana','Adriana','Beáta','Cyrila','Dagmar','Hedvika','Irena','Julie','Kamila','Laura','Nina','Olga','Renata','Silvie','Valerie','Xenie','Yvona','Žofie'];
-const lastNames=['Nováček','Svoboda','Novák','Dvořák','Černý','Procházka','Kučera','Veselý','Fiala','Horák','Pospíšil','Malý','Hájek','Jelínek','Růžička','Beneš','Soukup','Krejčí','Kříž','Šťastný','Kovář','Konečný','Bartoš','Sedláček','Urban','Zeman','Kolář','Ševčík','Trnka','Pokorný','Pavelka','Tichý','Mrázek','Málek','Janda','Kasal','Liška','Polák','Holub','Rybář','Šimek','Vlček','Rejcha','Moravec','Bílek','Zahrádka','Křížek','Kadlec','Musil','Šimánek','Valenta','Zoubek'];
-const emailDomains=['icloud.com','gmail.com','seznam.cz','post.cz','email.cz','atlas.cz','volny.cz','centrum.cz','quick.cz','yahoo.com','outlook.com','tiscali.cz'];
-const citiesData={'Praha':['10000','11000','12000','15000','17000','18000','19000','25000'],'Brno':['60200','61200','62500','63900'],'Ostrava':['70200','70800','71000','72000'],'Plzeň':['30100','32300','31200'],'Liberec':['46001','46301','46010'],'Olomouc':['77900','78301','77200'],'Hradec Králové':['50003','50008','50011'],'České Budějovice':['37001','37004','37007'],'Karlovy Vary':['36001','36005','36009'],'Pardubice':['53002','53009','53301'],'Ústí nad Labem':['40001','40301','40010'],'Zlín':['76001','76302','76005'],'Jihlava':['58601','58851'],'Mladá Boleslav':['29301','29306'],'Tábor':['39001','39101'],'Znojmo':['66902','67161'],'Frýdek-Místek':['73801','73942'],'Třinec':['73961','73995'],'Most':['43401','43502'],'Teplice':['41501','41701'],'Chomutov':['43001','43111'],'Kladno':['27201','27351'],'Opava':['74601','74705'],'Karviná':['73301','73506'],'Jablonec nad Nisou':['46601','46802'],'Prostějov':['79601','79802'],'Přerov':['75002','75116'],'Děčín':['40502','40711'],'Kroměříž':['76701','76811'],'Valašské Meziříčí':['75701','75704']};
-const allCities=Object.keys(citiesData);
-const HISTORY_KEY='iqosPeopleHistory';
-const EMAILS_KEY='emailsData';
-let currentEmailPerson=null;
-let currentEmailFolder='inbox';
-let currentSelectedEmail=null;
-const getRandomItem=arr=>arr[Math.floor(Math.random()*arr.length)];
-const getRandomInt=(min,max)=>Math.floor(Math.random()*(max-min+1))+min;
-const normalize=text=>text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,'');
-function showNotification(message,type='info'){const container=document.getElementById('notification-container');const note=document.createElement('div');note.className=`notification ${type}`;note.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':type==='danger'?'times-circle':type==='warning'?'exclamation-triangle':'info-circle'}"></i> ${message}`;container.appendChild(note);setTimeout(()=>{note.style.animation='slideIn 0.3s ease-out reverse';setTimeout(()=>note.remove(),300);},4000);}
-function generateBirthData(isMale){const currentYear=new Date().getFullYear();const year=getRandomInt(currentYear-65,currentYear-18);const month=getRandomInt(1,12);const day=getRandomInt(1,28);let rcMonth=month;if(!isMale)rcMonth+=50;const yy=String(year%100).padStart(2,'0');const mm=String(rcMonth).padStart(2,'0');const dd=String(day).padStart(2,'0');const suffix=String(getRandomInt(1000,9999)).padStart(4,'0');const rodneCislo=`${yy}${mm}${dd}/${suffix}`;return{day:day,month:month,year:year,formattedDate:`${String(day).padStart(2,'0')}.${String(month).padStart(2,'0')}.${year}`,rodneCislo:rodneCislo};}
-function generateEmail(firstName,lastName){const baseFirstName=normalize(firstName);const baseLastName=normalize(lastName);const randomNum=getRandomInt(1,99);const emailFormats=[`${baseFirstName}.${baseLastName}`,`${baseLastName}${baseFirstName.charAt(0)}`,`${baseFirstName}${randomNum}`,`${baseFirstName.charAt(0)}${baseLastName}${randomNum}`];const base=getRandomItem(emailFormats);const domain=getRandomItem(emailDomains);return `${base}@${domain}`;}
-function createPersonObject(customPhone=null,preferredGender='random'){let isMale;if(preferredGender==='Male')isMale=true;else if(preferredGender==='Female')isMale=false;else isMale=Math.random()<0.5;const{formattedDate,rodneCislo}=generateBirthData(isMale);let firstName;if(isMale)firstName=getRandomItem(firstNamesMale);else firstName=getRandomItem(firstNamesFemale);let lastNameBase=getRandomItem(lastNames);const lastName=isMale?lastNameBase:(lastNameBase.endsWith('ý')?lastNameBase.slice(0,-1)+'á':lastNameBase+'ová');const city=getRandomItem(allCities);const postalCode=getRandomItem(citiesData[city]);let phoneBase;if(customPhone){phoneBase=customPhone.replace(/\s/g,'').substring(0,9);}else{phoneBase=String(getRandomInt(700000000,799999999));}const person={id:Date.now()+Math.random(),fullName:`${firstName} ${lastName}`,birthDate:formattedDate,phoneNumber:phoneBase.replace(/(\d{3})(\d{3})(\d{3})/,'$1$2$3'),email:generateEmail(firstName,lastName),rodneCislo:rodneCislo,city:city,postalCode:postalCode,gender:isMale?'Muž':'Žena',timestamp:new Date().toLocaleString('cs-CZ'),isRegistered:false};return person;}
-function formatPerson(person){return `Jméno: ${person.fullName}\nDatum Narození: ${person.birthDate}\nTelefon: ${person.phoneNumber}\nE-mail: ${person.email}`.trim();}
-function formatProfile(person){const regStatus=person.isRegistered?'<span style="color: #27ae60;">ANO</span>':'<span style="color: #e74c3c;">NE</span>';return `<div class="profile-detail"><p><strong><i class="fas fa-user"></i> Jméno:</strong> ${person.fullName}</p><p><strong><i class="fas fa-calendar-alt"></i> Datum Narození:</strong> ${person.birthDate}</p><p><strong><i class="fas fa-phone"></i> Telefon:</strong> ${person.phoneNumber}</p><p><strong><i class="fas fa-at"></i> E-mail:</strong> ${person.email}</p><hr><p><strong><i class="fas fa-id-card"></i> Rodné Číslo:</strong> ${person.rodneCislo}</p><p><strong><i class="fas fa-venus-mars"></i> Pohlaví:</strong> ${person.gender}</p><p><strong><i class="fas fa-map-marker-alt"></i> Bydliště:</strong> ${person.city} (${person.postalCode})</p><p><strong><i class="fas fa-calendar-check"></i> Vytvořeno:</strong> ${person.timestamp}</p><hr><p><strong><i class="fas fa-user-check"></i> Registrovaný:</strong> ${regStatus}</p></div>`;}
-function renderPersonCard(person,container){const formattedPerson=formatPerson(person);const card=document.createElement('div');card.className='identity-card';card.setAttribute('data-id',person.id);card.innerHTML=`<div class="header-row"><div class="identity-number"></div><div class="button-group"><button onclick="copyPerson('${person.id}')" title="Kopírovat"><i class="fas fa-copy"></i></button><button onclick="removePersonFromOutput('${person.id}')" class="btn-danger" title="Smazat"><i class="fas fa-times"></i></button></div></div><pre class="identity-line">${formattedPerson}</pre>`;container.prepend(card);renumberOutputCards(container);}
-function renumberOutputCards(container){const cards=container.querySelectorAll('.identity-card');let count=cards.length;cards.forEach(card=>{const numberDiv=card.querySelector('.identity-number');if(numberDiv)numberDiv.textContent=`#${count}`;count--});}
-function generatePeople(isBulk=false,phoneList=[]){const outputDiv=document.getElementById('output');const gender=document.getElementById('gender-select').value;const customPhoneInput=document.getElementById('custom-phone');const customPhone=customPhoneInput.value.trim().replace(/\s/g,'');const isSingle=customPhone.length>0;let peopleToGenerate=[];if(isBulk){peopleToGenerate=phoneList.map(phone=>createPersonObject(phone,gender));}else if(isSingle){if(!/^\d{9}$/.test(customPhone)){showNotification('Neplatné číslo. Zadejte prosím 9 číslic.','danger');return;}peopleToGenerate.push(createPersonObject(customPhone,gender));}else{const count=parseInt(document.getElementById('generation-count').value,10);if(isNaN(count)||count<=0||count>50){showNotification('Zadejte platný počet (1-50 osob).','danger');return;}for(let i=0;i<count;i++){peopleToGenerate.push(createPersonObject(null,gender));}}if(!isBulk&&!isSingle)outputDiv.innerHTML='';peopleToGenerate.forEach(person=>{renderPersonCard(person,outputDiv);saveToHistory(person);});updatePeopleList();showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`,'success');if(customPhoneInput&&isSingle)customPhoneInput.value='';}
-function bulkGenerateFromPhones(){const textarea=document.getElementById('bulk-phones');const phones=textarea.value.split('\n').map(p=>p.trim()).filter(p=>p.length>0);const validPhones=phones.filter(p=>/^\d{9}$/.test(p));if(validPhones.length===0){showNotification('Nebylo nalezeno žádné platné 9místné číslo v seznamu.','danger');return;}generatePeople(true,validPhones);textarea.value='';showSection('generator');}
-function searchPerson(){const query=document.getElementById('search-input').value.trim().toLowerCase();const outputDiv=document.getElementById('search-output');outputDiv.innerHTML='';if(query.length<3){outputDiv.innerHTML=`<p style="text-align: center; color: #7f8c8d;">Zadejte alespoň 3 znaky pro vyhledávání.</p>`;showNotification('Zadejte alespoň 3 znaky pro vyhledávání.','warning');return;}const history=loadHistory();const foundPerson=history.find(person=>person.fullName.toLowerCase().includes(query)||person.phoneNumber.includes(query));if(foundPerson){outputDiv.innerHTML=formatProfile(foundPerson);showNotification(`Profil nalezen: ${foundPerson.fullName}`,'success');}else{outputDiv.innerHTML=`<p style="text-align: center; color: #7f8c8d;">Osoba nebyla nalezena.</p>`;showNotification('Osoba nenalezena.','danger');}}
-function loadHistory(){const history=localStorage.getItem(HISTORY_KEY);return history?JSON.parse(history):[];}
-function saveHistory(history){localStorage.setItem(HISTORY_KEY,JSON.stringify(history));}
-function saveToHistory(person){const history=loadHistory();history.push(person);saveHistory(history);document.getElementById('total-generated').textContent=history.length;}
-function removePersonFromOutput(id){const card=document.querySelector(`#output .identity-card[data-id="${id}"]`);if(card){card.remove();renumberOutputCards(document.getElementById('output'));showNotification('Osoba smazána z výsledků (zůstává v Historii).','warning');}}
-function clearHistory(){if(confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")){localStorage.removeItem(HISTORY_KEY);renderHistory();renderRegisteredPeople();updatePeopleList();showNotification('Celá historie byla úspěšně vymazána.','danger');}}
-function toggleRegistration(id){let history=loadHistory();const personIndex=history.findIndex(p=>p.id==id);if(personIndex!==-1){const isCurrentlyRegistered=history[personIndex].isRegistered;history[personIndex].isRegistered=!isCurrentlyRegistered;history[personIndex].timestamp=new Date().toLocaleString('cs-CZ');saveHistory(history);showNotification(`Osoba ${history[personIndex].fullName} byla ${!isCurrentlyRegistered?'zaregistrována':'odregistrována'}.`,'info');renderHistory();renderRegisteredPeople();updatePeopleList();}else{showNotification('Chyba: Osoba nebyla nalezena.','danger');}}
-function clearAllRegistrations(){if(confirm("Opravdu chcete zrušit registraci VŠEM lidem v historii?")){let history=loadHistory();history=history.map(person=>({...person,isRegistered:false}));saveHistory(history);showNotification('Registrace zrušena u VŠECH osob.','danger');renderHistory();renderRegisteredPeople();updatePeopleList();}}
-function renderHistory(){const history=loadHistory();const historyList=document.getElementById('history-list');const totalCountSpan=document.getElementById('total-generated');const totalRegisteredSpan=document.getElementById('total-registered');totalCountSpan.textContent=history.length;const registeredCount=history.filter(p=>p.isRegistered).length;totalRegisteredSpan.textContent=registeredCount;historyList.innerHTML=history.length===0?`<p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>`:'';[...history].reverse().forEach((person,index)=>{const isReg=person.isRegistered;const item=document.createElement('div');item.className='history-item';item.innerHTML=`<div><strong>#${history.length-index}:</strong> ${person.fullName} <span style="color: #7f8c8d;">(${person.phoneNumber})</span> ${isReg?'<i class="fas fa-check-circle" style="color: #9b59b6;"></i>':''}</div><div class="button-group"><button onclick="toggleRegistration('${person.id}')" class="${isReg?'btn-danger':'btn-success'}"><i class="fas ${isReg?'fa-user-times':'fa-user-check'}"></i> ${isReg?'Zrušit':'Registrovat'}</button><button onclick="viewProfile('${person.id}')"><i class="fas fa-eye"></i> Profil</button></div>`;historyList.appendChild(item);});}
-function renderRegisteredPeople(){const history=loadHistory();const registeredPeople=history.filter(p=>p.isRegistered);const registeredList=document.getElementById('registered-list');const regCountDisplay=document.getElementById('reg-count-display');regCountDisplay.textContent=registeredPeople.length;registeredList.innerHTML=registeredPeople.length===0?`<p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>`:'';registeredPeople.forEach((person,index)=>{const item=document.createElement('div');item.className='registered-item';item.innerHTML=`<div><strong class="registered-badge">#${index+1}:</strong> ${person.fullName} <span style="color: #7f8c8d;">(${person.phoneNumber})</span> <i class="fas fa-check-circle" style="color: #9b59b6;"></i></div><div class="button-group"><button onclick="toggleRegistration('${person.id}')" class="btn-danger"><i class="fas fa-user-times"></i> Zrušit registraci</button><button onclick="viewProfile('${person.id}')"><i class="fas fa-eye"></i> Profil</button></div>`;registeredList.appendChild(item);});}
-function viewProfile(id){const history=loadHistory();const person=history.find(i=>i.id==id);if(person){showSection('search');document.getElementById('search-input').value=person.fullName;document.getElementById('search-output').innerHTML=formatProfile(person);showNotification('Profil osoby zobrazen v sekci Vyhledávání.','info');}else{showNotification('Profil nebyl nalezen v historii.','danger');}}
-function copyPerson(id){const card=document.querySelector(`.identity-card[data-id="${id}"]`);if(!card)return;const textToCopy=card.querySelector('.identity-line').textContent;navigator.clipboard.writeText(textToCopy).then(()=>showNotification('Osoba zkopírována.','success')).catch(()=>showNotification('Kopírování se nezdařilo.','danger'));}
-function bulkCopyAllVisible(){const cards=document.querySelectorAll('#output .identity-card');if(cards.length===0){showNotification("Nejsou zde žádné osoby ke zkopírování.",'warning');return;}let allText='';cards.forEach((card,index)=>{const number=card.querySelector('.identity-number').textContent;const text=card.querySelector('.identity-line').textContent.trim();allText+=`---[ Osoba ${number} ]---\n${text}`;if(index<cards.length-1)allText+='\n\n';});navigator.clipboard.writeText(allText).then(()=>showNotification(`Hromadně zkopírováno ${cards.length} osob!`,'success')).catch(()=>showNotification('Hromadné kopírování se nezdařilo.','danger'));}
-function showSection(sectionName){document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));const section=document.getElementById(sectionName);if(section)section.classList.add('active');if(sectionName==='history'){renderHistory();}else if(sectionName==='registered'){renderRegisteredPeople();}else if(sectionName==='list'){updatePeopleList();}else if(sectionName==='email'){renderEmailPersonSelector();}}
-function updatePeopleList(){const history=loadHistory();const peopleList=document.getElementById('peopleList');peopleList.innerHTML=history.length===0?`<p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>`:'';history.forEach(person=>{const card=document.createElement('div');card.className='personCard';card.onclick=()=>showPersonProfile(person);card.innerHTML=`<h3 style="color: #2980b9; margin: 0 0 0.5rem 0;">${person.fullName}</h3><p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.email}</p><p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.phoneNumber}</p>`;peopleList.appendChild(card);});}
-function showPersonProfile(person){showSection('search');document.getElementById('profileContent').innerHTML=formatProfile(person);}
-function loadEmails(){const stored=localStorage.getItem(EMAILS_KEY);return stored?JSON.parse(stored):[];}
-function saveEmails(emails){localStorage.setItem(EMAILS_KEY,JSON.stringify(emails));}
-function renderEmailPersonSelector(){const history=loadHistory();const registeredPeople=history.filter(p=>p.isRegistered);const listContainer=document.getElementById('registered-people-list');if(registeredPeople.length===0){listContainer.innerHTML='<p style="text-align: center; color: #7f8c8d;">Žádní registrovaní uživatelé. Pro přístup k emailu musí být osoba nejprve zaregistrována.</p>';return;}listContainer.innerHTML='';const emails=loadEmails();registeredPeople.forEach(person=>{const unreadCount=emails.filter(e=>e.to===person.email&&e.folder==='inbox'&&!e.read).length;const card=document.createElement('div');card.className='registered-person-card';card.onclick=()=>openEmailClient(person);card.innerHTML=`<div style="display: flex; justify-content: space-between; align-items: center;"><div><h4 style="margin: 0 0 0.5rem 0;">${person.fullName}</h4><p style="margin: 0; color: #7f8c8d; font-size: 0.9rem;">${person.email}</p></div>${unreadCount>0?`<span class="unread-badge">${unreadCount}</span>`:''}</div>`;listContainer.appendChild(card);});const searchInput=document.getElementById('email-search');searchInput.oninput=e=>{const query=e.target.value.toLowerCase();const cards=listContainer.querySelectorAll('.registered-person-card');cards.forEach(card=>{const text=card.textContent.toLowerCase();card.style.display=text.includes(query)?'block':'none';});};}
-function openEmailClient(person){currentEmailPerson=person;currentEmailFolder='inbox';document.getElementById('email-person-selector').style.display='none';document.getElementById('email-client-container').style.display='block';document.getElementById('current-email-person').textContent=person.fullName;document.getElementById('current-email-address').textContent=person.email;switchEmailFolder('inbox');}
-function closeEmailClient(){currentEmailPerson=null;document.getElementById('email-person-selector').style.display='block';document.getElementById('email-client-container').style.display='none';renderEmailPersonSelector();}
-function switchEmailFolder(folder){currentEmailFolder=folder;document.querySelectorAll('.email-sidebar button').forEach(btn=>{btn.classList.remove('active');});document.getElementById(`folder-${folder}`).classList.add('active');document.getElementById('email-list-view').style.display='block';document.getElementById('email-detail-view').style.display='none';document.getElementById('email-compose-view').style.display='none';renderEmailList();}
-function renderEmailList(){if(!currentEmailPerson)return;const emails=loadEmails();const container=document.getElementById('email-list-container');let filteredEmails=emails.filter(e=>{if(currentEmailFolder==='inbox'){return e.to===currentEmailPerson.email&&e.folder==='inbox';}else if(currentEmailFolder==='sent'){return e.from===currentEmailPerson.email&&e.folder==='sent';}else if(currentEmailFolder==='starred'){return(e.to===currentEmailPerson.email||e.from===currentEmailPerson.email)&&e.starred;}else{return(e.to===currentEmailPerson.email||e.from===currentEmailPerson.email)&&e.folder===currentEmailFolder;}});const unreadCount=emails.filter(e=>e.to===currentEmailPerson.email&&e.folder==='inbox'&&!e.read).length;document.getElementById('inbox-count').textContent=unreadCount;if(filteredEmails.length===0){container.innerHTML='<p style="text-align: center; color: #7f8c8d; padding: 2rem;">Žádné emaily v této složce.</p>';return;}container.innerHTML='';filteredEmails.reverse().forEach(email=>{const item=document.createElement('div');item.className=`email-item ${!email.read&&email.to===currentEmailPerson.email?'unread':''}`;item.innerHTML=`<div style="flex: 1;"><div><span class="email-item-star ${email.starred?'starred':''}" onclick="event.stopPropagation(); toggleEmailStar('${email.id}')"><i class="fas fa-star"></i></span><strong>${currentEmailFolder==='sent'?'Komu: '+email.to:'Od: '+email.from}</strong></div><div style="margin: 0.5rem 0;">${email.subject}</div><div style="color: #7f8c8d; font-size: 0.85rem;">${email.body.substring(0,80)}...</div></div><div style="text-align: right; font-size: 0.85rem; color: #7f8c8d;">${email.timestamp}</div>`;item.onclick=()=>viewEmail(email);container.appendChild(item);});}
-function viewEmail(email){currentSelectedEmail=email;if(!email.read&&email.to===currentEmailPerson.email){const emails=loadEmails();const index=emails.findIndex(e=>e.id===email.id);if(index!==-1){emails[index].read=true;saveEmails(emails);}}document.getElementById('email-list-view').style.display='none';document.getElementById('email-detail-view').style.display='block';const detailContent=document.getElementById('email-detail-content');detailContent.innerHTML=`<div class="email-detail"><div class="email-detail-header"><h3>${email.subject}</h3><p><strong>Od:</strong> ${email.from}</p><p><strong>Komu:</strong> ${email.to}</p><p><strong>Datum:</strong> ${email.timestamp}</p><div class="button-group" style="margin-top: 1rem;"><button onclick="toggleEmailStar('${email.id}')" class="${email.starred?'btn-warning':''}"><i class="fas fa-star"></i> ${email.starred?'Odebrat hvězdičku':'Označit hvězdičkou'}</button>${currentEmailFolder!=='archived'?`<button onclick="archiveEmail('${email.id}')"><i class="fas fa-archive"></i> Archivovat</button>`:''}${currentEmailFolder!=='trash'?`<button onclick="moveEmailToTrash('${email.id}')" class="btn-danger"><i class="fas fa-trash"></i> Do koše</button>`:`<button onclick="deleteEmailPermanently('${email.id}')" class="btn-danger"><i class="fas fa-trash"></i> Smazat trvale</button>`}</div></div><div class="email-detail-body">${email.body}</div></div>`;}
-function backToEmailList(){currentSelectedEmail=null;document.getElementById('email-detail-view').style.display='none';document.getElementById('email-list-view').style.display='block';renderEmailList();}
-function composeNewEmail(){document.getElementById('email-list-view').style.display='none';document.getElementById('email-detail-view').style.display='none';document.getElementById('email-compose-view').style.display='block';document.getElementById('compose-to').value='';document.getElementById('compose-subject').value='';document.getElementById('compose-body').value='';}
-function sendEmail(){const to=document.getElementById('compose-to').value.trim();const subject=document.getElementById('compose-subject').value.trim();const body=document.getElementById('compose-body').value.trim();if(!to||!subject||!body){showNotification('Vyplňte všechna pole.','warning');return;}const newEmail={id:Date.now().toString()+Math.random(),from:currentEmailPerson.email,to:to,subject:subject,body:body,timestamp:new Date().toLocaleString('cs-CZ'),read:true,starred:false,folder:'sent'};const emails=loadEmails();emails.push(newEmail);saveEmails(emails);showNotification('Email byl úspěšně odeslán!','success');cancelCompose();switchEmailFolder('sent');}
-function cancelCompose(){document.getElementById('email-compose-view').style.display='none';document.getElementById('email-list-view').style.display='block';renderEmailList();}
-function toggleEmailStar(emailId){const emails=loadEmails();const index=emails.findIndex(e=>e.id===emailId);if(index!==-1){emails[index].starred=!emails[index].starred;saveEmails(emails);renderEmailList();if(currentSelectedEmail&&currentSelectedEmail.id===emailId){viewEmail(emails[index]);}showNotification(emails[index].starred?'Email označen hvězdičkou':'Hvězdička odebrána','info');}}
-function archiveEmail(emailId){const emails=loadEmails();const index=emails.findIndex(e=>e.id===emailId);if(index!==-1){emails[index].folder='archived';saveEmails(emails);showNotification('Email archivován','success');backToEmailList();}}
-function moveEmailToTrash(emailId){const emails=loadEmails();const index=emails.findIndex(e=>e.id===emailId);if(index!==-1){emails[index].folder='trash';saveEmails(emails);showNotification('Email přesunut do koše','warning');backToEmailList();}}
-function deleteEmailPermanently(emailId){if(!confirm('Opravdu chcete trvale smazat tento email?'))return;const emails=loadEmails();const filtered=emails.filter(e=>e.id!==emailId);saveEmails(filtered);showNotification('Email trvale smazán','danger');backToEmailList();}
-document.addEventListener('DOMContentLoaded',()=>{document.getElementById('total-generated').textContent=loadHistory().length;updatePeopleList();});
-</script>
+            <div class="profile-card">
+                <h2><i class="fas fa-user"></i> Detail Profilu</h2>
+                <div id="profileContent">
+                    <p style="text-align: center; color: #7f8c8d;">Vyberte osobu ze seznamu pro zobrazení profilu.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="history" class="section">
+            <div class="profile-card">
+                <h2><i class="fas fa-database"></i> Historie Generovaných Lidí</h2>
+
+                <div class="stats-box">
+                    <div class="stat">
+                        <div class="stat-value" id="total-generated">0</div>
+                        <div class="stat-label">Celkem vygenerováno</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value registered-badge" id="total-registered">0</div>
+                        <div class="stat-label">Registrovaných</div>
+                    </div>
+                </div>
+
+                <h3>Seznam Všech Lidí (Nejnovější nahoře)</h3>
+                <div id="history-list">
+                    <p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>
+                </div>
+
+                <button onclick="clearHistory()" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-trash-alt"></i> Vymazat Celou Historii
+                </button>
+            </div>
+        </div>
+
+        <div id="registered" class="section">
+            <div class="profile-card">
+                <h2 class="registered-badge"><i class="fas fa-user-check"></i> Registrovaní Lidé</h2>
+
+                <div class="stats-box">
+                    <div class="stat">
+                        <div class="stat-value registered-badge" id="reg-count-display">0</div>
+                        <div class="stat-label">Celkem registrovaných</div>
+                    </div>
+                </div>
+
+                <h3>Registrovaný Seznam</h3>
+                <div id="registered-list">
+                    <p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>
+                </div>
+
+                <button onclick="clearAllRegistrations()" class="btn-danger" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-undo-alt"></i> Zrušit Registraci Všem
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div id="notification-container"></div>
+
+    <script>
+        const firstNamesMale = ['Lukáš', 'Tomáš', 'Petr', 'Jan', 'Pavel', 'Martin', 'Ondřej', 'Jakub', 'Filip', 'Vojtěch', 'Adam', 'Marek', 'David', 'Karel', 'Jiří', 'Štěpán', 'Daniel', 'Matěj', 'Vít', 'Oldřich', 'František', 'Antonín', 'Miloslav', 'Vladimír', 'Josef', 'Václav', 'Michal', 'Patrik', 'Alex', 'Erik', 'Denis', 'Kryštof', 'Dominik', 'Hynek', 'Jaroslav', 'Aleš', 'Bohumil', 'Čeněk', 'Dalibor', 'Emil', 'Gustav', 'Ignác', 'Jindřich', 'Libor', 'Norbert', 'Oskar', 'Radek', 'Stanislav', 'Vlastimil', 'Zdeněk'];
+        const firstNamesFemale = ['Anna', 'Tereza', 'Kateřina', 'Lucie', 'Adéla', 'Eliška', 'Veronika', 'Kristýna', 'Nikola', 'Karolína', 'Jana', 'Eva', 'Hana', 'Petra', 'Markéta', 'Klára', 'Zuzana', 'Michaela', 'Lenka', 'Monika', 'Iva', 'Denisa', 'Alena', 'Barbora', 'Helena', 'Natálie', 'Vendula', 'Sabina', 'Simona', 'Viktoria', 'Magdaléna', 'Ludmila', 'Šárka', 'Diana', 'Adriana', 'Beáta', 'Cyrila', 'Dagmar', 'Hedvika', 'Irena', 'Julie', 'Kamila', 'Laura', 'Nina', 'Olga', 'Renata', 'Silvie', 'Valerie', 'Xenie', 'Yvona', 'Žofie'];
+        const lastNames = ['Nováček', 'Svoboda', 'Novák', 'Dvořák', 'Černý', 'Procházka', 'Kučera', 'Veselý', 'Fiala', 'Horák', 'Pospíšil', 'Malý', 'Hájek', 'Jelínek', 'Růžička', 'Beneš', 'Soukup', 'Krejčí', 'Kříž', 'Šťastný', 'Kovář', 'Konečný', 'Bartoš', 'Sedláček', 'Urban', 'Zeman', 'Kolář', 'Ševčík', 'Trnka', 'Pokorný', 'Pavelka', 'Tichý', 'Mrázek', 'Málek', 'Janda', 'Kasal', 'Liška', 'Polák', 'Holub', 'Rybář', 'Šimek', 'Vlček', 'Rejcha', 'Moravec', 'Bílek', 'Zahrádka', 'Křížek', 'Kadlec', 'Musil', 'Šimánek', 'Valenta', 'Zoubek'];
+        const emailDomains = ['icloud.com', 'gmail.com', 'seznam.cz', 'post.cz', 'email.cz', 'atlas.cz', 'volny.cz', 'centrum.cz', 'quick.cz', 'yahoo.com', 'outlook.com', 'tiscali.cz'];
+        const citiesData = {
+            'Praha': ['10000', '11000', '12000', '15000', '17000', '18000', '19000', '25000'],
+            'Brno': ['60200', '61200', '62500', '63900'],
+            'Ostrava': ['70200', '70800', '71000', '72000'],
+            'Plzeň': ['30100', '32300', '31200'],
+            'Liberec': ['46001', '46301', '46010'],
+            'Olomouc': ['77900', '78301', '77200'],
+            'Hradec Králové': ['50003', '50008', '50011'],
+            'České Budějovice': ['37001', '37004', '37007'],
+            'Karlovy Vary': ['36001', '36005', '36009'],
+            'Pardubice': ['53002', '53009', '53301'],
+            'Ústí nad Labem': ['40001', '40301', '40010'],
+            'Zlín': ['76001', '76302', '76005'],
+            'Jihlava': ['58601', '58851'],
+            'Mladá Boleslav': ['29301', '29306'],
+            'Tábor': ['39001', '39101'],
+            'Znojmo': ['66902', '67161'],
+            'Frýdek-Místek': ['73801', '73942'],
+            'Třinec': ['73961', '73995'],
+            'Most': ['43401', '43502'],
+            'Teplice': ['41501', '41701'],
+            'Chomutov': ['43001', '43111'],
+            'Kladno': ['27201', '27351'],
+            'Opava': ['74601', '74705'],
+            'Karviná': ['73301', '73506'],
+            'Jablonec nad Nisou': ['46601', '46802'],
+            'Prostějov': ['79601', '79802'],
+            'Přerov': ['75002', '75116'],
+            'Děčín': ['40502', '40711'],
+            'Kroměříž': ['76701', '76811'],
+            'Valašské Meziříčí': ['75701', '75704']
+        };
+        const allCities = Object.keys(citiesData);
+
+        const HISTORY_KEY = 'iqosPeopleHistory';
+        const EMAILS_KEY = 'iqosEmailsHistory';
+
+        const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        const normalize = (text) => text.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9\s]/g, '')
+            .replace(/\s+/g, '');
+
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const note = document.createElement('div');
+            note.className = `notification ${type}`;
+            note.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${message}`;
+            container.appendChild(note);
+            setTimeout(() => {
+                note.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => note.remove(), 300);
+            }, 4000);
+        }
+
+        function generateBirthData(isMale) {
+            const currentYear = new Date().getFullYear();
+            const year = getRandomInt(currentYear - 65, currentYear - 18);
+            const month = getRandomInt(1, 12);
+            const day = getRandomInt(1, 28);
+            let rcMonth = month;
+            if (!isMale) {
+                rcMonth += 50;
+            }
+            const yy = String(year % 100).padStart(2, '0');
+            const mm = String(rcMonth).padStart(2, '0');
+            const dd = String(day).padStart(2, '0');
+            const suffix = String(getRandomInt(1000, 9999)).padStart(4, '0');
+            const rodneCislo = `${yy}${mm}${dd}/${suffix}`;
+            return {
+                day: day,
+                month: month,
+                year: year,
+                formattedDate: `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`,
+                rodneCislo: rodneCislo
+            };
+        }
+
+        function generateEmail(firstName, lastName) {
+            const baseFirstName = normalize(firstName);
+            const baseLastName = normalize(lastName);
+            const randomNum = getRandomInt(1, 99);
+            const emailFormats = [
+                `${baseFirstName}.${baseLastName}`,
+                `${baseLastName}${baseFirstName.charAt(0)}`,
+                `${baseFirstName}${randomNum}`,
+                `${baseFirstName.charAt(0)}${baseLastName}${randomNum}`,
+            ];
+            const base = getRandomItem(emailFormats);
+            const domain = getRandomItem(emailDomains);
+            return `${base}@${domain}`;
+        }
+
+        function createPersonObject(customPhone = null, preferredGender = 'random') {
+            let isMale;
+            if (preferredGender === 'Male') isMale = true;
+            else if (preferredGender === 'Female') isMale = false;
+            else isMale = Math.random() < 0.5;
+
+            const { formattedDate, rodneCislo } = generateBirthData(isMale);
+
+            let firstName;
+            if (isMale) firstName = getRandomItem(firstNamesMale);
+            else firstName = getRandomItem(firstNamesFemale);
+
+            let lastNameBase = getRandomItem(lastNames);
+            const lastName = isMale ? lastNameBase : (lastNameBase.endsWith('ý') ? lastNameBase.slice(0, -1) + 'á' : lastNameBase + 'ová');
+
+            const city = getRandomItem(allCities);
+            const postalCode = getRandomItem(citiesData[city]);
+
+            let phoneBase;
+            if (customPhone) {
+                phoneBase = customPhone.replace(/\s/g, '').substring(0, 9);
+            } else {
+                phoneBase = String(getRandomInt(700000000, 799999999));
+            }
+
+            const person = {
+                id: Date.now() + Math.random(),
+                fullName: `${firstName} ${lastName}`,
+                birthDate: formattedDate,
+                phoneNumber: phoneBase.replace(/(\d{3})(\d{3})(\d{3})/, '$1$2$3'),
+                email: generateEmail(firstName, lastName),
+                rodneCislo: rodneCislo,
+                city: city,
+                postalCode: postalCode,
+                gender: isMale ? 'Muž' : 'Žena',
+                timestamp: new Date().toLocaleString('cs-CZ'),
+                isRegistered: false
+            };
+
+            return person;
+        }
+
+        function formatPerson(person) {
+            return `Jméno: ${person.fullName}\nDatum Narození: ${person.birthDate}\nTelefon: ${person.phoneNumber}\nE-mail: ${person.email}`.trim();
+        }
+
+        function formatProfile(person) {
+            const regStatus = person.isRegistered ? '<span style="color: #27ae60;">ANO</span>' : '<span style="color: #e74c3c;">NE</span>';
+            return `
+                <div class="profile-detail">
+                    <p><strong><i class="fas fa-user"></i> Jméno:</strong> ${person.fullName}</p>
+                    <p><strong><i class="fas fa-calendar-alt"></i> Datum Narození:</strong> ${person.birthDate}</p>
+                    <p><strong><i class="fas fa-phone"></i> Telefon:</strong> ${person.phoneNumber}</p>
+                    <p><strong><i class="fas fa-at"></i> E-mail:</strong> ${person.email}</p>
+                    <hr>
+                    <p><strong><i class="fas fa-id-card"></i> Rodné Číslo:</strong> ${person.rodneCislo}</p>
+                    <p><strong><i class="fas fa-venus-mars"></i> Pohlaví:</strong> ${person.gender}</p>
+                    <p><strong><i class="fas fa-map-marker-alt"></i> Bydliště:</strong> ${person.city} (${person.postalCode})</p>
+                    <p><strong><i class="fas fa-calendar-check"></i> Vytvořeno:</strong> ${person.timestamp}</p>
+                    <hr>
+                    <p><strong><i class="fas fa-user-check"></i> Registrovaný:</strong> ${regStatus}</p>
+                </div>
+            `;
+        }
+
+        function renderPersonCard(person, container) {
+            const formattedPerson = formatPerson(person);
+            const card = document.createElement('div');
+            card.className = 'identity-card';
+            card.setAttribute('data-id', person.id);
+            card.innerHTML = `
+                <div class="header-row">
+                    <div class="identity-number"></div>
+                    <div class="button-group">
+                        <button onclick="copyPerson('${person.id}')" title="Kopírovat">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button onclick="removePersonFromOutput('${person.id}')" class="btn-danger" title="Smazat">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <pre class="identity-line">${formattedPerson}</pre>
+            `;
+            container.prepend(card);
+            renumberOutputCards(container);
+        }
+
+        function renumberOutputCards(container) {
+            const cards = container.querySelectorAll('.identity-card');
+            let count = cards.length;
+            cards.forEach(card => {
+                const numberDiv = card.querySelector('.identity-number');
+                if (numberDiv) {
+                    numberDiv.textContent = `#${count}`;
+                }
+                count--;
+            });
+        }
+
+        function generatePeople(isBulk = false, phoneList = []) {
+            const outputDiv = document.getElementById('output');
+            const gender = document.getElementById('gender-select').value;
+            const customPhoneInput = document.getElementById('custom-phone');
+            const customPhone = customPhoneInput.value.trim().replace(/\s/g, '');
+            const isSingle = customPhone.length > 0;
+
+            let peopleToGenerate = [];
+
+            if (isBulk) {
+                peopleToGenerate = phoneList.map(phone => createPersonObject(phone, gender));
+            } else if (isSingle) {
+                if (!/^\d{9}$/.test(customPhone)) {
+                    showNotification('Neplatné číslo. Zadejte prosím 9 číslic.', 'danger');
+                    return;
+                }
+                peopleToGenerate.push(createPersonObject(customPhone, gender));
+            } else {
+                const count = parseInt(document.getElementById('generation-count').value, 10);
+                if (isNaN(count) || count <= 0 || count > 50) {
+                    showNotification('Zadejte platný počet (1-50 osob).', 'danger');
+                    return;
+                }
+                for (let i = 0; i < count; i++) {
+                    peopleToGenerate.push(createPersonObject(null, gender));
+                }
+            }
+
+            if (!isBulk && !isSingle) {
+                outputDiv.innerHTML = '';
+            }
+
+            peopleToGenerate.forEach(person => {
+                renderPersonCard(person, outputDiv);
+                saveToHistory(person);
+            });
+
+            updatePeopleList();
+            renderEmailList();
+            updateEmailSelects();
+
+            showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
+
+            if (customPhoneInput && isSingle) {
+                customPhoneInput.value = '';
+            }
+        }
+
+        function bulkGenerateFromPhones() {
+            const textarea = document.getElementById('bulk-phones');
+            const phones = textarea.value.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+            const validPhones = phones.filter(p => /^\d{9}$/.test(p));
+
+            if (validPhones.length === 0) {
+                showNotification('Nebylo nalezeno žádné platné 9místné číslo v seznamu.', 'danger');
+                return;
+            }
+
+            generatePeople(true, validPhones);
+            textarea.value = '';
+            showSection('generator');
+        }
+
+        function searchPerson() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const outputDiv = document.getElementById('search-output');
+            outputDiv.innerHTML = '';
+
+            if (query.length < 3) {
+                outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Zadejte alespoň 3 znaky pro vyhledávání.</p>`;
+                showNotification('Zadejte alespoň 3 znaky pro vyhledávání.', 'warning');
+                return;
+            }
+
+            const history = loadHistory();
+            const foundPerson = history.find(person =>
+                person.fullName.toLowerCase().includes(query) ||
+                person.phoneNumber.includes(query)
+            );
+
+            if (foundPerson) {
+                outputDiv.innerHTML = formatProfile(foundPerson);
+                showNotification(`Profil nalezen: ${foundPerson.fullName}`, 'success');
+            } else {
+                outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Osoba nebyla nalezena.</p>`;
+                showNotification('Osoba nenalezena.', 'danger');
+            }
+        }
+
+        function loadHistory() {
+            const history = localStorage.getItem(HISTORY_KEY);
+            return history ? JSON.parse(history) : [];
+        }
+
+        function saveHistory(history) {
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        }
+
+        function saveToHistory(person) {
+            const history = loadHistory();
+            history.push(person);
+            saveHistory(history);
+            document.getElementById('total-generated').textContent = history.length;
+        }
+
+        function loadEmails() {
+            const emails = localStorage.getItem(EMAILS_KEY);
+            return emails ? JSON.parse(emails) : [];
+        }
+
+        function saveEmails(emails) {
+            localStorage.setItem(EMAILS_KEY, JSON.stringify(emails));
+        }
+
+        function sendEmailToUser() {
+            const fromSelect = document.getElementById('email-from-select');
+            const toSelect = document.getElementById('email-to-select');
+            const subject = document.getElementById('email-subject-input').value.trim();
+            const message = document.getElementById('email-message-input').value.trim();
+
+            const fromPersonId = fromSelect.value;
+            const toPersonId = toSelect.value;
+
+            if (!fromPersonId || !toPersonId) {
+                showNotification('Musíte vybrat odesílatele i příjemce.', 'danger');
+                return;
+            }
+
+            if (!subject || !message) {
+                showNotification('Předmět i zpráva musí být vyplněny.', 'danger');
+                return;
+            }
+
+            const history = loadHistory();
+            const fromPerson = history.find(p => p.id == fromPersonId);
+            const toPerson = history.find(p => p.id == toPersonId);
+
+            if (!fromPerson || !toPerson) {
+                showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
+                return;
+            }
+
+            const emailObject = {
+                id: Date.now() + Math.random(),
+                from: fromPerson.email,
+                fromName: fromPerson.fullName,
+                fromId: fromPerson.id,
+                to: toPerson.email,
+                toName: toPerson.fullName,
+                toId: toPerson.id,
+                subject: subject,
+                message: message,
+                timestamp: new Date().toLocaleString('cs-CZ'),
+                read: false
+            };
+
+            const emails = loadEmails();
+            emails.push(emailObject);
+            saveEmails(emails);
+
+            showNotification(`Email úspěšně odeslán od ${fromPerson.fullName} pro ${toPerson.fullName}!`, 'success');
+
+            document.getElementById('email-subject-input').value = '';
+            document.getElementById('email-message-input').value = '';
+            fromSelect.selectedIndex = 0;
+            toSelect.selectedIndex = 0;
+
+            renderEmailList();
+        }
+
+        function updateEmailSelects() {
+            const history = loadHistory();
+            const registeredPeople = history.filter(p => p.isRegistered);
+
+            const fromSelect = document.getElementById('email-from-select');
+            const toSelect = document.getElementById('email-to-select');
+            const filterSelect = document.getElementById('email-filter-user');
+
+            fromSelect.innerHTML = '<option value="">-- Vyberte odesílatele --</option>';
+            toSelect.innerHTML = '<option value="">-- Vyberte příjemce --</option>';
+            filterSelect.innerHTML = '<option value="">-- Všichni uživatelé --</option>';
+
+            registeredPeople.forEach(person => {
+                const optionFrom = document.createElement('option');
+                optionFrom.value = person.id;
+                optionFrom.textContent = `${person.fullName} (${person.email})`;
+                fromSelect.appendChild(optionFrom);
+
+                const optionTo = document.createElement('option');
+                optionTo.value = person.id;
+                optionTo.textContent = `${person.fullName} (${person.email})`;
+                toSelect.appendChild(optionTo);
+
+                const optionFilter = document.createElement('option');
+                optionFilter.value = person.id;
+                optionFilter.textContent = `${person.fullName} (${person.email})`;
+                filterSelect.appendChild(optionFilter);
+            });
+        }
+
+        function removePersonFromOutput(id) {
+            const card = document.querySelector(`#output .identity-card[data-id="${id}"]`);
+            if (card) {
+                card.remove();
+                renumberOutputCards(document.getElementById('output'));
+                showNotification('Osoba smazána z výsledků (zůstává v Historii).', 'warning');
+            }
+        }
+
+        function clearHistory() {
+            if (confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")) {
+                localStorage.removeItem(HISTORY_KEY);
+                localStorage.removeItem(EMAILS_KEY);
+                renderHistory();
+                renderRegisteredPeople();
+                renderEmailList();
+                updatePeopleList();
+                updateEmailSelects();
+                showNotification('Celá historie byla úspěšně vymazána.', 'danger');
+            }
+        }
+
+        function toggleRegistration(id) {
+            let history = loadHistory();
+            const personIndex = history.findIndex(p => p.id == id);
+
+            if (personIndex !== -1) {
+                const isCurrentlyRegistered = history[personIndex].isRegistered;
+                history[personIndex].isRegistered = !isCurrentlyRegistered;
+                history[personIndex].timestamp = new Date().toLocaleString('cs-CZ');
+                saveHistory(history);
+
+                showNotification(`Osoba ${history[personIndex].fullName} byla ${!isCurrentlyRegistered ? 'zaregistrována' : 'odregistrována'}.`, 'info');
+
+                renderHistory();
+                renderRegisteredPeople();
+                updatePeopleList();
+                updateEmailSelects();
+            } else {
+                showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
+            }
+        }
+
+        function clearAllRegistrations() {
+            if (confirm("Opravdu chcete zrušit registraci VŠEM lidem v historii?")) {
+                let history = loadHistory();
+                history = history.map(person => ({ ...person, isRegistered: false }));
+                saveHistory(history);
+
+                showNotification('Registrace zrušena u VŠECH osob.', 'danger');
+                renderHistory();
+                renderRegisteredPeople();
+                updatePeopleList();
+                updateEmailSelects();
+            }
+        }
+
+        function renderHistory() {
+            const history = loadHistory();
+            const historyList = document.getElementById('history-list');
+            const totalCountSpan = document.getElementById('total-generated');
+            const totalRegisteredSpan = document.getElementById('total-registered');
+
+            totalCountSpan.textContent = history.length;
+            const registeredCount = history.filter(p => p.isRegistered).length;
+            totalRegisteredSpan.textContent = registeredCount;
+
+            historyList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>` : '';
+
+            [...history].reverse().forEach((person, index) => {
+                const isReg = person.isRegistered;
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>#${history.length - index}:</strong> ${person.fullName}
+                        <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
+                        ${isReg ? '<i class="fas fa-check-circle" style="color: #9b59b6;"></i>' : ''}
+                    </div>
+                    <div class="button-group">
+                        <button onclick="toggleRegistration('${person.id}')" class="${isReg ? 'btn-danger' : 'btn-success'}">
+                            <i class="fas ${isReg ? 'fa-user-times' : 'fa-user-check'}"></i> ${isReg ? 'Zrušit' : 'Registrovat'}
+                        </button>
+                        <button onclick="viewProfile('${person.id}')">
+                            <i class="fas fa-eye"></i> Profil
+                        </button>
+                    </div>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+
+        function renderRegisteredPeople() {
+            const history = loadHistory();
+            const registeredPeople = history.filter(p => p.isRegistered);
+            const registeredList = document.getElementById('registered-list');
+            const regCountDisplay = document.getElementById('reg-count-display');
+
+            regCountDisplay.textContent = registeredPeople.length;
+
+            registeredList.innerHTML = registeredPeople.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>` : '';
+
+            registeredPeople.forEach((person, index) => {
+                const item = document.createElement('div');
+                item.className = 'registered-item';
+
+                item.innerHTML = `
+                    <div>
+                        <strong class="registered-badge">#${index + 1}:</strong> ${person.fullName}
+                        <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
+                        <i class="fas fa-check-circle" style="color: #9b59b6;"></i>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="toggleRegistration('${person.id}')" class="btn-danger">
+                            <i class="fas fa-user-times"></i> Zrušit registraci
+                        </button>
+                        <button onclick="viewProfile('${person.id}')">
+                            <i class="fas fa-eye"></i> Profil
+                        </button>
+                    </div>
+                `;
+                registeredList.appendChild(item);
+            });
+        }
+
+        function renderEmailList(filteredEmails = null) {
+            const emails = filteredEmails || loadEmails();
+            const emailList = document.getElementById('email-list');
+            const emailCountDisplay = document.getElementById('email-count-display');
+            const sentCountDisplay = document.getElementById('sent-email-count');
+            const receivedCountDisplay = document.getElementById('received-email-count');
+
+            emailCountDisplay.textContent = emails.length;
+
+            const allEmails = loadEmails();
+            const uniqueSenders = new Set(allEmails.map(e => e.fromId));
+            const uniqueReceivers = new Set(allEmails.map(e => e.toId));
+
+            sentCountDisplay.textContent = allEmails.length;
+            receivedCountDisplay.textContent = allEmails.length;
+
+            emailList.innerHTML = emails.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nebyly odeslány žádné emaily.</p>` : '';
+
+            [...emails].reverse().forEach((email) => {
+                const item = document.createElement('div');
+                item.className = 'email-item';
+                item.style.cursor = 'pointer';
+                item.innerHTML = `
+                    <div>
+                        <strong><i class="fas fa-envelope"></i> ${email.subject}</strong><br>
+                        <span style="color: #7f8c8d; font-size: 0.9rem;">
+                            Od: ${email.fromName} (${email.from})<br>
+                            Pro: ${email.toName} (${email.to})<br>
+                            ${email.timestamp}
+                        </span>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="event.stopPropagation(); openEmailDetail('${email.id}')">
+                            <i class="fas fa-eye"></i> Otevřít
+                        </button>
+                        <button onclick="event.stopPropagation(); deleteEmail('${email.id}')" class="btn-danger">
+                            <i class="fas fa-trash"></i> Smazat
+                        </button>
+                    </div>
+                `;
+                item.onclick = () => openEmailDetail(email.id);
+                emailList.appendChild(item);
+            });
+        }
+
+        function filterEmails() {
+            const query = document.getElementById('email-search-input').value.trim().toLowerCase();
+
+            if (query.length === 0) {
+                renderEmailList();
+                return;
+            }
+
+            const emails = loadEmails();
+            const filtered = emails.filter(email =>
+                email.fromName.toLowerCase().includes(query) ||
+                email.toName.toLowerCase().includes(query) ||
+                email.from.toLowerCase().includes(query) ||
+                email.to.toLowerCase().includes(query) ||
+                email.subject.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                showNotification('Nebyly nalezeny žádné emaily odpovídající hledání.', 'warning');
+            }
+
+            renderEmailList(filtered);
+        }
+
+        function filterEmailsByUser() {
+            const filterSelect = document.getElementById('email-filter-user');
+            const userId = filterSelect.value;
+
+            if (!userId) {
+                renderEmailList();
+                return;
+            }
+
+            const emails = loadEmails();
+            const filtered = emails.filter(email =>
+                email.fromId == userId || email.toId == userId
+            );
+
+            renderEmailList(filtered);
+        }
+
+        function clearEmailSearch() {
+            document.getElementById('email-search-input').value = '';
+            document.getElementById('email-filter-user').selectedIndex = 0;
+            renderEmailList();
+        }
+
+        function openEmail(id) {
+            const history = loadHistory();
+            const person = history.find(p => p.id == id);
+
+            if (!person) {
+                showNotification('Email nebyl nalezen.', 'danger');
+                return;
+            }
+
+            document.getElementById('email-detail-subject').innerHTML = `<i class="fas fa-envelope-open"></i> Email: ${person.fullName}`;
+            document.getElementById('email-detail-from').textContent = person.email;
+            document.getElementById('email-detail-date').textContent = person.timestamp;
+            document.getElementById('email-detail-body').innerHTML = formatProfile(person);
+
+            document.getElementById('email-list').parentElement.style.display = 'none';
+            document.getElementById('email-detail-container').style.display = 'block';
+
+            showNotification(`Email otevřen: ${person.email}`, 'info');
+        }
+
+        function openEmailDetail(emailId) {
+            const emails = loadEmails();
+            const email = emails.find(e => e.id == emailId);
+
+            if (!email) {
+                showNotification('Email nebyl nalezen.', 'danger');
+                return;
+            }
+
+            document.getElementById('email-detail-subject').innerHTML = `<i class="fas fa-envelope-open"></i> ${email.subject}`;
+            document.getElementById('email-detail-from').textContent = `${email.fromName} (${email.from})`;
+            document.getElementById('email-detail-to').textContent = `${email.toName} (${email.to})`;
+            document.getElementById('email-detail-date').textContent = email.timestamp;
+            document.getElementById('email-detail-body').innerHTML = `<p style="white-space: pre-wrap;">${email.message}</p>`;
+
+            document.getElementById('email-list').parentElement.style.display = 'none';
+            document.getElementById('email-detail-container').style.display = 'block';
+
+            showNotification(`Email otevřen: ${email.subject}`, 'info');
+        }
+
+        function closeEmailDetail() {
+            document.getElementById('email-list').parentElement.style.display = 'block';
+            document.getElementById('email-detail-container').style.display = 'none';
+        }
+
+        function deleteEmail(emailId) {
+            if (confirm('Opravdu chcete smazat tento email?')) {
+                let emails = loadEmails();
+                emails = emails.filter(e => e.id != emailId);
+                saveEmails(emails);
+                renderEmailList();
+                showNotification('Email byl úspěšně smazán.', 'success');
+            }
+        }
+
+        function viewProfile(id) {
+            const history = loadHistory();
+            const person = history.find(i => i.id == id);
+
+            if (person) {
+                showSection('search');
+                document.getElementById('search-input').value = person.fullName;
+                document.getElementById('search-output').innerHTML = formatProfile(person);
+                showNotification('Profil osoby zobrazen v sekci Vyhledávání.', 'info');
+            } else {
+                showNotification('Profil nebyl nalezen v historii.', 'danger');
+            }
+        }
+
+        function copyPerson(id) {
+            const card = document.querySelector(`.identity-card[data-id="${id}"]`);
+            if (!card) return;
+
+            const textToCopy = card.querySelector('.identity-line').textContent;
+
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    showNotification('Osoba zkopírována.', 'success');
+                })
+                .catch(err => {
+                    showNotification('Kopírování se nezdařilo.', 'danger');
+                });
+        }
+
+        function bulkCopyAllVisible() {
+            const cards = document.querySelectorAll('#output .identity-card');
+            if (cards.length === 0) {
+                showNotification("Nejsou zde žádné osoby ke zkopírování.", 'warning');
+                return;
+            }
+
+            let allText = '';
+            cards.forEach((card, index) => {
+                const number = card.querySelector('.identity-number').textContent;
+                const text = card.querySelector('.identity-line').textContent.trim();
+                allText += `---[ Osoba ${number} ]---\n${text}`;
+                if (index < cards.length - 1) {
+                    allText += '\n\n';
+                }
+            });
+
+            navigator.clipboard.writeText(allText)
+                .then(() => {
+                    showNotification(`Hromadně zkopírováno ${cards.length} osob!`, 'success');
+                })
+                .catch(err => {
+                    showNotification('Hromadné kopírování se nezdařilo.', 'danger');
+                });
+        }
+
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            const section = document.getElementById(sectionName);
+            if (section) {
+                section.classList.add('active');
+            }
+
+            if (sectionName === 'history') {
+                renderHistory();
+            } else if (sectionName === 'registered') {
+                renderRegisteredPeople();
+            } else if (sectionName === 'list') {
+                updatePeopleList();
+            } else if (sectionName === 'email') {
+                closeEmailDetail();
+                renderEmailList();
+            } else if (sectionName === 'send-email') {
+                updateEmailSelects();
+            }
+        }
+
+        function updatePeopleList() {
+            const history = loadHistory();
+            const peopleList = document.getElementById('peopleList');
+
+            peopleList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>` : '';
+
+            history.forEach(person => {
+                const card = document.createElement('div');
+                card.className = 'personCard';
+                card.onclick = () => showPersonProfile(person);
+                card.innerHTML = `
+                    <h3 style="color: #2980b9; margin: 0 0 0.5rem 0;">${person.fullName}</h3>
+                    <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.email}</p>
+                    <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.phoneNumber}</p>
+                `;
+                peopleList.appendChild(card);
+            });
+        }
+
+        function showPersonProfile(person) {
+            showSection('search');
+            document.getElementById('profileContent').innerHTML = formatProfile(person);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('total-generated').textContent = loadHistory().length;
+            updatePeopleList();
+            renderEmailList();
+            updateEmailSelects();
+        });
+    </script>
 </body>
 </html>
