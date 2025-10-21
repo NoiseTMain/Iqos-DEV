@@ -27,6 +27,7 @@
   nav {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
   }
   nav button {
     background: none;
@@ -160,16 +161,6 @@
     background-color: #3498db;
     color: white;
   }
-  #emailSection {
-    margin-top: 2rem;
-    background: #ecf0f1;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  video {
-    max-width: 100%;
-    border-radius: 8px;
-  }
   .identity-card {
     background: #fff;
     padding: 1rem;
@@ -284,6 +275,110 @@
     font-weight: 600;
     color: #2c3e50;
   }
+
+  .email-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 1rem;
+    min-height: 70vh;
+  }
+  .email-sidebar {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .email-sidebar button {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #2c3e50;
+  }
+  .email-sidebar button:hover {
+    background: #ecf0f1;
+  }
+  .email-sidebar button.active {
+    background: #3498db;
+    color: white;
+  }
+  .email-main {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .email-list {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .email-item {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .email-item:hover {
+    background: #f8f9fa;
+  }
+  .email-item.unread {
+    background: #e3f2fd;
+    font-weight: bold;
+  }
+  .email-item-star {
+    cursor: pointer;
+    color: #95a5a6;
+    margin-right: 0.5rem;
+  }
+  .email-item-star.starred {
+    color: #f39c12;
+  }
+  .email-detail {
+    padding: 1rem;
+  }
+  .email-detail-header {
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .email-detail-body {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  .compose-form input, .compose-form textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .registered-person-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .registered-person-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+  }
+  .unread-badge {
+    background: #e74c3c;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
@@ -292,7 +387,7 @@
   <h1>Profesionální Webová Aplikace</h1>
   <nav>
     <button onclick="showSection('home')">Domů</button>
-    <button onclick="showSection('register')">Registrace</button>
+    <button onclick="showSection('email')">Email</button>
     <button onclick="showSection('generator')">Generátor</button>
     <button onclick="showSection('bulk')">Hromadné</button>
     <button onclick="showSection('list')">Seznam</button>
@@ -307,9 +402,9 @@
 <div id="home" class="section active">
   <div class="profile-card">
     <h2>Vítejte v aplikaci</h2>
-    <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
+    <p>Vytvořený na míru od Adama </p>
     <ul>
-      <li><strong>Registrace:</strong> Zaregistrujte nové uživatele</li>
+      <li><strong>Email:</strong> Emailový klient pro registrované osoby</li>
       <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
       <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
       <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
@@ -320,17 +415,87 @@
   </div>
 </div>
 
-<div id="register" class="section">
+<div id="email" class="section">
   <div class="profile-card">
-    <h2>Registrace</h2>
-    <form onsubmit="handleRegistration(event)">
-      <input type="text" id="regName" placeholder="Jméno" required>
-      <input type="email" id="regEmail" placeholder="Email" required>
-      <button type="submit" class="btn-success">
-        <i class="fas fa-user-plus"></i> Registrovat
-      </button>
-    </form>
-    <div id="regMessage" style="margin-top: 1rem;"></div>
+    <h2><i class="fas fa-envelope"></i> Emailový Systém</h2>
+
+    <div id="email-person-selector">
+      <h3>Vyberte Registrovanou Osobu</h3>
+      <input type="text" id="email-search" placeholder="Vyhledat osobu..." style="width: 100%; margin-bottom: 1rem;">
+      <div id="registered-people-list"></div>
+    </div>
+
+    <div id="email-client-container" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div>
+          <h3 style="margin: 0;" id="current-email-person"></h3>
+          <p style="margin: 0; color: #7f8c8d; font-size: 0.9rem;" id="current-email-address"></p>
+        </div>
+        <button onclick="closeEmailClient()" class="btn-secondary">
+          <i class="fas fa-arrow-left"></i> Zpět na seznam
+        </button>
+      </div>
+
+      <div class="email-container">
+        <div class="email-sidebar">
+          <button onclick="composeNewEmail()" class="btn-success" style="margin-bottom: 1rem; justify-content: center;">
+            <i class="fas fa-pen"></i> Napsat Email
+          </button>
+
+          <button onclick="switchEmailFolder('inbox')" class="active" id="folder-inbox">
+            <i class="fas fa-inbox"></i> Doručená (<span id="inbox-count">0</span>)
+          </button>
+          <button onclick="switchEmailFolder('sent')" id="folder-sent">
+            <i class="fas fa-paper-plane"></i> Odeslané
+          </button>
+          <button onclick="switchEmailFolder('starred')" id="folder-starred">
+            <i class="fas fa-star"></i> Označené
+          </button>
+          <button onclick="switchEmailFolder('archived')" id="folder-archived">
+            <i class="fas fa-archive"></i> Archiv
+          </button>
+          <button onclick="switchEmailFolder('trash')" id="folder-trash">
+            <i class="fas fa-trash"></i> Koš
+          </button>
+        </div>
+
+        <div class="email-main">
+          <div id="email-list-view">
+            <div class="email-list" id="email-list-container"></div>
+          </div>
+
+          <div id="email-detail-view" style="display: none;">
+            <button onclick="backToEmailList()" style="margin-bottom: 1rem;">
+              <i class="fas fa-arrow-left"></i> Zpět
+            </button>
+            <div id="email-detail-content"></div>
+          </div>
+
+          <div id="email-compose-view" style="display: none;">
+            <h3>Nový Email</h3>
+            <div class="compose-form">
+              <label>Komu:</label>
+              <input type="email" id="compose-to" placeholder="email@example.com">
+
+              <label>Předmět:</label>
+              <input type="text" id="compose-subject" placeholder="Předmět emailu">
+
+              <label>Zpráva:</label>
+              <textarea id="compose-body" rows="15" placeholder="Napište svou zprávu..."></textarea>
+
+              <div class="button-group">
+                <button onclick="sendEmail()" class="btn-success">
+                  <i class="fas fa-paper-plane"></i> Odeslat
+                </button>
+                <button onclick="cancelCompose()" class="btn-secondary">
+                  <i class="fas fa-times"></i> Zrušit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -475,529 +640,6 @@
 
 <div id="notification-container"></div>
 
-<script>
-const firstNamesMale = ['Lukáš', 'Tomáš', 'Petr', 'Jan', 'Pavel', 'Martin', 'Ondřej', 'Jakub', 'Filip', 'Vojtěch', 'Adam', 'Marek', 'David', 'Karel', 'Jiří', 'Štěpán', 'Daniel', 'Matěj', 'Vít', 'Oldřich', 'František', 'Antonín', 'Miloslav', 'Vladimír', 'Josef', 'Václav', 'Michal', 'Patrik', 'Alex', 'Erik', 'Denis', 'Kryštof', 'Dominik', 'Hynek', 'Jaroslav', 'Aleš', 'Bohumil', 'Čeněk', 'Dalibor', 'Emil', 'Gustav', 'Ignác', 'Jindřich', 'Libor', 'Norbert', 'Oskar', 'Radek', 'Stanislav', 'Vlastimil', 'Zdeněk'];
-const firstNamesFemale = ['Anna', 'Tereza', 'Kateřina', 'Lucie', 'Adéla', 'Eliška', 'Veronika', 'Kristýna', 'Nikola', 'Karolína', 'Jana', 'Eva', 'Hana', 'Petra', 'Markéta', 'Klára', 'Zuzana', 'Michaela', 'Lenka', 'Monika', 'Iva', 'Denisa', 'Alena', 'Barbora', 'Helena', 'Natálie', 'Vendula', 'Sabina', 'Simona', 'Viktoria', 'Magdaléna', 'Ludmila', 'Šárka', 'Diana', 'Adriana', 'Beáta', 'Cyrila', 'Dagmar', 'Hedvika', 'Irena', 'Julie', 'Kamila', 'Laura', 'Nina', 'Olga', 'Renata', 'Silvie', 'Valerie', 'Xenie', 'Yvona', 'Žofie'];
-const lastNames = ['Nováček', 'Svoboda', 'Novák', 'Dvořák', 'Černý', 'Procházka', 'Kučera', 'Veselý', 'Fiala', 'Horák', 'Pospíšil', 'Malý', 'Hájek', 'Jelínek', 'Růžička', 'Beneš', 'Soukup', 'Krejčí', 'Kříž', 'Šťastný', 'Kovář', 'Konečný', 'Bartoš', 'Sedláček', 'Urban', 'Zeman', 'Kolář', 'Ševčík', 'Trnka', 'Pokorný', 'Pavelka', 'Tichý', 'Mrázek', 'Málek', 'Janda', 'Kasal', 'Liška', 'Polák', 'Holub', 'Rybář', 'Šimek', 'Vlček', 'Rejcha', 'Moravec', 'Bílek', 'Zahrádka', 'Křížek', 'Kadlec', 'Musil', 'Šimánek', 'Valenta', 'Zoubek'];
-const emailDomains = ['icloud.com', 'gmail.com', 'seznam.cz', 'post.cz', 'email.cz', 'atlas.cz', 'volny.cz', 'centrum.cz', 'quick.cz', 'yahoo.com', 'outlook.com', 'tiscali.cz'];
-const citiesData = {
-    'Praha': ['10000', '11000', '12000', '15000', '17000', '18000', '19000', '25000'], 'Brno': ['60200', '61200', '62500', '63900'], 'Ostrava': ['70200', '70800', '71000', '72000'], 'Plzeň': ['30100', '32300', '31200'], 'Liberec': ['46001', '46301', '46010'], 'Olomouc': ['77900', '78301', '77200'], 'Hradec Králové': ['50003', '50008', '50011'], 'České Budějovice': ['37001', '37004', '37007'], 'Karlovy Vary': ['36001', '36005', '36009'], 'Pardubice': ['53002', '53009', '53301'], 'Ústí nad Labem': ['40001', '40301', '40010'], 'Zlín': ['76001', '76302', '76005'], 'Jihlava': ['58601', '58851'], 'Mladá Boleslav': ['29301', '29306'], 'Tábor': ['39001', '39101'], 'Znojmo': ['66902', '67161'], 'Frýdek-Místek': ['73801', '73942'], 'Třinec': ['73961', '73995'], 'Most': ['43401', '43502'], 'Teplice': ['41501', '41701'], 'Chomutov': ['43001', '43111'], 'Kladno': ['27201', '27351'], 'Opava': ['74601', '74705'], 'Karviná': ['73301', '73506'], 'Jablonec nad Nisou': ['46601', '46802'], 'Prostějov': ['79601', '79802'], 'Přerov': ['75002', '75116'], 'Děčín': ['40502', '40711'], 'Kroměříž': ['76701', '76811'], 'Valašské Meziříčí': ['75701', '75704']
-};
-const allCities = Object.keys(citiesData);
-const HISTORY_KEY = 'iqosPeopleHistory';
-
-const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const normalize = (text) => text.toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, '')
-    .replace(/\s+/g, '');
-
-function showNotification(message, type = 'info') {
-    const container = document.getElementById('notification-container');
-    const note = document.createElement('div');
-
-    note.className = `notification ${type}`;
-    note.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> ${message}`;
-    container.appendChild(note);
-
-    setTimeout(() => {
-        note.style.animation = 'slideIn 0.3s ease-out reverse';
-        setTimeout(() => note.remove(), 300);
-    }, 4000);
-}
-
-function generateBirthData(isMale) {
-    const currentYear = new Date().getFullYear();
-    const year = getRandomInt(currentYear - 65, currentYear - 18);
-    const month = getRandomInt(1, 12);
-    const day = getRandomInt(1, 28);
-
-    let rcMonth = month;
-    if (!isMale) {
-        rcMonth += 50;
-    }
-
-    const yy = String(year % 100).padStart(2, '0');
-    const mm = String(rcMonth).padStart(2, '0');
-    const dd = String(day).padStart(2, '0');
-
-    const suffix = String(getRandomInt(1000, 9999)).padStart(4, '0');
-
-    const rodneCislo = `${yy}${mm}${dd}/${suffix}`;
-
-    return {
-        day: day,
-        month: month,
-        year: year,
-        formattedDate: `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`,
-        rodneCislo: rodneCislo
-    };
-}
-
-function generateEmail(firstName, lastName) {
-    const baseFirstName = normalize(firstName);
-    const baseLastName = normalize(lastName);
-    const randomNum = getRandomInt(1, 99);
-
-    const emailFormats = [
-        `${baseFirstName}.${baseLastName}`,
-        `${baseLastName}${baseFirstName.charAt(0)}`,
-        `${baseFirstName}${randomNum}`,
-        `${baseFirstName.charAt(0)}${baseLastName}${randomNum}`,
-    ];
-
-    const base = getRandomItem(emailFormats);
-    const domain = getRandomItem(emailDomains);
-    return `${base}@${domain}`;
-}
-
-function createPersonObject(customPhone = null, preferredGender = 'random') {
-    let isMale;
-    if (preferredGender === 'Male') isMale = true;
-    else if (preferredGender === 'Female') isMale = false;
-    else isMale = Math.random() < 0.5;
-
-    const { formattedDate, rodneCislo } = generateBirthData(isMale);
-
-    let firstName;
-    if (isMale) firstName = getRandomItem(firstNamesMale);
-    else firstName = getRandomItem(firstNamesFemale);
-
-    let lastNameBase = getRandomItem(lastNames);
-    const lastName = isMale ? lastNameBase : (lastNameBase.endsWith('ý') ? lastNameBase.slice(0, -1) + 'á' : lastNameBase + 'ová');
-
-    const city = getRandomItem(allCities);
-    const postalCode = getRandomItem(citiesData[city]);
-
-    let phoneBase;
-    if (customPhone) {
-        phoneBase = customPhone.replace(/\s/g, '').substring(0, 9);
-    } else {
-        phoneBase = String(getRandomInt(700000000, 799999999));
-    }
-
-    const person = {
-        id: Date.now() + Math.random(),
-        fullName: `${firstName} ${lastName}`,
-        birthDate: formattedDate,
-        phoneNumber: phoneBase.replace(/(\d{3})(\d{3})(\d{3})/, '$1$2$3'),
-        email: generateEmail(firstName, lastName),
-
-        rodneCislo: rodneCislo,
-        city: city,
-        postalCode: postalCode,
-        gender: isMale ? 'Muž' : 'Žena',
-        timestamp: new Date().toLocaleString('cs-CZ'),
-        isRegistered: false
-    };
-
-    return person;
-}
-
-function formatPerson(person) {
-    return `Jméno: ${person.fullName}\nDatum Narození: ${person.birthDate}\nTelefon: ${person.phoneNumber}\nE-mail: ${person.email}`.trim();
-}
-
-function formatProfile(person) {
-    const regStatus = person.isRegistered ? '<span style="color: #27ae60;">ANO</span>' : '<span style="color: #e74c3c;">NE</span>';
-
-    return `
-        <div class="profile-detail">
-            <p><strong><i class="fas fa-user"></i> Jméno:</strong> ${person.fullName}</p>
-            <p><strong><i class="fas fa-calendar-alt"></i> Datum Narození:</strong> ${person.birthDate}</p>
-            <p><strong><i class="fas fa-phone"></i> Telefon:</strong> ${person.phoneNumber}</p>
-            <p><strong><i class="fas fa-at"></i> E-mail:</strong> ${person.email}</p>
-            <hr>
-            <p><strong><i class="fas fa-id-card"></i> Rodné Číslo:</strong> ${person.rodneCislo}</p>
-            <p><strong><i class="fas fa-venus-mars"></i> Pohlaví:</strong> ${person.gender}</p>
-            <p><strong><i class="fas fa-map-marker-alt"></i> Bydliště:</strong> ${person.city} (${person.postalCode})</p>
-            <p><strong><i class="fas fa-calendar-check"></i> Vytvořeno:</strong> ${person.timestamp}</p>
-            <hr>
-            <p><strong><i class="fas fa-user-check"></i> Registrovaný:</strong> ${regStatus}</p>
-        </div>
-    `;
-}
-
-function renderPersonCard(person, container) {
-    const formattedPerson = formatPerson(person);
-    const card = document.createElement('div');
-    card.className = 'identity-card';
-    card.setAttribute('data-id', person.id);
-
-    card.innerHTML = `
-        <div class="header-row">
-            <div class="identity-number"></div>
-            <div class="button-group">
-                <button onclick="copyPerson('${person.id}')" title="Kopírovat">
-                    <i class="fas fa-copy"></i>
-                </button>
-                <button onclick="removePersonFromOutput('${person.id}')" class="btn-danger" title="Smazat">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        <pre class="identity-line">${formattedPerson}</pre>
-    `;
-    container.prepend(card);
-
-    renumberOutputCards(container);
-}
-
-function renumberOutputCards(container) {
-    const cards = container.querySelectorAll('.identity-card');
-    let count = cards.length;
-    cards.forEach(card => {
-        const numberDiv = card.querySelector('.identity-number');
-        if (numberDiv) {
-            numberDiv.textContent = `#${count}`;
-        }
-        count--;
-    });
-}
-
-function generatePeople(isBulk = false, phoneList = []) {
-    const outputDiv = document.getElementById('output');
-    const gender = document.getElementById('gender-select').value;
-    const customPhoneInput = document.getElementById('custom-phone');
-    const customPhone = customPhoneInput.value.trim().replace(/\s/g, '');
-    const isSingle = customPhone.length > 0;
-
-    let peopleToGenerate = [];
-
-    if (isBulk) {
-        peopleToGenerate = phoneList.map(phone => createPersonObject(phone, gender));
-    } else if (isSingle) {
-        if (!/^\d{9}$/.test(customPhone)) {
-             showNotification('Neplatné číslo. Zadejte prosím 9 číslic.', 'danger');
-             return;
-        }
-        peopleToGenerate.push(createPersonObject(customPhone, gender));
-    } else {
-        const count = parseInt(document.getElementById('generation-count').value, 10);
-        if (isNaN(count) || count <= 0 || count > 50) {
-            showNotification('Zadejte platný počet (1-50 osob).', 'danger');
-            return;
-        }
-        for (let i = 0; i < count; i++) {
-            peopleToGenerate.push(createPersonObject(null, gender));
-        }
-    }
-
-    if (!isBulk && !isSingle) {
-         outputDiv.innerHTML = '';
-    }
-
-    peopleToGenerate.forEach(person => {
-        renderPersonCard(person, outputDiv);
-        saveToHistory(person);
-    });
-
-    updatePeopleList();
-
-    showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
-
-    if (customPhoneInput && isSingle) {
-        customPhoneInput.value = '';
-    }
-}
-
-function bulkGenerateFromPhones() {
-    const textarea = document.getElementById('bulk-phones');
-    const phones = textarea.value.split('\n').map(p => p.trim()).filter(p => p.length > 0);
-    const validPhones = phones.filter(p => /^\d{9}$/.test(p));
-
-    if (validPhones.length === 0) {
-        showNotification('Nebylo nalezeno žádné platné 9místné číslo v seznamu.', 'danger');
-        return;
-    }
-
-    generatePeople(true, validPhones);
-    textarea.value = '';
-
-    showSection('generator');
-}
-
-function searchPerson() {
-    const query = document.getElementById('search-input').value.trim().toLowerCase();
-    const outputDiv = document.getElementById('search-output');
-    outputDiv.innerHTML = '';
-
-    if (query.length < 3) {
-        outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Zadejte alespoň 3 znaky pro vyhledávání.</p>`;
-        showNotification('Zadejte alespoň 3 znaky pro vyhledávání.', 'warning');
-        return;
-    }
-
-    const history = loadHistory();
-
-    const foundPerson = history.find(person =>
-        person.fullName.toLowerCase().includes(query) ||
-        person.phoneNumber.includes(query)
-    );
-
-    if (foundPerson) {
-        outputDiv.innerHTML = formatProfile(foundPerson);
-        showNotification(`Profil nalezen: ${foundPerson.fullName}`, 'success');
-    } else {
-        outputDiv.innerHTML = `<p style="text-align: center; color: #7f8c8d;">Osoba nebyla nalezena.</p>`;
-        showNotification('Osoba nenalezena.', 'danger');
-    }
-}
-
-function loadHistory() {
-    const history = localStorage.getItem(HISTORY_KEY);
-    return history ? JSON.parse(history) : [];
-}
-
-function saveHistory(history) {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-}
-
-function saveToHistory(person) {
-    const history = loadHistory();
-    history.push(person);
-    saveHistory(history);
-
-    document.getElementById('total-generated').textContent = history.length;
-}
-
-function removePersonFromOutput(id) {
-    const card = document.querySelector(`#output .identity-card[data-id="${id}"]`);
-    if (card) {
-        card.remove();
-        renumberOutputCards(document.getElementById('output'));
-        showNotification('Osoba smazána z výsledků (zůstává v Historii).', 'warning');
-    }
-}
-
-function clearHistory() {
-     if (confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")) {
-        localStorage.removeItem(HISTORY_KEY);
-        renderHistory();
-        renderRegisteredPeople();
-        updatePeopleList();
-        showNotification('Celá historie byla úspěšně vymazána.', 'danger');
-    }
-}
-
-function toggleRegistration(id) {
-    let history = loadHistory();
-    const personIndex = history.findIndex(p => p.id == id);
-
-    if (personIndex !== -1) {
-        const isCurrentlyRegistered = history[personIndex].isRegistered;
-        history[personIndex].isRegistered = !isCurrentlyRegistered;
-        history[personIndex].timestamp = new Date().toLocaleString('cs-CZ');
-        saveHistory(history);
-
-        showNotification(`Osoba ${history[personIndex].fullName} byla ${!isCurrentlyRegistered ? 'zaregistrována' : 'odregistrována'}.`, 'info');
-
-        renderHistory();
-        renderRegisteredPeople();
-        updatePeopleList();
-    } else {
-        showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
-    }
-}
-
-function clearAllRegistrations() {
-     if (confirm("Opravdu chcete zrušit registraci VŠEM lidem v historii?")) {
-        let history = loadHistory();
-        history = history.map(person => ({ ...person, isRegistered: false }));
-        saveHistory(history);
-
-        showNotification('Registrace zrušena u VŠECH osob.', 'danger');
-        renderHistory();
-        renderRegisteredPeople();
-        updatePeopleList();
-    }
-}
-
-function renderHistory() {
-    const history = loadHistory();
-    const historyList = document.getElementById('history-list');
-    const totalCountSpan = document.getElementById('total-generated');
-    const totalRegisteredSpan = document.getElementById('total-registered');
-
-    totalCountSpan.textContent = history.length;
-    const registeredCount = history.filter(p => p.isRegistered).length;
-    totalRegisteredSpan.textContent = registeredCount;
-
-    historyList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Historie je prázdná.</p>` : '';
-
-    [...history].reverse().forEach((person, index) => {
-        const isReg = person.isRegistered;
-        const item = document.createElement('div');
-        item.className = 'history-item';
-        item.innerHTML = `
-            <div>
-                <strong>#${history.length - index}:</strong> ${person.fullName}
-                <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
-                ${isReg ? '<i class="fas fa-check-circle" style="color: #9b59b6;"></i>' : ''}
-            </div>
-            <div class="button-group">
-                <button onclick="toggleRegistration('${person.id}')" class="${isReg ? 'btn-danger' : 'btn-success'}">
-                    <i class="fas ${isReg ? 'fa-user-times' : 'fa-user-check'}"></i> ${isReg ? 'Zrušit' : 'Registrovat'}
-                </button>
-                <button onclick="viewProfile('${person.id}')">
-                    <i class="fas fa-eye"></i> Profil
-                </button>
-            </div>
-        `;
-        historyList.appendChild(item);
-    });
-}
-
-function renderRegisteredPeople() {
-    const history = loadHistory();
-    const registeredPeople = history.filter(p => p.isRegistered);
-    const registeredList = document.getElementById('registered-list');
-    const regCountDisplay = document.getElementById('reg-count-display');
-
-    regCountDisplay.textContent = registeredPeople.length;
-
-    registeredList.innerHTML = registeredPeople.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nejsou žádní registrovaní lidé.</p>` : '';
-
-    registeredPeople.forEach((person, index) => {
-        const item = document.createElement('div');
-        item.className = 'registered-item';
-
-        item.innerHTML = `
-            <div>
-                <strong class="registered-badge">#${index + 1}:</strong> ${person.fullName}
-                <span style="color: #7f8c8d;">(${person.phoneNumber})</span>
-                <i class="fas fa-check-circle" style="color: #9b59b6;"></i>
-            </div>
-            <div class="button-group">
-                 <button onclick="toggleRegistration('${person.id}')" class="btn-danger">
-                    <i class="fas fa-user-times"></i> Zrušit registraci
-                </button>
-                <button onclick="viewProfile('${person.id}')">
-                    <i class="fas fa-eye"></i> Profil
-                </button>
-            </div>
-        `;
-        registeredList.appendChild(item);
-    });
-}
-
-function viewProfile(id) {
-    const history = loadHistory();
-    const person = history.find(i => i.id == id);
-
-    if (person) {
-        showSection('search');
-        document.getElementById('search-input').value = person.fullName;
-        document.getElementById('search-output').innerHTML = formatProfile(person);
-        showNotification('Profil osoby zobrazen v sekci Vyhledávání.', 'info');
-    } else {
-        showNotification('Profil nebyl nalezen v historii.', 'danger');
-    }
-}
-
-function copyPerson(id) {
-    const card = document.querySelector(`.identity-card[data-id="${id}"]`);
-    if (!card) return;
-
-    const textToCopy = card.querySelector('.identity-line').textContent;
-
-    navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-            showNotification('Osoba zkopírována.', 'success');
-        })
-        .catch(err => {
-            showNotification('Kopírování se nezdařilo.', 'danger');
-        });
-}
-
-function bulkCopyAllVisible() {
-     const cards = document.querySelectorAll('#output .identity-card');
-    if (cards.length === 0) {
-        showNotification("Nejsou zde žádné osoby ke zkopírování.", 'warning');
-        return;
-    }
-
-    let allText = '';
-    cards.forEach((card, index) => {
-        const number = card.querySelector('.identity-number').textContent;
-        const text = card.querySelector('.identity-line').textContent.trim();
-        allText += `---[ Osoba ${number} ]---\n${text}`;
-        if (index < cards.length - 1) {
-            allText += '\n\n';
-        }
-    });
-
-    navigator.clipboard.writeText(allText)
-        .then(() => {
-            showNotification(`Hromadně zkopírováno ${cards.length} osob!`, 'success');
-        })
-        .catch(err => {
-            showNotification('Hromadné kopírování se nezdařilo.', 'danger');
-        });
-}
-
-function showSection(sectionName) {
-    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-    const section = document.getElementById(sectionName);
-    if (section) {
-        section.classList.add('active');
-    }
-
-    if (sectionName === 'history') {
-        renderHistory();
-    } else if (sectionName === 'registered') {
-        renderRegisteredPeople();
-    } else if (sectionName === 'list') {
-        updatePeopleList();
-    }
-}
-
-function updatePeopleList() {
-    const history = loadHistory();
-    const peopleList = document.getElementById('peopleList');
-
-    peopleList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d; width: 100%;">Zatím nejsou žádní lidé v seznamu.</p>` : '';
-
-    history.forEach(person => {
-        const card = document.createElement('div');
-        card.className = 'personCard';
-        card.onclick = () => showPersonProfile(person);
-        card.innerHTML = `
-            <h3 style="color: #2980b9; margin: 0 0 0.5rem 0;">${person.fullName}</h3>
-            <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.email}</p>
-            <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #7f8c8d;">${person.phoneNumber}</p>
-        `;
-        peopleList.appendChild(card);
-    });
-}
-
-function showPersonProfile(person) {
-    showSection('search');
-    document.getElementById('profileContent').innerHTML = formatProfile(person);
-}
-
-function handleRegistration(event) {
-    event.preventDefault();
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-
-    const messageDiv = document.getElementById('regMessage');
-    messageDiv.innerHTML = `<p style="color: #27ae60;">Děkujeme za registraci, ${name}! Na email ${email} jsme Vám zaslali potvrzení.</p>`;
-
-    document.getElementById('regName').value = '';
-    document.getElementById('regEmail').value = '';
-
-    showNotification('Registrace proběhla úspěšně!', 'success');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('total-generated').textContent = loadHistory().length;
-    updatePeopleList();
-});
-
-</script>
+<script src="app.js"></script>
 </body>
 </html>
-
