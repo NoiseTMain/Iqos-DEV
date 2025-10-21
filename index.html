@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profesionální webová aplikace</title>
+    <title>IQOS MANAGMENT APP - CZ </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -247,7 +247,9 @@
 
         #history-list,
         #registered-list,
-        #email-list {
+        #email-list,
+        #sent-emails-list,
+        #inbox-list {
             max-height: 60vh;
             overflow-y: auto;
             border: 1px solid #dee2e6;
@@ -387,56 +389,41 @@
             margin-bottom: 1rem;
         }
 
-        .unread-badge {
-            background-color: #e74c3c;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .email-compose-form {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .email-compose-form textarea {
-            width: 100%;
-            min-height: 150px;
-            box-sizing: border-box;
-        }
-
-        .email-compose-form input,
-        .email-compose-form select {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
         .sent-email-item {
-            background: #e8f5e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
 
-        .received-email-item {
-            background: #e3f2fd;
+        .sent-email-item:hover {
+            background: #e9ecef;
+        }
+
+        .sent-email-item.unread {
+            background: #e8f4f8;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Profesionální Webová Aplikace</h1>
+        <h1><i class="fab fa-alipay"></i> IQOS MANAGMENT APP - CZ</h1>
         <nav>
-            <button onclick="showSection('home')">Domů</button>
-            <button onclick="showSection('email')">Email</button>
-            <button onclick="showSection('send-email')">Napsat Email</button>
-            <button onclick="showSection('generator')">Generátor</button>
-            <button onclick="showSection('bulk')">Hromadné</button>
-            <button onclick="showSection('list')">Seznam</button>
-            <button onclick="showSection('search')">Vyhledávání</button>
-            <button onclick="showSection('history')">Historie</button>
-            <button onclick="showSection('registered')">Registrovaní</button>
+            <button onclick="showSection('home')"><i class="fa fa-home"></i>Domů</button>
+            <button onclick="showSection('email')"><i class="fas fa-mail-bulk"></i>Email</button>
+            <button onclick="showSection('send-email')"><i class="fas fa-paper-plane"></i> Odeslat Email</button>
+            <button onclick="showSection('generator')"><i class="fab fa-magento"></i> Generátor</button>
+            <button onclick="showSection('bulk')"><i class="	fab fa-google-wallet"></i> Hromadné</button>
+            <button onclick="showSection('list')"><i class="fas fa-list"></i> Seznam</button>
+            <button onclick="showSection('search')"><i class="fas fa-search"></i> Vyhledávání</button>
+            <button onclick="showSection('history')"><i class="fas fa-bullhorn"></i> Historie</button>
+            <button onclick="showSection('registered')"><i class="	fas fa-registered"></i> Registrovaní</button>
         </nav>
     </header>
 
@@ -444,10 +431,10 @@
         <div id="home" class="section active">
             <div class="profile-card">
                 <h2>Vítejte v aplikaci</h2>
-                <p>Toto je profesionální webová aplikace pro správu a generování dat. Použijte navigaci výše pro přístup k různým funkcím.</p>
+                <p>awdawd</p>
                 <ul>
                     <li><strong>Email:</strong> Přístup k emailům všech vygenerovaných osob</li>
-                    <li><strong>Napsat Email:</strong> Odeslání emailu registrovaným osobám</li>
+                    <li><strong>Odeslat Email:</strong> Odeslání emailu registrovaným osobám</li>
                     <li><strong>Generátor:</strong> Rychlé generování osob s náhodnými údaji</li>
                     <li><strong>Hromadné:</strong> Generování více osob najednou z telefonních čísel</li>
                     <li><strong>Seznam:</strong> Prohlížení všech vygenerovaných osob</li>
@@ -460,38 +447,65 @@
 
         <div id="send-email" class="section">
             <div class="profile-card">
-                <h2><i class="fas fa-paper-plane"></i> Napsat Nový Email</h2>
+                <h2><i class="fas fa-paper-plane"></i> Odeslat Email Registrované Osobě</h2>
+                <p>Tato funkce umožňuje odeslat email jakékoliv registrované osobě ve vašem systému.</p>
 
-                <div class="email-compose-form">
-                    <form onsubmit="event.preventDefault(); sendEmailToUser();">
-                        <div style="margin-bottom: 1rem;">
-                            <label for="email-from-select">Od (váš email):</label>
-                            <select id="email-from-select" required>
-                                <option value="">-- Vyberte odesílatele --</option>
-                            </select>
+                <form onsubmit="event.preventDefault(); sendEmailToUser();">
+                    <div style="flex: 1 1 100%;">
+                        <label for="recipient-select">Příjemce (Vyberte registrovanou osobu):</label>
+                        <select id="recipient-select" required>
+                            <option value="">-- Vyberte příjemce --</option>
+                        </select>
+                    </div>
+
+                    <div style="flex: 1 1 100%;">
+                        <label for="email-subject">Předmět emailu:</label>
+                        <input type="text" id="email-subject" placeholder="Zadejte předmět emailu..." required>
+                    </div>
+
+                    <div style="flex: 1 1 100%;">
+                        <label for="email-message">Zpráva:</label>
+                        <textarea id="email-message" placeholder="Napište vaši zprávu zde..." style="min-height: 150px;" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-success" style="flex: 1 1 100%;">
+                        <i class="fas fa-paper-plane"></i> Odeslat Email
+                    </button>
+                </form>
+            </div>
+
+            <div class="profile-card">
+                <h2><i class="fas fa-inbox"></i> Odeslané Emaily</h2>
+
+                <div class="stats-box">
+                    <div class="stat">
+                        <div class="stat-value" id="sent-emails-count">0</div>
+                        <div class="stat-label">Celkem odesláno</div>
+                    </div>
+                </div>
+
+                <h3>Historie Odeslaných Emailů</h3>
+                <div id="sent-emails-list">
+                    <p style="text-align: center; color: #7f8c8d;">Zatím jste neodeslali žádné emaily.</p>
+                </div>
+            </div>
+
+            <div id="sent-email-detail-container" style="display: none;">
+                <div class="profile-card">
+                    <button onclick="closeSentEmailDetail()" class="back-button btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Zpět na seznam
+                    </button>
+
+                    <div class="email-detail-view">
+                        <div class="email-header">
+                            <h3 id="sent-email-detail-subject">Email Detail</h3>
+                            <p><strong>Pro:</strong> <span id="sent-email-detail-to"></span></p>
+                            <p><strong>Datum odeslání:</strong> <span id="sent-email-detail-date"></span></p>
                         </div>
-
-                        <div style="margin-bottom: 1rem;">
-                            <label for="email-to-select">Komu:</label>
-                            <select id="email-to-select" required>
-                                <option value="">-- Vyberte příjemce --</option>
-                            </select>
+                        <div class="email-body">
+                            <div id="sent-email-detail-body"></div>
                         </div>
-
-                        <div style="margin-bottom: 1rem;">
-                            <label for="email-subject-input">Předmět:</label>
-                            <input type="text" id="email-subject-input" placeholder="Zadejte předmět emailu..." required>
-                        </div>
-
-                        <div style="margin-bottom: 1rem;">
-                            <label for="email-message-input">Zpráva:</label>
-                            <textarea id="email-message-input" placeholder="Napište svou zprávu..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn-success" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i> Odeslat Email
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -505,14 +519,6 @@
                         <div class="stat-value" id="email-count-display">0</div>
                         <div class="stat-label">Celkem emailů</div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-value" id="sent-email-count">0</div>
-                        <div class="stat-label">Odeslaných</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="received-email-count">0</div>
-                        <div class="stat-label">Přijatých</div>
-                    </div>
                 </div>
 
                 <div class="email-search-box">
@@ -525,16 +531,9 @@
                     </button>
                 </div>
 
-                <div style="margin-bottom: 1rem;">
-                    <label for="email-filter-user">Filtrovat podle uživatele:</label>
-                    <select id="email-filter-user" onchange="filterEmailsByUser()">
-                        <option value="">-- Všichni uživatelé --</option>
-                    </select>
-                </div>
-
                 <h3>Seznam Emailů</h3>
                 <div id="email-list">
-                    <p style="text-align: center; color: #7f8c8d;">Zatím nebyly odeslány žádné emaily.</p>
+                    <p style="text-align: center; color: #7f8c8d;">Zatím nebyly vygenerovány žádné osoby s emaily.</p>
                 </div>
             </div>
 
@@ -548,7 +547,6 @@
                         <div class="email-header">
                             <h3 id="email-detail-subject">Email Detail</h3>
                             <p><strong>Od:</strong> <span id="email-detail-from"></span></p>
-                            <p><strong>Komu:</strong> <span id="email-detail-to"></span></p>
                             <p><strong>Datum:</strong> <span id="email-detail-date"></span></p>
                         </div>
                         <div class="email-body">
@@ -739,7 +737,7 @@
         const allCities = Object.keys(citiesData);
 
         const HISTORY_KEY = 'iqosPeopleHistory';
-        const EMAILS_KEY = 'iqosEmailsHistory';
+        const SENT_EMAILS_KEY = 'iqosSentEmails';
 
         const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
         const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -834,7 +832,8 @@
                 postalCode: postalCode,
                 gender: isMale ? 'Muž' : 'Žena',
                 timestamp: new Date().toLocaleString('cs-CZ'),
-                isRegistered: false
+                isRegistered: false,
+                inbox: []
             };
 
             return person;
@@ -937,7 +936,7 @@
 
             updatePeopleList();
             renderEmailList();
-            updateEmailSelects();
+            updateRecipientSelect();
 
             showNotification(`Úspěšně vygenerováno ${peopleToGenerate.length} osob.`, 'success');
 
@@ -1003,101 +1002,6 @@
             document.getElementById('total-generated').textContent = history.length;
         }
 
-        function loadEmails() {
-            const emails = localStorage.getItem(EMAILS_KEY);
-            return emails ? JSON.parse(emails) : [];
-        }
-
-        function saveEmails(emails) {
-            localStorage.setItem(EMAILS_KEY, JSON.stringify(emails));
-        }
-
-        function sendEmailToUser() {
-            const fromSelect = document.getElementById('email-from-select');
-            const toSelect = document.getElementById('email-to-select');
-            const subject = document.getElementById('email-subject-input').value.trim();
-            const message = document.getElementById('email-message-input').value.trim();
-
-            const fromPersonId = fromSelect.value;
-            const toPersonId = toSelect.value;
-
-            if (!fromPersonId || !toPersonId) {
-                showNotification('Musíte vybrat odesílatele i příjemce.', 'danger');
-                return;
-            }
-
-            if (!subject || !message) {
-                showNotification('Předmět i zpráva musí být vyplněny.', 'danger');
-                return;
-            }
-
-            const history = loadHistory();
-            const fromPerson = history.find(p => p.id == fromPersonId);
-            const toPerson = history.find(p => p.id == toPersonId);
-
-            if (!fromPerson || !toPerson) {
-                showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
-                return;
-            }
-
-            const emailObject = {
-                id: Date.now() + Math.random(),
-                from: fromPerson.email,
-                fromName: fromPerson.fullName,
-                fromId: fromPerson.id,
-                to: toPerson.email,
-                toName: toPerson.fullName,
-                toId: toPerson.id,
-                subject: subject,
-                message: message,
-                timestamp: new Date().toLocaleString('cs-CZ'),
-                read: false
-            };
-
-            const emails = loadEmails();
-            emails.push(emailObject);
-            saveEmails(emails);
-
-            showNotification(`Email úspěšně odeslán od ${fromPerson.fullName} pro ${toPerson.fullName}!`, 'success');
-
-            document.getElementById('email-subject-input').value = '';
-            document.getElementById('email-message-input').value = '';
-            fromSelect.selectedIndex = 0;
-            toSelect.selectedIndex = 0;
-
-            renderEmailList();
-        }
-
-        function updateEmailSelects() {
-            const history = loadHistory();
-            const registeredPeople = history.filter(p => p.isRegistered);
-
-            const fromSelect = document.getElementById('email-from-select');
-            const toSelect = document.getElementById('email-to-select');
-            const filterSelect = document.getElementById('email-filter-user');
-
-            fromSelect.innerHTML = '<option value="">-- Vyberte odesílatele --</option>';
-            toSelect.innerHTML = '<option value="">-- Vyberte příjemce --</option>';
-            filterSelect.innerHTML = '<option value="">-- Všichni uživatelé --</option>';
-
-            registeredPeople.forEach(person => {
-                const optionFrom = document.createElement('option');
-                optionFrom.value = person.id;
-                optionFrom.textContent = `${person.fullName} (${person.email})`;
-                fromSelect.appendChild(optionFrom);
-
-                const optionTo = document.createElement('option');
-                optionTo.value = person.id;
-                optionTo.textContent = `${person.fullName} (${person.email})`;
-                toSelect.appendChild(optionTo);
-
-                const optionFilter = document.createElement('option');
-                optionFilter.value = person.id;
-                optionFilter.textContent = `${person.fullName} (${person.email})`;
-                filterSelect.appendChild(optionFilter);
-            });
-        }
-
         function removePersonFromOutput(id) {
             const card = document.querySelector(`#output .identity-card[data-id="${id}"]`);
             if (card) {
@@ -1110,12 +1014,11 @@
         function clearHistory() {
             if (confirm("Opravdu chcete vymazat CELOU historii generovaných osob?")) {
                 localStorage.removeItem(HISTORY_KEY);
-                localStorage.removeItem(EMAILS_KEY);
                 renderHistory();
                 renderRegisteredPeople();
                 renderEmailList();
                 updatePeopleList();
-                updateEmailSelects();
+                updateRecipientSelect();
                 showNotification('Celá historie byla úspěšně vymazána.', 'danger');
             }
         }
@@ -1135,7 +1038,7 @@
                 renderHistory();
                 renderRegisteredPeople();
                 updatePeopleList();
-                updateEmailSelects();
+                updateRecipientSelect();
             } else {
                 showNotification('Chyba: Osoba nebyla nalezena.', 'danger');
             }
@@ -1151,7 +1054,7 @@
                 renderHistory();
                 renderRegisteredPeople();
                 updatePeopleList();
-                updateEmailSelects();
+                updateRecipientSelect();
             }
         }
 
@@ -1223,47 +1126,31 @@
             });
         }
 
-        function renderEmailList(filteredEmails = null) {
-            const emails = filteredEmails || loadEmails();
+        function renderEmailList(filteredPeople = null) {
+            const history = filteredPeople || loadHistory();
             const emailList = document.getElementById('email-list');
             const emailCountDisplay = document.getElementById('email-count-display');
-            const sentCountDisplay = document.getElementById('sent-email-count');
-            const receivedCountDisplay = document.getElementById('received-email-count');
 
-            emailCountDisplay.textContent = emails.length;
+            emailCountDisplay.textContent = history.length;
 
-            const allEmails = loadEmails();
-            const uniqueSenders = new Set(allEmails.map(e => e.fromId));
-            const uniqueReceivers = new Set(allEmails.map(e => e.toId));
+            emailList.innerHTML = history.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nebyly vygenerovány žádné osoby s emaily.</p>` : '';
 
-            sentCountDisplay.textContent = allEmails.length;
-            receivedCountDisplay.textContent = allEmails.length;
-
-            emailList.innerHTML = emails.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím nebyly odeslány žádné emaily.</p>` : '';
-
-            [...emails].reverse().forEach((email) => {
+            [...history].reverse().forEach((person, index) => {
                 const item = document.createElement('div');
                 item.className = 'email-item';
                 item.style.cursor = 'pointer';
                 item.innerHTML = `
                     <div>
-                        <strong><i class="fas fa-envelope"></i> ${email.subject}</strong><br>
-                        <span style="color: #7f8c8d; font-size: 0.9rem;">
-                            Od: ${email.fromName} (${email.from})<br>
-                            Pro: ${email.toName} (${email.to})<br>
-                            ${email.timestamp}
-                        </span>
+                        <strong><i class="fas fa-envelope"></i> ${person.email}</strong><br>
+                        <span style="color: #7f8c8d; font-size: 0.9rem;">${person.fullName} - ${person.timestamp}</span>
                     </div>
                     <div class="button-group">
-                        <button onclick="event.stopPropagation(); openEmailDetail('${email.id}')">
+                        <button onclick="event.stopPropagation(); openEmail('${person.id}')">
                             <i class="fas fa-eye"></i> Otevřít
-                        </button>
-                        <button onclick="event.stopPropagation(); deleteEmail('${email.id}')" class="btn-danger">
-                            <i class="fas fa-trash"></i> Smazat
                         </button>
                     </div>
                 `;
-                item.onclick = () => openEmailDetail(email.id);
+                item.onclick = () => openEmail(person.id);
                 emailList.appendChild(item);
             });
         }
@@ -1276,42 +1163,21 @@
                 return;
             }
 
-            const emails = loadEmails();
-            const filtered = emails.filter(email =>
-                email.fromName.toLowerCase().includes(query) ||
-                email.toName.toLowerCase().includes(query) ||
-                email.from.toLowerCase().includes(query) ||
-                email.to.toLowerCase().includes(query) ||
-                email.subject.toLowerCase().includes(query)
+            const history = loadHistory();
+            const filtered = history.filter(person =>
+                person.fullName.toLowerCase().includes(query) ||
+                person.email.toLowerCase().includes(query)
             );
 
             if (filtered.length === 0) {
-                showNotification('Nebyly nalezeny žádné emaily odpovídající hledání.', 'warning');
+                showNotification('Nebyli nalezeni žádní uživatelé odpovídající hledání.', 'warning');
             }
-
-            renderEmailList(filtered);
-        }
-
-        function filterEmailsByUser() {
-            const filterSelect = document.getElementById('email-filter-user');
-            const userId = filterSelect.value;
-
-            if (!userId) {
-                renderEmailList();
-                return;
-            }
-
-            const emails = loadEmails();
-            const filtered = emails.filter(email =>
-                email.fromId == userId || email.toId == userId
-            );
 
             renderEmailList(filtered);
         }
 
         function clearEmailSearch() {
             document.getElementById('email-search-input').value = '';
-            document.getElementById('email-filter-user').selectedIndex = 0;
             renderEmailList();
         }
 
@@ -1335,40 +1201,9 @@
             showNotification(`Email otevřen: ${person.email}`, 'info');
         }
 
-        function openEmailDetail(emailId) {
-            const emails = loadEmails();
-            const email = emails.find(e => e.id == emailId);
-
-            if (!email) {
-                showNotification('Email nebyl nalezen.', 'danger');
-                return;
-            }
-
-            document.getElementById('email-detail-subject').innerHTML = `<i class="fas fa-envelope-open"></i> ${email.subject}`;
-            document.getElementById('email-detail-from').textContent = `${email.fromName} (${email.from})`;
-            document.getElementById('email-detail-to').textContent = `${email.toName} (${email.to})`;
-            document.getElementById('email-detail-date').textContent = email.timestamp;
-            document.getElementById('email-detail-body').innerHTML = `<p style="white-space: pre-wrap;">${email.message}</p>`;
-
-            document.getElementById('email-list').parentElement.style.display = 'none';
-            document.getElementById('email-detail-container').style.display = 'block';
-
-            showNotification(`Email otevřen: ${email.subject}`, 'info');
-        }
-
         function closeEmailDetail() {
             document.getElementById('email-list').parentElement.style.display = 'block';
             document.getElementById('email-detail-container').style.display = 'none';
-        }
-
-        function deleteEmail(emailId) {
-            if (confirm('Opravdu chcete smazat tento email?')) {
-                let emails = loadEmails();
-                emails = emails.filter(e => e.id != emailId);
-                saveEmails(emails);
-                renderEmailList();
-                showNotification('Email byl úspěšně smazán.', 'success');
-            }
         }
 
         function viewProfile(id) {
@@ -1426,6 +1261,152 @@
                 });
         }
 
+        // NOVÁ FUNKCE: Odeslání emailu registrované osobě
+        function sendEmailToUser() {
+            const recipientId = document.getElementById('recipient-select').value;
+            const subject = document.getElementById('email-subject').value.trim();
+            const message = document.getElementById('email-message').value.trim();
+
+            if (!recipientId) {
+                showNotification('Vyberte prosím příjemce.', 'warning');
+                return;
+            }
+
+            if (!subject || !message) {
+                showNotification('Vyplňte prosím předmět a zprávu.', 'warning');
+                return;
+            }
+
+            let history = loadHistory();
+            const recipientIndex = history.findIndex(p => p.id == recipientId);
+
+            if (recipientIndex === -1) {
+                showNotification('Příjemce nebyl nalezen.', 'danger');
+                return;
+            }
+
+            const recipient = history[recipientIndex];
+
+            // Vytvoření emailu
+            const email = {
+                id: Date.now() + Math.random(),
+                recipientId: recipient.id,
+                recipientName: recipient.fullName,
+                recipientEmail: recipient.email,
+                subject: subject,
+                message: message,
+                timestamp: new Date().toLocaleString('cs-CZ'),
+                read: false
+            };
+
+            // Uložení do odeslaných emailů
+            saveSentEmail(email);
+
+            // Přidání emailu do schránky příjemce
+            if (!history[recipientIndex].inbox) {
+                history[recipientIndex].inbox = [];
+            }
+            history[recipientIndex].inbox.push(email);
+            saveHistory(history);
+
+            showNotification(`Email byl úspěšně odeslán osobě ${recipient.fullName}!`, 'success');
+
+            // Vyčištění formuláře
+            document.getElementById('recipient-select').value = '';
+            document.getElementById('email-subject').value = '';
+            document.getElementById('email-message').value = '';
+
+            // Aktualizace zobrazení
+            renderSentEmails();
+        }
+
+        function loadSentEmails() {
+            const emails = localStorage.getItem(SENT_EMAILS_KEY);
+            return emails ? JSON.parse(emails) : [];
+        }
+
+        function saveSentEmail(email) {
+            const emails = loadSentEmails();
+            emails.push(email);
+            localStorage.setItem(SENT_EMAILS_KEY, JSON.stringify(emails));
+        }
+
+        function renderSentEmails() {
+            const emails = loadSentEmails();
+            const sentEmailsList = document.getElementById('sent-emails-list');
+            const sentCountDisplay = document.getElementById('sent-emails-count');
+
+            sentCountDisplay.textContent = emails.length;
+
+            sentEmailsList.innerHTML = emails.length === 0 ? `<p style="text-align: center; color: #7f8c8d;">Zatím jste neodeslali žádné emaily.</p>` : '';
+
+            [...emails].reverse().forEach((email, index) => {
+                const item = document.createElement('div');
+                item.className = 'sent-email-item';
+                item.innerHTML = `
+                    <div>
+                        <strong><i class="fas fa-paper-plane"></i> Pro: ${email.recipientName}</strong> (${email.recipientEmail})<br>
+                        <span style="color: #7f8c8d; font-size: 0.9rem;">Předmět: ${email.subject}</span><br>
+                        <span style="color: #95a5a6; font-size: 0.85rem;">${email.timestamp}</span>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="openSentEmail('${email.id}')">
+                            <i class="fas fa-eye"></i> Zobrazit
+                        </button>
+                    </div>
+                `;
+                sentEmailsList.appendChild(item);
+            });
+        }
+
+        function openSentEmail(id) {
+            const emails = loadSentEmails();
+            const email = emails.find(e => e.id == id);
+
+            if (!email) {
+                showNotification('Email nebyl nalezen.', 'danger');
+                return;
+            }
+
+            document.getElementById('sent-email-detail-subject').innerHTML = `<i class="fas fa-paper-plane"></i> ${email.subject}`;
+            document.getElementById('sent-email-detail-to').textContent = `${email.recipientName} (${email.recipientEmail})`;
+            document.getElementById('sent-email-detail-date').textContent = email.timestamp;
+            document.getElementById('sent-email-detail-body').innerHTML = `<p style="white-space: pre-wrap;">${email.message}</p>`;
+
+            document.getElementById('sent-emails-list').parentElement.style.display = 'none';
+            document.getElementById('sent-email-detail-container').style.display = 'block';
+
+            showNotification(`Detail emailu otevřen.`, 'info');
+        }
+
+        function closeSentEmailDetail() {
+            document.getElementById('sent-emails-list').parentElement.style.display = 'block';
+            document.getElementById('sent-email-detail-container').style.display = 'none';
+        }
+
+        function updateRecipientSelect() {
+            const history = loadHistory();
+            const registeredPeople = history.filter(p => p.isRegistered);
+            const select = document.getElementById('recipient-select');
+
+            // Zachování současné hodnoty
+            const currentValue = select.value;
+
+            select.innerHTML = '<option value="">-- Vyberte příjemce --</option>';
+
+            registeredPeople.forEach(person => {
+                const option = document.createElement('option');
+                option.value = person.id;
+                option.textContent = `${person.fullName} (${person.email})`;
+                select.appendChild(option);
+            });
+
+            // Obnovení hodnoty pokud existuje
+            if (currentValue) {
+                select.value = currentValue;
+            }
+        }
+
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             const section = document.getElementById(sectionName);
@@ -1443,7 +1424,9 @@
                 closeEmailDetail();
                 renderEmailList();
             } else if (sectionName === 'send-email') {
-                updateEmailSelects();
+                closeSentEmailDetail();
+                updateRecipientSelect();
+                renderSentEmails();
             }
         }
 
@@ -1475,7 +1458,8 @@
             document.getElementById('total-generated').textContent = loadHistory().length;
             updatePeopleList();
             renderEmailList();
-            updateEmailSelects();
+            updateRecipientSelect();
+            renderSentEmails();
         });
     </script>
 </body>
